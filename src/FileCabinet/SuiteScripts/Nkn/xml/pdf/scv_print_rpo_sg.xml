@@ -1,0 +1,378 @@
+<?xml version = "1.0"?><!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
+<pdf>
+<head>
+    <meta name="title" value="Print RPO (SG)"/>
+    <link name="ScvFont" type="font" subtype="opentype" src="${libPdf.font.arial?html}" src-bold="${libPdf.font.arial_bold?html}" src-italic="${libPdf.font.arial_italic?html}" src-bolditalic="${libPdf.font.arial_bolditalic?html}" bytes="2" />
+    <style type="text/css">
+        ${libPdf.css}
+
+        body {
+            font-size: 10pt;
+        }
+        table { 
+            font-size: 10pt;
+        }
+        table.info-rows td { padding-bottom: 4px; }
+    </style>
+
+    <macrolist>
+		<macro id="headerTitle">
+			<table width="100%" class="fs-10">
+                <tr>
+                    <td colspan="50" class="align-left">
+                        <span>${results.headers.isoNumber}</span><br/>
+                        <span>Sheet <pagenumber/> of <totalpages/></span>
+                    </td>
+                    <td colspan="50" class="align-right">
+                        <p>${results.headers.subsidiary}</p>
+                    </td>
+                </tr>
+
+                {libPdf.rowcol100}
+			</table>
+		</macro>
+	</macrolist>
+</head>
+<body padding="0.3in 0.3in 1in 0.3in" size="A4" header="headerTitle" header-height="0.4in" >
+    <#list results.datas as result>
+    <table width="100%">
+        <tr class="mb-5">
+            <td colspan="100" class="align-center fs-12 font-weight-bold">
+                <p>REQUEST FOR PURCHASE ORDER</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="48" >
+                <table width="100%" class="info-rows">
+                    <tr>
+                        <td colspan="25">
+                            VENDOR: 
+                        </td>
+                        <td colspan="75">
+                            ${result.vendor}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="25">
+                            PROJECT: 
+                        </td>
+                        <td colspan="75">
+                            ${results.headers.project}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="25">
+                            P.O. No: 
+                        </td>
+                        <td colspan="75">
+                            ${results.headers.poNo}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="30">
+                            CLAIMANT No.: 
+                        </td>
+                        <td colspan="70">
+                            ${results.headers.claimantNo}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="37">
+                            SCOPE OF WORK: 
+                        </td>
+                        <td colspan="63">
+                            ${results.headers.scopeOfWork}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="40">
+                            CONTRACT PRICE: 
+                        </td>
+                        <td colspan="60">
+                            ${result.contractPrice}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="40">
+                            GST: 
+                        </td>
+                        <td colspan="60">
+                            ${results.headers.gst}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="100">
+                            TYPE OF CONTRACT: ${results.headers.typeOfContract}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="40">
+                            PAYMENT TERM: 
+                        </td>
+                        <td colspan="60">
+                            ${results.headers.paymentTerm}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="40">
+                            RETENTION: 
+                        </td>
+                        <td colspan="60">
+                            ${results.headers.retention}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="40">
+                            VENDOR. QTN. REF: 
+                        </td>
+                        <td colspan="60" class="fs-8">
+                            ${result.vendorQtnRef}
+                        </td>
+                    </tr>
+
+                    ${libPdf.rowcol100}
+                </table>
+            </td>
+            <td colspan="52" >
+                <table width="100%" class="info-rows">
+                    <tr>
+                        <td colspan="70">
+                            DATE OF REQUEST:
+                        </td>
+                        <td colspan="30" class="align-right">
+                            ${results.headers.dateOfRequest}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="70">
+                            DATE OF COMMENCEMENT:
+                        </td>
+                        <td colspan="30" class="align-right">
+                            ${results.headers.dateOfCommencement}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="70">
+                            DATE OF COMPLETION:
+                        </td>
+                        <td colspan="30" class="align-right">
+                            ${results.headers.dateOfCompletion}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="50">
+                            L.D./ PENALTY FOR DELAY: 
+                        </td>
+                        <td colspan="50" class="align-right">
+                            ${results.headers.ldPenaltyForDelay} ${results.headers.ldPenaltyForDelayPerday} per day
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="100">
+                            MAINTENACE PERIOD: ${results.headers.maintenacePeriod}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="70">
+                            PERFORMANCE BOND: ${results.headers.performanceBond}
+                        </td>
+                        <td colspan="30" class="align-right">
+                            ${results.headers.performanceBondPercent}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="70">
+                            INSURANCE: 
+                        </td>
+                        <td colspan="30" class="align-right">
+                            ${results.headers.insurance}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="100">
+                            WARRANTY: ${results.headers.warranty}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="70">
+                            CONDITIONS OF SUBCONTRACT:
+                        </td>
+                        <td colspan="30" class="align-right">
+                            ${results.headers.conditionsOfSubcontract}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="70">
+                            CONDITIONS OF PURCHASE:
+                        </td>
+                        <td colspan="30" class="align-right">
+                            ${results.headers.conditionsOfPurchase}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="70">
+                            SPECIFICATION:
+                        </td>
+                        <td colspan="30" class="align-right">
+                            ${results.headers.specification}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="70">
+                            B Q / SCHEDULE OF RATES:
+                        </td>
+                        <td colspan="30" class="align-right">
+                            ${results.headers.bqScheduleOfRates}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="70">
+                            DRAWINGS:
+                        </td>
+                        <td colspan="30" class="align-right">
+                            ${results.headers.drawings}
+                        </td>
+                    </tr>
+
+
+                    ${libPdf.rowcol100}
+                </table>
+            </td>
+        </tr>
+
+        {libPdf.rowcol100}
+    </table>
+
+    <table class="border-table">
+        <thead class="font-weight-bold" >
+            <tr height="40px">
+                <td colspan="24" class="valign-top">
+                    <p>WORK ITEM NO.</p>
+                </td>
+                <td colspan="20" class="valign-top">
+                    <p>WORKING BUDGET</p>
+                </td>
+                <td colspan="20" class="valign-top">
+                    <p>CONTRACT PRICE</p>
+                </td>
+                <td colspan="18" class="valign-top">
+                    <p>BALANCE</p>
+                </td>
+                <td colspan="18" class="valign-top">
+                    <p>RESERVES</p>
+                </td>
+            </tr>
+        </thead>
+        <tbody class="">
+            <#list result.lines as line>
+                <tr>
+                    <td colspan="24" class="align-center">
+                        <p>${line.workItemNo}</p>
+                    </td>
+                    <td colspan="20" class="align-right">
+                        <p>${line.workingBudget}</p>
+                    </td>
+                    <td colspan="20" class="align-right">
+                        <p>${line.contractPrice}</p>
+                    </td>
+                    <td colspan="18" class="align-right">
+                        <p>${line.balance}</p>
+                    </td>
+                    <td colspan="18" class="align-right">
+                        <p>${line.reserves}</p>
+                    </td>
+                </tr>
+            </#list>
+            <tr>
+                <td colspan="24" class="align-left pl-5">
+                    <p>TOTAL SUM: </p>
+                </td>
+                <td colspan="20" class="align-right">
+                    <p>${result.workingBudget}</p>
+                </td>
+                <td colspan="20" class="align-right">
+                    <p>${result.contractPrice}</p>
+                </td>
+                <td colspan="18" class="align-right">
+                    <p>${result.balance}</p>
+                </td>
+                <td colspan="18" class="align-right">
+                    <p>${result.reserves}</p>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="15" class="valign-top align-left pl-5" style="border-right: none;">
+                    <p>REMARK:</p>
+                </td>
+                <td colspan="85" class="align-left" style="border-left: none;">
+                    <p>${results.headers.remark}</p>
+                </td>
+            </tr>
+            ${libPdf.rowcol100}
+        </tbody>
+    </table>
+
+    <table width="100%" class="mt-10">
+        <tr >
+            <td colspan="10" rowspan="2" class="align-center valign-middle" style="border: 1px solid black; border-right: none;">
+                <p>DATE</p>
+            </td>
+            <td colspan="30" class="align-center" style="border: 1px solid black; border-right: none;">
+                <p>RECEIVED</p>
+            </td>
+            <td colspan="30" class="align-center" style="border: 1px solid black; border-right: none;">
+                <p>PROCESSED</p>
+            </td>
+            <td colspan="30" class="align-center" style="border: 1px solid black;">
+                <p>ACCOUNTS</p>
+            </td>
+        </tr>
+        <tr height="40px">
+            <td colspan="30" class="align-center" style="border: 1px solid black; border-top: none; border-right: none;">
+                <p></p>
+            </td>
+            <td colspan="30" class="align-center" style="border: 1px solid black; border-top: none; border-right: none;">
+                <p></p>
+            </td>
+            <td colspan="30" class="align-center" style="border: 1px solid black; border-top: none;">
+                <p></p>
+            </td>
+        </tr>
+        ${libPdf.rowcol100}
+	</table>
+
+    <table width="100%" class="mt-10">
+        <tr>
+            <td colspan="16" class="align-center" style="border: 1px solid black; border-right: none;">
+                <p>M.D</p>
+            </td>
+            <td colspan="16" class="align-center" style="border: 1px solid black; border-right: none;">
+                <p>D.M.D</p>
+            </td>
+            <td colspan="17" class="align-center" style="border: 1px solid black; border-right: none;">
+                <p>PROCESSED</p>
+            </td>
+            <td colspan="17" class="align-center" style="border: 1px solid black; border-right: none;">
+                <p></p>
+            </td>
+            <td colspan="17" class="align-center" style="border: 1px solid black; border-right: none;">
+                <p>P.M.</p>
+            </td>
+            <td colspan="17" class="align-center" style="border: 1px solid black;">
+                <p>Q.S.</p>
+            </td>
+        </tr>
+        <tr height="80px">
+            <td colspan="16" class="align-center" style="border: 1px solid black; border-top: none; border-right: none;"></td>
+            <td colspan="16" class="align-center" style="border: 1px solid black; border-top: none; border-right: none;"></td>
+            <td colspan="17" class="align-center" style="border: 1px solid black; border-top: none; border-right: none;"></td>
+            <td colspan="17" class="align-center" style="border: 1px solid black; border-top: none; border-right: none;"></td>
+            <td colspan="17" class="align-center" style="border: 1px solid black; border-top: none; border-right: none;"></td>
+            <td colspan="17" class="align-center" style="border: 1px solid black; border-top: none;"></td>
+        </tr>
+        ${libPdf.rowcol100}
+	</table>
+    <#if result_has_next><pbr/></#if>
+    </#list>
+</body>
+</pdf>

@@ -1,0 +1,471 @@
+<?xml version = "1.0"?><!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
+<pdf>
+<head>
+    <meta name="title" value="Print PO (SG)"/>
+    <link name="ScvFont" type="font" subtype="opentype" src="${libPdf.font.arial?html}" src-bold="${libPdf.font.arial_bold?html}" src-italic="${libPdf.font.arial_italic?html}" src-bolditalic="${libPdf.font.arial_bolditalic?html}" bytes="2" />
+    <style type="text/css">
+        ${libPdf.css}
+
+        body {
+            font-size: 10pt;
+        }
+        table {
+            font-size: 10pt;
+        }
+        td.num-col { vertical-align: top; }
+        table.info-rows td { padding-bottom: 4px; }
+        table.detail-rows td { padding-bottom: 10px; vertical-align: top; }
+        table.list-rows td { padding-bottom: 8px; vertical-align: top; }
+        .text-underline { text-decoration: underline; }
+        .text-line-through { text-decoration: line-through; }
+        .duplicate-box {
+            border: 2px solid #2e75b6;
+            color: #2e75b6;
+            font-weight: bold;
+        }
+    </style>
+
+    <macrolist>
+        <macro id="footerPage">
+            <table width="100%">
+                <tr>
+                    <td class="align-center">Page <span class="font-weight-bold"><pagenumber/></span> of <span class="font-weight-bold"><totalpages/></span></td>
+                </tr>
+            </table>
+        </macro>
+        <macro id="footerBlank">
+            <table width="100%">
+                <tr>
+                    <td></td>
+                </tr>
+            </table>
+        </macro>
+    </macrolist>
+</head>
+<body padding="0.3in 0.5in 0.5in 0.5in" size="A4" footer="footerPage" footer-height="0.3in" >
+    <!-- ================================================== PAGE 1 ================================================== -->
+    <table width="100%">
+        <tr>
+            <td colspan="35" class="align-left">
+                <span class="text-underline">PROCUREMENT</span><br/>
+                <span>Form Date: 16 February 2023</span><br/>
+                <span>Form Ref: Q0501</span>
+            </td>
+            <td colspan="30" class="align-center">
+                ${result.tagImgLogo}
+            </td>
+            <td colspan="35" class="align-right valign-top">
+                <table width="100%">
+                    <tr>
+                        <td colspan="30"></td>
+                        <td colspan="70" class="align-center duplicate-box p-2">
+                            <span class="fs-16 font-weight-bold">DUPLICATE</span><br/>
+                            <span class="fs-9 font-weight-bold">TO BE RETURNED</span>
+                        </td>
+                    </tr>
+                    ${libPdf.rowcol100}
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="100" class="align-center">
+                <span class="fs-16">${(subsidiary.legalname!"")?upper_case}</span><br/>
+                <span class="fs-10">${subsidiary.mainaddress_text}</span><br/>
+                <span class="fs-10">Tel: ${subsidiary.custrecord_scv_sub_tel_phone}  Fax: ${subsidiary.fax}</span><br/>
+                <span class="fs-8">Reg. No. ${subsidiary.federalidnumber} &nbsp;&nbsp; GST Reg. No. ${subsidiary.custrecord_scv_sub_gst_reg_no}</span>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="100" class="align-center pt-5 pb-5">
+                <p class="fs-13 font-weight-bold">PURCHASE ORDER</p>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="45" >
+                <table width="100%">
+                    <tr>
+                        <td class="valign-top">
+                            ${result.vendorAddress}
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td colspan="55">
+                <table width="100%">
+                    <tr>
+                        <td colspan="50">
+                            <span>P.O. NO</span>
+                        </td>
+                        <td colspan="5">
+                            <span>:</span>
+                        </td>
+                        <td colspan="45">
+                            <span>${result.poNo}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="50">
+                            <span>DATE</span>
+                        </td>
+                        <td colspan="5">
+                            <span>:</span>
+                        </td>
+                        <td colspan="45">
+                            <span>${result.date}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="50">
+                            <span>SUB-CONTRACTOR NO.</span>
+                        </td>
+                        <td colspan="5">
+                            <span>:</span>
+                        </td>
+                        <td colspan="45">
+                            <span>${result.subContractNo}</span>
+                        </td>
+                    </tr>
+                    ${libPdf.rowcol100}
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="10" class="pt-4 pb-4">
+                <span class="font-weight-bold">Attention</span>
+            </td>
+            <td colspan="90" class="pt-4 pb-4">
+                <span class="font-weight-bold">: &nbsp;${result.attention}</span>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="10" class="pt-4 pb-4">
+                <span class="font-weight-bold">PROJECT</span>
+            </td>
+            <td colspan="90" class="pt-4 pb-4">
+                <span class="font-weight-bold">: &nbsp;${result.project}</span>
+            </td>
+        </tr>
+
+        ${libPdf.rowcol100}
+    </table>
+
+    <table width="100%" class="list-rows mt-5">
+        <tr>
+            <td colspan="100" class="align-justify">
+                ${result.remark_1}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="100" class="align-justify">
+                ${result.remark_2}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="5" class="num-col">3.</td>
+            <td colspan="95">
+                The following are the details of this Sub-Contract.
+            </td>
+        </tr>
+        <tr>
+            <td colspan="5"></td>
+            <td colspan="30">Works</td>
+            <td colspan="3">:</td>
+            <td colspan="62">${result.works}</td>
+        </tr>
+        <tr>
+            <td colspan="5"></td>
+            <td colspan="30">Sub-Contract Sum</td>
+            <td colspan="3">:</td>
+            <td colspan="62">${result.subContractSum}</td>
+        </tr>
+        <tr>
+            <td colspan="5"></td>
+            <td colspan="30">Type of Sub-Contract</td>
+            <td colspan="3">:</td>
+            <td colspan="62">${result.typeOfSubContract}</td>
+        </tr>
+        <tr>
+            <td colspan="5"></td>
+            <td colspan="30">Date of Commencement</td>
+            <td colspan="3">:</td>
+            <td colspan="62">${result.dateOfCommencement}</td>
+        </tr>
+        <tr>
+            <td colspan="5"></td>
+            <td colspan="30">Scheduled Completion Date</td>
+            <td colspan="3">:</td>
+            <td colspan="62">${result.scheduledCompletionDate}</td>
+        </tr>
+        <tr>
+            <td colspan="5"></td>
+            <td colspan="30">Liquidated Damages</td>
+            <td colspan="3">:</td>
+            <td colspan="62">${result.liquidatedDamages}</td>
+        </tr>
+        <tr>
+            <td colspan="5"></td>
+            <td colspan="30">Payment Period</td>
+            <td colspan="3">:</td>
+            <td colspan="62">${result.paymentPeriod}</td>
+        </tr>
+        <tr>
+            <td colspan="5"></td>
+            <td colspan="30">Retention</td>
+            <td colspan="3">:</td>
+            <td colspan="62">${result.retention}</td>
+        </tr>
+        <tr>
+            <td colspan="5"></td>
+            <td colspan="30">Limit of Retention</td>
+            <td colspan="3">:</td>
+            <td colspan="62">${result.limitOfRetention}</td>
+        </tr>
+        <tr>
+            <td colspan="5"></td>
+            <td colspan="30">Maintenance Period</td>
+            <td colspan="3">:</td>
+            <td colspan="62">${result.maintenancePeriod}</td>
+        </tr>
+        <tr>
+            <td colspan="5"></td>
+            <td colspan="30">Performance Bond</td>
+            <td colspan="3">:</td>
+            <td colspan="62">${result.performanceBond}</td>
+        </tr>
+        <tr>
+            <td colspan="5"></td>
+            <td colspan="30">Insurance(s)</td>
+            <td colspan="3">:</td>
+            <td colspan="62" class="align-justify">
+                ${result.insurance}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="5"></td>
+            <td colspan="30">Warranties Required</td>
+            <td colspan="3">:</td>
+            <td colspan="62">${result.warrantiesRequired}</td>
+        </tr>
+        <tr>
+            <td colspan="5"></td>
+            <td colspan="30">Limit on suspension period<sup>1</sup></td>
+            <td colspan="3">:</td>
+            <td colspan="62">${result.limitOnSuspensionPeriod}</td>
+        </tr>
+        <tr>
+            <td colspan="5"></td>
+            <td colspan="30">Insurance(s)</td>
+            <td colspan="3">:</td>
+            <td colspan="62" class="align-justify">
+                Vendor shall provide Plant and Equipment Insurance and Work Injury
+                Compensation Insurance which shall exclude Non-Contribution Clause
+            </td>
+        </tr>
+        <tr>
+            <td colspan="100" class="align-justify">
+                ${result.remark_4}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="100">
+                ${result.remark_5}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="5" class="num-col">6.</td>
+            <td colspan="95" class="align-justify">
+                This Purchase Order is sent to you in duplicate. Please signify your acceptance of and agreement with the
+                terms and conditions of this Sub-Contract by signing and stamping (company stamp) on the acceptance
+                slip below and returning to us the acceptance slip duly signed and stamped by your authorised
+                representative within 7 days from the date of this Purchase Order. The original copy is for your retention.
+            </td>
+        </tr>
+        <tr height="100px">
+            <td colspan="100"></td>
+        </tr>
+        <tr>
+            <td colspan="100" class="pt-15 valign-top">
+                <p>${(subsidiary.legalname!"")?upper_case}</p>
+            </td>
+        </tr>
+        <tr height="250px">
+            <td colspan="100"></td>
+        </tr>
+        <tr>
+            <td colspan="100" class="fs-8">
+                <p><sup>1</sup> Refer to Clause 24.2.3 of the Conditions of Sub-Contract</p>
+            </td>
+        </tr>
+        ${libPdf.rowcol100}
+    </table>
+
+    <pbr/>
+    <!-- ================================================== PAGE 3 ================================================== -->
+    <table width="100%">
+        <tr>
+            <td colspan="100" class="align-center pb-5">
+                <p class="font-weight-bold">ACCEPTANCE</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="100" class="align-justify line-height-10">
+                ${result.acceptance}
+            </td>
+        </tr>
+        <tr>
+            <td colspan="100" class="pt-10">
+                <p>Yours faithfully,</p>
+                <p>For and on behalf of <span class="font-weight-bold">${result.vendorCompanyName}</span></p>
+            </td>
+        </tr>
+        <tr height="120px">
+            <td colspan="100" ></td>
+        </tr>
+        <tr>
+            <td colspan="40" style="border-top: 1px solid black;" class="align-center">
+                <p>Signature &amp; Company's Stamp</p>
+            </td>
+            <td colspan="60"></td>
+        </tr>
+        <tr>
+            <td colspan="100" class="pt-10">
+                <span class="pb-4">Name:</span><br/>
+                <span class="pb-4">Designation:</span><br/>
+                <span class="pb-4">Date:</span>
+            </td>
+        </tr>
+        ${libPdf.rowcol100}
+    </table>
+
+    <pbr footer="footerBlank" footer-height="0.3in"/>
+    <!-- ================================================== PAGE 4 (APPENDIX Q0501A) ================================================== -->
+    <table width="100%">
+        <tr>
+            <td colspan="35" style="border: 1px solid black; border-right: none;" class="pl-2">
+                <p class="font-weight-bold">NAKANO SINGAPORE (PTE) LTD</p>
+            </td>
+            <td colspan="35" style="border: 1px solid black; border-right: none;" class="pl-2">
+                <p>PROCEDURAL MANUAL</p>
+            </td>
+            <td colspan="13" style="border: 1px solid black; border-right: none;" class="pl-2">
+                <p>Form Date</p>
+            </td>
+            <td colspan="3" style="border: 1px solid black; border-left: none; border-right: none;" class="align-center">
+                <p>:</p>
+            </td>
+            <td colspan="14" style="border: 1px solid black; border-left: none;" class="align-right pr-2">
+                <p>18<sup>th</sup> July 13</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="70" style="border: 1px solid black; border-top: none; border-right: none;" class="pl-2">
+                <p class="font-weight-bold">PROCUREMENT</p>
+            </td>
+            <td colspan="13" style="border: 1px solid black; border-top: none; border-right: none;" class="pl-2">
+                <p>Page</p>
+            </td>
+            <td colspan="3" style="border: 1px solid black; border-left: none; border-top: none; border-right: none;" class="align-center">
+                <p>:</p>
+            </td>
+            <td colspan="14" style="border: 1px solid black; border-left: none; border-top: none;" class="align-right pr-2">
+                <p><pagenumber/> of <totalpages/></p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="70" style="border: 1px solid black; border-top: none; border-right: none;" class="pl-2">
+                <p class="font-weight-bold">APPENDIX TO PURCHASE ORDER</p>
+            </td>
+            <td colspan="13" style="border: 1px solid black; border-top: none; border-right: none;" class="pl-2">
+                <p>Appendix</p>
+            </td>
+            <td colspan="3" style="border: 1px solid black; border-left: none; border-top: none; border-right: none; " class="align-center">
+                <p>:</p>
+            </td>
+            <td colspan="14" style="border: 1px solid black; border-left: none; border-top: none;" class="align-right pr-2">
+                <p class="font-weight-bold">Q0501A</p>
+            </td>
+        </tr>
+        ${libPdf.rowcol100}
+    </table>
+
+    <table width="100%" class="info-rows mt-15">
+        <tr>
+            <td colspan="30">Purchase Order No</td>
+            <td colspan="3">:</td>
+            <td colspan="67">${result.poNo}</td>
+        </tr>
+        <tr>
+            <td colspan="30">Purchase Order Date</td>
+            <td colspan="3">:</td>
+            <td colspan="67">${result.date}</td>
+        </tr>
+        <tr>
+            <td colspan="30">Project Title</td>
+            <td colspan="3">:</td>
+            <td colspan="67" class="font-weight-bold">${result.project}</td>
+        </tr>
+        ${libPdf.rowcol100}
+    </table>
+
+    <table width="100%" class="mt-15">
+        <tr>
+            <td colspan="100" class="pb-5">
+                <p class="font-weight-bold">COMMITMENT AND CONFIRMATION BY SUB-CONTRACTOR</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="100" class="pb-5">
+                ${result.commitmentAndConfirmation}
+            </td>
+        </tr>
+        ${libPdf.rowcol100}
+    </table>
+
+    <table width="100%" class="mt-15">
+        <tr height="80px">
+            <td colspan="40" class="valign-bottom">
+                <!-- TODO: IMAGE - Chữ ký người đại diện Sub-Contractor (thường để trống cho vendor ký tay) -->
+                <p></p>
+            </td>
+            <td colspan="15"></td>
+            <td colspan="45" class="valign-bottom">
+                <p></p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="40" style="border-top: 1px solid black;">
+                <p>Authorised Signature</p>
+            </td>
+            <td colspan="15"></td>
+            <td colspan="45" style="border-top: 1px solid black;">
+                <p>Name / NRIC No.</p>
+            </td>
+        </tr>
+        <tr height="80px">
+            <td colspan="40" class="valign-bottom">
+                <!-- TODO: IMAGE - Con dấu công ty (company stamp) Sub-Contractor (thường để trống cho vendor đóng dấu) -->
+                <p></p>
+            </td>
+            <td colspan="15"></td>
+            <td colspan="45" class="valign-bottom">
+                <p></p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="40" style="border-top: 1px solid black;">
+                <p>Company Stamp</p>
+            </td>
+            <td colspan="15"></td>
+            <td colspan="45" style="border-top: 1px solid black;">
+                <p>Date</p>
+            </td>
+        </tr>
+        ${libPdf.rowcol100}
+    </table>
+</body>
+</pdf>

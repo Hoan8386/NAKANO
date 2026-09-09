@@ -1,0 +1,210 @@
+<?xml version = "1.0"?><!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
+<pdf>
+<head>
+    <meta name="title" value="Print ROP (SG)"/>
+    <link name="ScvFont" type="font" subtype="opentype" src="${libPdf.font.arial?html}" src-bold="${libPdf.font.arial_bold?html}" src-italic="${libPdf.font.arial_italic?html}" src-bolditalic="${libPdf.font.arial_bolditalic?html}" bytes="2" />
+    <style type="text/css">
+        ${libPdf.css}
+
+        body {
+            font-size: 10pt;
+        }
+        table {
+            font-size: 10pt;
+        }
+        .small-size {
+            font-size: 8.5pt;
+        }
+        .tbl-recommendation td:last-child{
+            border-right: 1px solid;
+        }
+
+        .tbl-data td {
+            vertical-align: top !important;
+        }
+
+        .row-ttl-contract td, .row-data-end td {
+            border-bottom: 1px solid !important;
+        }
+    </style>
+</head>
+<body padding="0.5in 0.3in 0.5in 0.1in" size="A4">
+    <table class="tbl-recommendation small-size">
+        <tr class="border">
+            <td colspan="40" class="border-l"><p>${(subsidiary.legalname!"")?upper_case}</p></td>
+            <td colspan="25" class="border-l"><p>PROCEDURAL MANUAL</p></td>
+            <td colspan="13" class="align-right"><p>Issue Date:</p></td>
+            <td colspan="22" class="border-l align-center"><p>16-Nov-15</p></td>
+        </tr>
+        <tr class="border-b">
+            <td colspan="78" class="border-l align-right"><p>Form:</p></td>
+            <td colspan="22" class="border-l align-center"><p>Q0703</p></td>
+        </tr>
+        <tr>
+            <td colspan="71" class="fs-12 align-center"><p><b>RECOMMENDATION FOR PAYMENT</b></p></td>
+            <td colspan="7" class="align-right"><p>VO. NO:</p></td>
+            <td colspan="22" class="border-l border-b align-center"><p></p></td>
+        </tr>
+        <tr>
+            <td colspan="78" class="align-right"><p>Date:</p></td>
+            <td colspan="22" class="border-l border-b align-center"><p>${result.date?date?string["dd-MMM-yy"]}</p></td>
+        </tr>
+    </table>
+    <table class="mt-4 small-size">
+        <tr>
+            <td colspan="14"><p>1 Proj No:</p></td>
+            <td colspan="18" class="border"><p></p></td>
+            <td colspan="10"></td>
+            <td colspan="17"><p>PROJ NAME</p></td>
+            <td colspan="41" class="border-b"><p></p></td>
+        </tr>
+        <tr>
+            <td colspan="14"><p>2 Claimant No:</p></td>
+            <td colspan="18" class="border" border-top="none"><p>${result.claimant_no?html}</p></td>
+            <td colspan="10"></td>
+            <td colspan="17"><p>CLAIMANT NAME:</p></td>
+            <td colspan="41" class="border-b"><p>${result.claimant_name?html}</p></td>
+        </tr>
+    </table>
+    <table class="tbl-data border-table table-dotted mt-6 small-size">
+        <thead>
+            <tr>
+                <td width="10.67%"><p>INV/REF NO.</p></td>
+                <td width="7.82%"><p>P.O. NO.</p></td>
+                <td width="11.05%"><p>WORK ITEM</p></td>
+                <td width="11.6%"><p>CONTRACT</p></td>
+                <td width="12%"><p>ACCU APPROVAL</p></td>
+                <td width="13.5%"><p>PREV APPROVAL<br />(Incl Retention)</p></td>
+                <td width="11.6%"><p>NOW APPRVD</p></td>
+                <td width="12.38%"><p>PRESENT <br />RETENTION (%)</p></td>
+                <td width="9.39%"><p>GST <br />9%</p></td>
+            </tr>
+        </thead>
+        <tbody>
+            <#list result.arrP2PReqPayment as objLine>
+                <#assign isEnd = objLine?index == result.arrP2PReqPayment?size - 1 />
+                <#assign rowclass = isEnd?then("row-data-end", "row-basic") />
+
+                <#if objLine.is_default == "T">
+                    <tr class="${rowclass}">
+                        <td><p>&nbsp;</p></td>
+                        <td></td><td></td><td></td><td></td>
+                        <td></td><td></td><td></td><td></td>
+                    </tr>
+                    <#else>
+                    <tr class="${rowclass}">
+                        <td class="align-left"><p>${objLine.inv_ref_no?html}</p></td>
+                        <td class="align-left"><p>${objLine.p_o_no?html}</p></td>
+                        <td class="align-left"><p>${objLine.work_item_display?html}</p></td>
+                        <td class="align-right"><p>${objLine.contract_fmt}</p></td>
+                        <td class="align-right"><p>${objLine.accu_approval_fmt}</p></td>
+                        <td class="align-right"><p>${objLine.prev_approval_fmt}</p></td>
+                        <td class="align-right"><p>${objLine.now_apprvd_fmt}</p></td>
+                        <td class="align-right"><p>${objLine.present_retention_fmt}</p></td>
+                        <td class="align-right"><p>${objLine.gst_9_fmt}</p></td>
+                    </tr>
+                </#if>
+            </#list>
+            <#if result.objTtlContract.is_default == "T">
+                <tr>
+                    <td><p>&nbsp;</p></td>
+                    <td></td><td></td><td></td><td></td>
+                    <td></td><td></td><td></td><td></td>
+                </tr>
+                <#else>
+                <tr class="row-ttl-contract">
+                    <td class="align-left"><p></p></td>
+                    <td colspan="2" class="align-left"><p><b>${result.objTtlContract.description?html}</b></p></td>
+                    <td class="align-right"><p>${result.objTtlContract.contract_fmt}</p></td>
+                    <td class="align-right"><p>${result.objTtlContract.accu_approval_fmt}</p></td>
+                    <td class="align-right"><p>${result.objTtlContract.prev_approval_fmt}</p></td>
+                    <td class="align-right"><p>${result.objTtlContract.now_apprvd_fmt}</p></td>
+                    <td class="align-right"><p>${result.objTtlContract.present_retention_fmt}</p></td>
+                    <td class="align-right"><p>${result.objTtlContract.gst_9_fmt}</p></td>
+                </tr>
+            </#if>
+            <#list result.arrPOPrePayment as objLine>
+                <#assign isEnd = objLine?index == result.arrP2PReqPayment?size - 1 />
+                <#assign rowclass = isEnd?then("row-data-end", "row-basic") />
+
+                <#if objLine.is_default == "T">
+                    <tr class="${rowclass}">
+                        <td><p>&nbsp;</p></td>
+                        <td></td><td></td><td></td><td></td>
+                        <td></td><td></td><td></td><td></td>
+                    </tr>
+                    <#else>
+                    <tr class="${rowclass}">
+                        <td class="align-left"><p></p></td>
+                        <td class="align-left"><p></p></td>
+                        <td class="align-left"><p>${objLine.account_number?html}</p></td>
+                        <td class="align-right"><p>${objLine.contract_fmt}</p></td>
+                        <td class="align-right"><p>${objLine.accu_approval_fmt}</p></td>
+                        <td class="align-right"><p>${objLine.prev_approval_fmt}</p></td>
+                        <td class="align-right"><p>${objLine.now_apprvd_fmt}</p></td>
+                        <td class="align-right"><p>${objLine.present_retention_fmt}</p></td>
+                        <td class="align-right"><p>${objLine.gst_9_fmt}</p></td>
+                    </tr>
+                </#if>
+            </#list>
+            <tr>
+                <td border-left="none" border-bottom="none"><p></p></td>
+                <td border-left="none" border-bottom="none"><p></p></td>
+                <td border-left="none" border-bottom="none"><p><b>${result.objTotal.description?html}</b></p></td>
+                <td class="align-right"><p>${result.objTotal.contract_fmt}</p></td>
+                <td class="align-right"><p>${result.objTotal.accu_approval_fmt}</p></td>
+                <td class="align-right"><p>${result.objTotal.prev_approval_fmt}</p></td>
+                <td class="align-right"><p>${result.objTotal.now_apprvd_fmt}</p></td>
+                <td class="align-right"><p>${result.objTotal.present_retention_fmt}</p></td>
+                <td class="align-right"><p>${result.objTotal.gst_9_fmt}</p></td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="tbl-signature border-table mt-4 small-size">
+        <thead>
+            <tr>
+                <td border="none" width="10.67%"></td>
+                <td border="none" width="7.82%"></td>
+                <td border="none" width="11.05%"></td>
+                <td border="none" width="11.6%"></td>
+                <td border="none" width="12%"></td>
+                <td border="none" width="13.5%"></td>
+                <td border="none" width="11.6%"></td>
+                <td border="none" width="12.38%"></td>
+                <td border="none" width="9.39%"></td>
+            </tr>
+            <tr>
+                <td colspan="2" class="align-left"><p>PAYMENT DATE:</p></td>
+                <td><p>M.D.</p></td>
+                <td><p>D.M.D</p></td>
+                <td><p>PROC DEPT</p></td>
+                <td><p>ACCT DEPT</p></td>
+                <td><p>CHECKER</p></td>
+                <td><p>PM</p></td>
+                <td><p>SITE QS</p></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="align-center"><p>CURRENT MONTH</p></td>
+                <td class="align-center"><p>NEXT MONTH</p></td>
+                <td rowspan="3"></td>
+                <td rowspan="3"></td>
+                <td rowspan="3"></td>
+                <td rowspan="3"></td>
+                <td rowspan="3"></td>
+                <td rowspan="3"></td>
+                <td rowspan="3"></td>
+            </tr>
+            <tr>
+                <td class="align-center"><p>${result.objCurMonth.start}</p></td>
+                <td class="align-center" border-right="none"><p>${result.objNextMonth.start}</p></td>
+            </tr>
+            <tr>
+                <td class="align-center"><p>${result.objCurMonth.end}</p></td>
+                <td class="align-center" border-right="none"><p>${result.objNextMonth.end}</p></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</pdf>

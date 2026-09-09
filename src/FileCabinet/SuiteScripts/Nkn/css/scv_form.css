@@ -1,0 +1,117 @@
+/**
+ * Nội dung: 
+ * Version: 1.260616.3
+ * =======================================================================================
+ *  Date                Author                  Description
+ *  17 Mar 2025         Huy Pham                Init & create file
+ */
+.scvLoader {
+    width: 100px;
+    height: 100px;
+    border: 8px solid #bdbdbd;
+    border-bottom-color: #ff3d00;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    position: fixed;
+    transform: translate(-50%, -50%);
+    animation: scvRotationLoading 1s linear infinite;
+}
+
+.scvProgessStatus {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    font-size: 12px;
+    transform: translate(-50%, -50%);
+}
+
+.scvMainLoader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.85);
+}
+
+@keyframes scvRotationLoading {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.scv-icon-style {
+    transition: color 0.3s ease;
+}
+
+.scv-icon-style:hover {
+    color: #007bff;
+}
+
+/*BEGIN: Page Sublist*/
+.scv-ns-page-select {
+    display: inline-block;
+    position: relative;
+    padding: 0 16px 0 10px;
+    border-left: 1px solid #b8b8b8;
+    font: bold 12px Arial, Helvetica, sans-serif;
+}
+
+.scv-ns-page-select select {
+    border: 0;
+    background: transparent;
+    font: inherit;
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.scv-ns-page-select::after {
+    content: "";
+    position: absolute;
+    right: 4px;
+    top: 50%;
+    margin-top: -2px;
+
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid #000;
+
+    pointer-events: none;
+}
+
+.scv-total-count {
+    font: bold 12px Arial, Helvetica, sans-serif
+}
+
+.scv-filter input {
+    height: 20px;
+    width: 180px;
+
+    border: 1px solid #7e9db9;
+    background: #fff;
+
+    padding: 0 4px;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+
+    box-sizing: border-box;
+}
+
+.scv-filter input:focus {
+    outline: none;
+    border-color: #4f81bd;
+}
+/*END: Page Sublist*/
