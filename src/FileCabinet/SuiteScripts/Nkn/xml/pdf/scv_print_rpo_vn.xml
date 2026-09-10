@@ -14,32 +14,21 @@
         }
         table.info-rows td { padding-bottom: 4px; }
 
- 
-        .main-table {
-            width: 100%;
-            border-collapse: collapse;
-            table-layout: fixed;
-        }
-
-        .main-table > tbody > tr > td {
-            border: 1px solid #000000;
-            padding: 0;
-        }
-
-        .inner-table {
-            width: 100%;
-            border-collapse: collapse;
+        .border-none,
+        .border-none td,
+        .border-none th {
             border: 0;
         }
 
-        .inner-table td {
-            border: 0;
-            padding: 4px 6px;
-        }
+         .border-none .top {
+            border-top : 1px solid #000;
+         }
+        
     </style>
 
 </head>
 <body padding="0.3in 0.3in 1in 0.3in" size="A4" header-height="0.4in" >
+    <#list results.datas as result>
     <table width="100%" >
         <tr>
             <td class="align-center">
@@ -48,7 +37,7 @@
         </tr>
         <tr>
             <td class="align-center">
-                <p>PURCHASE ORDER REQUEST</p>
+                <p> <b>PURCHASE ORDER REQUEST</b></p>
             </td>
         </tr>
         <tr>
@@ -58,23 +47,23 @@
         </tr>
     </table >
 
-    <table width="100%" class="main-table">
+    <table width="100%" class="border-table" border-top="1">
 
         <tr>
             <td width="50%">
-                <table width="100%" class="inner-table">
+               <table width="100%" class="border-none" >
                     <tr>
-                        <td width="30%">P.J Code:</td>
-                        <td width="70%">${results.headers.pjCode}</td>
+                        <td width="30%" >P.J Code:</td>
+                        <td width="70%" style=" border-right: none;">${results.headers.pjCode}</td>
                     </tr>
                 </table>
             </td>
 
             <td width="50%">
-                <table width="100%" class="inner-table">
+                 <table width="100%"  class="border-none" >
                     <tr>
                         <td width="50%">Date of Request for PO :</td>
-                        <td width="50%">${results.headers.datePO}</td>
+                        <td width="50%" style=" border-right: none;">${results.headers.datePO}</td>
                     </tr>
                 </table>
             </td>
@@ -82,19 +71,19 @@
 
         <tr>
             <td width="50%">
-                <table width="100%" class="inner-table">
+                 <table width="100%"   class="border-none" >
                     <tr>
                         <td width="30%">P.J Name:</td>
-                        <td width="70%">${results.headers.pjName}</td>
+                        <td width="70%" style=" border-right: none;">${results.headers.pjName}</td>
                     </tr>
                 </table>
             </td>
 
             <td width="50%">
-                <table width="100%" class="inner-table">
+                 <table width="100%"  class="border-none">
                     <tr>
                         <td width="50%">Date of Commencement :</td>
-                        <td width="50%">${results.headers.dateCommencement}</td>
+                        <td width="50%" style=" border-right: none;">${results.headers.dateCommencement}</td>
                     </tr>
                 </table>
             </td>
@@ -102,19 +91,19 @@
 
         <tr>
             <td width="50%">
-                <table width="100%" class="inner-table">
+                 <table width="100%"  class="border-none" >
                     <tr>
                         <td width="30%">Vendor:</td>
-                        <td width="70%">${results.headers.vendor}</td>
+                        <td width="70%" style=" border-right: none;">${result.vendor}</td>
                     </tr>
                 </table>
             </td>
 
             <td width="50%">
-                <table width="100%" class="inner-table">
+                 <table width="100%"  class="border-none" >
                     <tr>
                         <td width="50%">Date of Completion :</td>
-                        <td width="50%">${results.headers.dateCompletion}</td>
+                        <td width="50%" style=" border-right: none;">${results.headers.dateCompletion}</td>
                     </tr>
                 </table>
             </td>
@@ -122,27 +111,36 @@
 
         <tr>
             <td width="50%">
-                <table width="100%" class="inner-table">
-                    <tr>
-                        <td width="30%">Scope of Work:</td>
-                        <td width="70%">${results.headers.SCofWork}</td>
-                    </tr>
-                    <tr>
-                        <td width="30%"></td>
-                        <td width="70%">Cửa, cửa sổ nhôm kính</td>
+                <table width="100%"  class="border-none" style="vertical-align: top; " >
+                    <tr >
+                        <td width="30%" style=" padding-top: 0;">
+                            Scope of Work:
+                        </td>
+                        <td width="70%" style=" border-right: none; padding-top: 0;">
+                            ${results.headers.SCofWork}
+                        </td>
                     </tr>
                 </table>
             </td>
 
-            <td width="50%">
-                <table width="100%" class="inner-table">
+            <td width="50%" style="padding:0px;">
+                <table width="100%" class="border-none" cellpadding="0" cellspacing="0">
                     <tr>
-                        <td width="50%">Maintenance Period :</td>
-                        <td width="50%">${results.headers.mainPride}</td>
+                        <td width="50%" style="margin: 5px " >
+                            Maintenance Period :
+                        </td>
+                        <td width="50%" style="border-right:none; margin: 5px ">
+                            ${results.headers.mainPride}
+                        </td>
                     </tr>
-                    <tr>
-                        <td width="50%">Warranty :</td>
-                        <td width="50%">${results.headers.warranty}</td>
+
+                    <tr style="border-top:1px solid black;">
+                        <td width="50%" style="margin: 5px ">
+                            Warranty :
+                        </td>
+                        <td width="50%" style="border-right:none; margin: 5px  ">
+                            ${results.headers.warranty}
+                        </td>
                     </tr>
                 </table>
             </td>
@@ -150,22 +148,27 @@
 
         <tr>
             <td width="50%">
-                <table width="100%" class="inner-table">
+                 <table width="100%"  class="border-none" >
                     <tr>
-                        <td width="30%">Amount:  ${results.headers.currency}</td>
-                        <td width="70%">
-                           VND 
-                            ${results.headers.totalAmount}
+                        <td width="30%">Amount:</td>
+                        <td width="70%" style=" border-right: none;">
+                            <table width="100%"  class="border-none" >
+                                <tr>
+                                    <td width="30%">${results.headers.currencyDisplay!}</td>
+                                    <td width="70%" style=" border-right: none;"> ${result.totalThisAmountDisplay.amount}</td>
+                                </tr>
+                            </table>
+                            
                         </td>
                     </tr>
                 </table>
             </td>
 
             <td width="50%">
-                <table width="100%" class="inner-table">
+                <table width="100%"  class="border-none" >
                     <tr>
                         <td width="50%">Insurance :</td>
-                        <td width="50%">${results.headers.insurance}</td>
+                        <td width="50%" style=" border-right: none;">${results.headers.insurance}</td>
                     </tr>
                 </table>
             </td>
@@ -173,19 +176,19 @@
 
         <tr>
             <td width="50%">
-                <table width="100%" class="inner-table">
+                 <table width="100%"  class="border-none" >
                     <tr>
                         <td width="30%">Note:</td>
-                        <td width="70%" >${results.headers.note}</td>
+                        <td width="70%" style=" border-right: none;" >${results.headers.note}</td>
                     </tr>
                 </table>
             </td>
 
             <td width="50%">
-                <table width="100%" class="inner-table">
+                 <table width="100%"  class="border-none" >
                     <tr>
-                        <td width="60%">Quotation No. : ${results.headers.quoNo}</td>
-                        <td width="40%">Quotation Dates. :${results.headers.quoDate}</td>
+                        <td width="50%" style=" border-right: none;">Quotation No.  ${results.headers.quoNo}</td>
+                        <td width="50%" style=" border-right: none;">Quotation Dates. :${results.headers.quoDate}</td>
                     </tr>
                 </table>
             </td>
@@ -193,19 +196,19 @@
 
         <tr>
             <td width="50%">
-                <table width="100%" class="inner-table">
+                 <table width="100%"  class="border-none" >
                     <tr>
-                        <td width="30%">Type of Contract</td>
-                        <td width="70%">${results.headers.typeOfCt}</td>
+                        <td width="30%" style=" border-right: none;">Type of Contract: </td>
+                        <td width="70%" style=" border-right: none;" >${results.headers.typeOfCt}</td>
                     </tr>
                 </table>
             </td>
 
             <td width="50%">
-                <table width="100%" class="inner-table">
+                 <table width="100%"  class="border-none" >
                     <tr>
-                        <td width="50%">PO No :</td>
-                        <td width="50%">${results.headers.poNo}</td>
+                        <td width="50%" style=" border-right: none;">PO No :</td>
+                        <td width="50%" style=" border-right: none;" >${results.headers.poNo}</td>
                     </tr>
                 </table>
             </td>
@@ -213,7 +216,7 @@
 
     </table>
 
-    <table width="100%">
+    <table width="100%" class="mt-5">
         <tr>
             <td colspan="70">
                 Payment term: ${results.headers.paymentTerm}
@@ -229,7 +232,12 @@
                 - 30% in advance (Exclude VAT) after get bank guarantee
             </td>
             <td colspan="5" align="center">
-                <input type="checkbox" name="subcon_quotation" value="${results.headers.subCon}"/>
+                <input type="checkbox"
+                    readonly="true"
+                    name="subcon_quotation"
+                    value="${results.headers.subCon}"
+                    <#if results.headers.subCon == "true">checked="true"</#if>
+                />
             </td>
             <td colspan="25">
                 Sub-con Quotation
@@ -241,7 +249,12 @@
                 - 30% after all materials come to site
             </td>
             <td colspan="5" align="center">
-                <input type="checkbox" name="drawing" value="${results.headers.drawings}"/>
+                <input type="checkbox"
+                    readonly="true"
+                    name="drawing"
+                    value="${results.headers.drawings}"
+                    <#if results.headers.drawings == "true">checked="true"</#if>
+                />
             </td>
             <td colspan="25">
                 Drawing (if any)
@@ -253,7 +266,12 @@
                 - 40% after completion &amp; handover
             </td>
             <td colspan="5" align="center">
-                <input type="checkbox" name="schedule" value="${results.headers.schedule}"/>
+                <input type="checkbox"
+                    readonly="true"
+                    name="schedule"
+                    value="${results.headers.schedule}"
+                    <#if results.headers.schedule == "true">checked="true"</#if>
+                />
             </td>
             <td colspan="25">
                 Schedule (if any)
@@ -263,7 +281,12 @@
         <tr>
             <td colspan="70"></td>
             <td colspan="5" align="center">
-                <input type="checkbox" name="others" value="${results.headers.other}"/>
+                <input type="checkbox"
+                    readonly="true"
+                    name="others"
+                    value="${results.headers.other}"
+                    <#if results.headers.other == "true">checked="true"</#if>
+                />
             </td>
             <td colspan="25">
                 Others...
@@ -273,7 +296,12 @@
         <tr>
             <td colspan="70"></td>
             <td colspan="5" align="center">
-                <input type="checkbox" name="spec" value="${results.headers.specification}"/>
+                <input type="checkbox"
+                    readonly="true"
+                    name="spec"
+                    value="${results.headers.specification}"
+                    <#if results.headers.specification == "true">checked="true"</#if>
+                />
             </td>
             <td colspan="25">
                 Spec
@@ -281,14 +309,14 @@
         </tr>
     </table>
 
-    <table> 
+    <table >
         <tr>
-            <td colspan="10">Retention</td>
-            <td colspan="10">Bank Guarantee</td>
+            <td colspan="15"> (${results.headers.retention}) Retention</td>
+            <td colspan="85">(${results.headers.bankGuarantee}%) Bank Guarantee</td>
         </tr>
     </table>
 
-    <table width="100%" class="border-table"   >
+    <table width="100%" class="border-table">
         <thead>
             <tr height="45px">
                 <th colspan="10" align="center">W/B No.</th>
@@ -299,44 +327,101 @@
                 <th colspan="10" align="center">Remarks</th>
             </tr>
         </thead>
+
         <tbody>
-            <tr>
-                <td colspan="10" align="center">19-100</td>
-                <td colspan="20">VND <span style="float:right;">4,696,696,314</span></td>
-                <td colspan="20">VND <span style="float:right;">2,621,000,000</span></td>
-                <td colspan="20">VND <span style="float:right;">3,330,000,000</span></td>
-                <td colspan="20">VND <span style="float:right;">1,366,696,314</span></td>
-                <td colspan="10"></td>
-            </tr>
-            <tr>
-                <td colspan="10" align="center">24-100</td>
-                <td colspan="20">VND <span style="float:right;">613,219,943</span></td>
-                <td colspan="20">VND <span style="float:right;">50,000,000</span></td>
-                <td colspan="20">VND <span style="float:right;">471,887,000</span></td>
-                <td colspan="20">VND <span style="float:right;">141,332,943</span></td>
-                <td colspan="10"></td>
-            </tr>
-            <#list 1..9 as i>
+            <#list result.lines as line>
                 <tr height="27px">
-                    <td colspan="10"></td>
-                    <td colspan="20"></td>
-                    <td colspan="20"></td>
-                    <td colspan="20"></td>
-                    <td colspan="20"></td>
-                    <td colspan="10"></td>
+                    <td colspan="10" align="center">
+                        ${line.wbNo}
+                    </td>
+
+                    <td colspan="20">
+                        <table width="100%" class="border-none">
+                            <tr>
+                                <td width="30%" align="left">${line.workingBudget.currency}</td>
+                                <td width="70%" align="right" style=" border-right: none;">${line.workingBudget.amount}</td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td colspan="20">
+                        <table width="100%" class="border-none">
+                            <tr>
+                                <td width="30%" align="left">${line.thisAmount.currency}</td>
+                                <td width="70%" align="right" style=" border-right: none;">${line.thisAmount.amount}</td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td colspan="20">
+                        <table width="100%" class="border-none">
+                            <tr>
+                                <td width="30%" align="left">${line.accumulateAmount.currency}</td>
+                                <td width="70%" align="right" style=" border-right: none;">${line.accumulateAmount.amount}</td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td colspan="20">
+                        <table width="100%" class="border-none">
+                            <tr>
+                                <td width="30%" align="left">${line.balance.currency}</td>
+                                <td width="70%" align="right" style=" border-right: none;">${line.balance.amount}</td>
+                            </tr>
+                        </table>
+                    </td>
+
+                    <td colspan="10">
+                        ${line.remarks}
+                    </td>
                 </tr>
             </#list>
+
             <tr>
-                <td colspan="10" align="center">Total</td>
-                <td colspan="20">VND <span style="float:right;">5,309,916,257</span></td>
-                <td colspan="20">VND <span style="float:right;">2,671,000,000</span></td>
-                <td colspan="20">VND <span style="float:right;">3,801,887,000</span></td>
-                <td colspan="20">VND <span style="float:right;">1,508,029,257</span></td>
+                <td colspan="10" align="center">
+                    Total
+                </td>
+
+                <td colspan="20">
+                    <table width="100%" class="border-none">
+                        <tr>
+                            <td width="30%" align="left">${result.totalWorkingBudgetDisplay.currency}</td>
+                            <td width="70%" align="right" style=" border-right: none;">${result.totalWorkingBudgetDisplay.amount}</td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td colspan="20">
+                    <table width="100%" class="border-none">
+                        <tr>
+                            <td width="30%" align="left">${result.totalThisAmountDisplay.currency}</td>
+                            <td width="70%" align="right" style=" border-right: none;">${result.totalThisAmountDisplay.amount}</td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td colspan="20">
+                    <table width="100%" class="border-none">
+                        <tr>
+                            <td width="30%" align="left">${result.totalAccumulateAmountDisplay.currency}</td>
+                            <td width="70%" align="right" style=" border-right: none;">${result.totalAccumulateAmountDisplay.amount}</td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td colspan="20">
+                    <table width="100%" class="border-none">
+                        <tr>
+                            <td width="30%" align="left">${result.totalBalanceDisplay.currency}</td>
+                            <td width="70%" align="right" style=" border-right: none;">${result.totalBalanceDisplay.amount}</td>
+                        </tr>
+                    </table>
+                </td>
+
                 <td colspan="10"></td>
             </tr>
         </tbody>
     </table>
-
     <table width="100%" class="border-table mt-5" border-top="1">
         <tr height="50px">
             <td  class="valign-top align-left pl-5" >Remark : ${results.headers.remark}</td>
@@ -376,12 +461,14 @@
         </tr>
     </table>
 
-    <table width="100%" class="border-none  mt-3">
+    <table width="100%" class="border-none  ">
         <tr >
             <td colspan="100" align="center">
                 <b><u>NAKANO VIETNAM CO., LTD.</u></b>
             </td>
         </tr>
     </table>
+    <#if result_has_next><pbr/></#if>
+    </#list>
 </body>
 </pdf>
