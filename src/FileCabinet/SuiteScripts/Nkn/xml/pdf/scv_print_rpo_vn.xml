@@ -1,0 +1,387 @@
+<?xml version = "1.0"?><!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
+<pdf>
+<head>
+    <meta name="title" value="Print RPO (VN)"/>
+    <link name="ScvFont" type="font" subtype="opentype" src="${libPdf.font.arial?html}" src-bold="${libPdf.font.arial_bold?html}" src-italic="${libPdf.font.arial_italic?html}" src-bolditalic="${libPdf.font.arial_bolditalic?html}" bytes="2" />
+    <style type="text/css">
+        ${libPdf.css}
+
+        body {
+            font-size: 10pt;
+        }
+        table { 
+            font-size: 10pt;
+        }
+        table.info-rows td { padding-bottom: 4px; }
+
+ 
+        .main-table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+
+        .main-table > tbody > tr > td {
+            border: 1px solid #000000;
+            padding: 0;
+        }
+
+        .inner-table {
+            width: 100%;
+            border-collapse: collapse;
+            border: 0;
+        }
+
+        .inner-table td {
+            border: 0;
+            padding: 4px 6px;
+        }
+    </style>
+
+</head>
+<body padding="0.3in 0.3in 1in 0.3in" size="A4" header-height="0.4in" >
+    <table width="100%" >
+        <tr>
+            <td class="align-center">
+                 ${results.headers.tagImgLogo}
+            </td>
+        </tr>
+        <tr>
+            <td class="align-center">
+                <p>PURCHASE ORDER REQUEST</p>
+            </td>
+        </tr>
+        <tr>
+            <td class="align-right">
+                <p>  ${results.headers.docNum}</p>
+            </td>
+        </tr>
+    </table >
+
+    <table width="100%" class="main-table">
+
+        <tr>
+            <td width="50%">
+                <table width="100%" class="inner-table">
+                    <tr>
+                        <td width="30%">P.J Code:</td>
+                        <td width="70%">${results.headers.pjCode}</td>
+                    </tr>
+                </table>
+            </td>
+
+            <td width="50%">
+                <table width="100%" class="inner-table">
+                    <tr>
+                        <td width="50%">Date of Request for PO :</td>
+                        <td width="50%">${results.headers.datePO}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td width="50%">
+                <table width="100%" class="inner-table">
+                    <tr>
+                        <td width="30%">P.J Name:</td>
+                        <td width="70%">${results.headers.pjName}</td>
+                    </tr>
+                </table>
+            </td>
+
+            <td width="50%">
+                <table width="100%" class="inner-table">
+                    <tr>
+                        <td width="50%">Date of Commencement :</td>
+                        <td width="50%">${results.headers.dateCommencement}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td width="50%">
+                <table width="100%" class="inner-table">
+                    <tr>
+                        <td width="30%">Vendor:</td>
+                        <td width="70%">${results.headers.vendor}</td>
+                    </tr>
+                </table>
+            </td>
+
+            <td width="50%">
+                <table width="100%" class="inner-table">
+                    <tr>
+                        <td width="50%">Date of Completion :</td>
+                        <td width="50%">${results.headers.dateCompletion}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td width="50%">
+                <table width="100%" class="inner-table">
+                    <tr>
+                        <td width="30%">Scope of Work:</td>
+                        <td width="70%">${results.headers.SCofWork}</td>
+                    </tr>
+                    <tr>
+                        <td width="30%"></td>
+                        <td width="70%">Cửa, cửa sổ nhôm kính</td>
+                    </tr>
+                </table>
+            </td>
+
+            <td width="50%">
+                <table width="100%" class="inner-table">
+                    <tr>
+                        <td width="50%">Maintenance Period :</td>
+                        <td width="50%">${results.headers.mainPride}</td>
+                    </tr>
+                    <tr>
+                        <td width="50%">Warranty :</td>
+                        <td width="50%">${results.headers.warranty}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td width="50%">
+                <table width="100%" class="inner-table">
+                    <tr>
+                        <td width="30%">Amount:  ${results.headers.currency}</td>
+                        <td width="70%">
+                           VND 
+                            ${results.headers.totalAmount}
+                        </td>
+                    </tr>
+                </table>
+            </td>
+
+            <td width="50%">
+                <table width="100%" class="inner-table">
+                    <tr>
+                        <td width="50%">Insurance :</td>
+                        <td width="50%">${results.headers.insurance}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td width="50%">
+                <table width="100%" class="inner-table">
+                    <tr>
+                        <td width="30%">Note:</td>
+                        <td width="70%" >${results.headers.note}</td>
+                    </tr>
+                </table>
+            </td>
+
+            <td width="50%">
+                <table width="100%" class="inner-table">
+                    <tr>
+                        <td width="60%">Quotation No. : ${results.headers.quoNo}</td>
+                        <td width="40%">Quotation Dates. :${results.headers.quoDate}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td width="50%">
+                <table width="100%" class="inner-table">
+                    <tr>
+                        <td width="30%">Type of Contract</td>
+                        <td width="70%">${results.headers.typeOfCt}</td>
+                    </tr>
+                </table>
+            </td>
+
+            <td width="50%">
+                <table width="100%" class="inner-table">
+                    <tr>
+                        <td width="50%">PO No :</td>
+                        <td width="50%">${results.headers.poNo}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+    </table>
+
+    <table width="100%">
+        <tr>
+            <td colspan="70">
+                Payment term: ${results.headers.paymentTerm}
+            </td>
+            <td colspan="5"></td>
+            <td colspan="25">
+                <span style="text-decoration:underline">Attach with:</span>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="70">
+                - 30% in advance (Exclude VAT) after get bank guarantee
+            </td>
+            <td colspan="5" align="center">
+                <input type="checkbox" name="subcon_quotation" value="${results.headers.subCon}"/>
+            </td>
+            <td colspan="25">
+                Sub-con Quotation
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="70">
+                - 30% after all materials come to site
+            </td>
+            <td colspan="5" align="center">
+                <input type="checkbox" name="drawing" value="${results.headers.drawings}"/>
+            </td>
+            <td colspan="25">
+                Drawing (if any)
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="70">
+                - 40% after completion &amp; handover
+            </td>
+            <td colspan="5" align="center">
+                <input type="checkbox" name="schedule" value="${results.headers.schedule}"/>
+            </td>
+            <td colspan="25">
+                Schedule (if any)
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="70"></td>
+            <td colspan="5" align="center">
+                <input type="checkbox" name="others" value="${results.headers.other}"/>
+            </td>
+            <td colspan="25">
+                Others...
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="70"></td>
+            <td colspan="5" align="center">
+                <input type="checkbox" name="spec" value="${results.headers.specification}"/>
+            </td>
+            <td colspan="25">
+                Spec
+            </td>
+        </tr>
+    </table>
+
+    <table> 
+        <tr>
+            <td colspan="10">Retention</td>
+            <td colspan="10">Bank Guarantee</td>
+        </tr>
+    </table>
+
+    <table width="100%" class="border-table"   >
+        <thead>
+            <tr height="45px">
+                <th colspan="10" align="center">W/B No.</th>
+                <th colspan="20" align="center">Working Budget</th>
+                <th colspan="20" align="center">This Amount</th>
+                <th colspan="20" align="center">Accumulate<br/>Amount</th>
+                <th colspan="20" align="center">Balance</th>
+                <th colspan="10" align="center">Remarks</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td colspan="10" align="center">19-100</td>
+                <td colspan="20">VND <span style="float:right;">4,696,696,314</span></td>
+                <td colspan="20">VND <span style="float:right;">2,621,000,000</span></td>
+                <td colspan="20">VND <span style="float:right;">3,330,000,000</span></td>
+                <td colspan="20">VND <span style="float:right;">1,366,696,314</span></td>
+                <td colspan="10"></td>
+            </tr>
+            <tr>
+                <td colspan="10" align="center">24-100</td>
+                <td colspan="20">VND <span style="float:right;">613,219,943</span></td>
+                <td colspan="20">VND <span style="float:right;">50,000,000</span></td>
+                <td colspan="20">VND <span style="float:right;">471,887,000</span></td>
+                <td colspan="20">VND <span style="float:right;">141,332,943</span></td>
+                <td colspan="10"></td>
+            </tr>
+            <#list 1..9 as i>
+                <tr height="27px">
+                    <td colspan="10"></td>
+                    <td colspan="20"></td>
+                    <td colspan="20"></td>
+                    <td colspan="20"></td>
+                    <td colspan="20"></td>
+                    <td colspan="10"></td>
+                </tr>
+            </#list>
+            <tr>
+                <td colspan="10" align="center">Total</td>
+                <td colspan="20">VND <span style="float:right;">5,309,916,257</span></td>
+                <td colspan="20">VND <span style="float:right;">2,671,000,000</span></td>
+                <td colspan="20">VND <span style="float:right;">3,801,887,000</span></td>
+                <td colspan="20">VND <span style="float:right;">1,508,029,257</span></td>
+                <td colspan="10"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table width="100%" class="border-table mt-5" border-top="1">
+        <tr height="50px">
+            <td  class="valign-top align-left pl-5" >Remark : ${results.headers.remark}</td>
+        </tr>
+        <tr height="50px">
+            <td class="valign-top align-left pl-5" >Reason of Excess from W/B : ${results.headers.reasonOfExcessFromWB}</td>
+        </tr>
+        <tr height="50px">
+            <td  class="valign-top align-left pl-5">Compensation Proposal :  ${results.headers.compensationProposal}</td>
+        </tr>
+    </table>
+
+    <table width="100%" class="border-table  mt-5" border-top="1">
+        <tr >
+            <td colspan="17" align="center"><b>GD</b></td>
+            <td colspan="17" align="center"><b>CMS</b></td>
+            <td colspan="17" align="center"><b>QS Manager</b></td>
+            <td colspan="17" align="center"><b>Admin Manager</b></td>
+            <td colspan="17" align="center"><b>Con. Pur. Manager</b></td>
+            <td colspan="15" align="center"><b>PM</b></td>
+        </tr>
+        <tr height="60px">
+            <td colspan="17"></td>
+            <td colspan="17"></td>
+            <td colspan="17"></td>
+            <td colspan="17"></td>
+            <td colspan="17"></td>
+            <td colspan="15"></td>
+        </tr>
+        <tr height="25px">
+            <td colspan="17">Date:</td>
+            <td colspan="17">Date:</td>
+            <td colspan="17">Date:</td>
+            <td colspan="17">Date:</td>
+            <td colspan="17">Date:</td>
+            <td colspan="15">Date:</td>
+        </tr>
+    </table>
+
+    <table width="100%" class="border-none  mt-3">
+        <tr >
+            <td colspan="100" align="center">
+                <b><u>NAKANO VIETNAM CO., LTD.</u></b>
+            </td>
+        </tr>
+    </table>
+</body>
+</pdf>
