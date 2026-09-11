@@ -104,8 +104,9 @@ define([
             });
             
             let objLineFirst = arrLine01[0] ?? {};
-            log.error("Hoan",arrLine01)
-
+            // log.error("Hoan",arrLine01)
+            // arrLine01[0]._24_working_budget = null;
+            // arrLine01[0]._26_accumulate_amount = "0";
             let projectId = curRec.getValue('cseg_scv_sg_proj');
             let objLookup = search.lookupFields({
                 type: 'customrecord_cseg_scv_sg_proj',
@@ -176,10 +177,10 @@ define([
 
                 let objResult = {
                     vendor: vendorName,
-                    totalWorkingBudget: 0,
-                    totalThisAmount: 0,
-                    totalAccumulateAmount: 0,
-                    totalBalance: 0,
+                    totalWorkingBudget: null,
+                    totalThisAmount: null,
+                    totalAccumulateAmount: null,
+                    totalBalance: null,
                     lines: []
                 };
 
@@ -187,15 +188,33 @@ define([
                     let objLine01 = arrLine01_detail[i];
                     let currency = objLine01._2_currency_display || '';
 
-                    let workingBudgetVal  = Number(objLine01._24_working_budget)  || 0;
-                    let thisAmountVal     = Number(objLine01._25_this_amount)     || 0;
-                    let accumulateAmtVal  = Number(objLine01._26_accumulate_amount) || 0;
-                    let balanceVal        = Number(objLine01._27_balance)          || 0;
+                    let workingBudgetVal = null;
+                    if (objLine01._24_working_budget) {
+                        workingBudgetVal = Number(objLine01._24_working_budget);
+                    }
 
-                    objResult.totalWorkingBudget    += workingBudgetVal;
-                    objResult.totalThisAmount       += thisAmountVal;
+                    let thisAmountVal = null;
+                    if (objLine01._25_this_amount) {
+                        thisAmountVal = Number(objLine01._25_this_amount);
+                    }
+
+                    let accumulateAmtVal = null;
+                    if (objLine01._26_accumulate_amount) {
+                        accumulateAmtVal = Number(objLine01._26_accumulate_amount);
+                    }
+
+                    let balanceVal = null;
+                    if (objLine01._27_balance) {
+                        balanceVal = Number(objLine01._27_balance);
+                    }
+
+                    objResult.totalWorkingBudget += workingBudgetVal;
+
+                    objResult.totalThisAmount += thisAmountVal;
+
                     objResult.totalAccumulateAmount += accumulateAmtVal;
-                    objResult.totalBalance          += balanceVal;
+
+                    objResult.totalBalance += balanceVal;
 
                     let objResDetail = {
                         wbNo:             objLine01._23_w_b_no,
@@ -212,10 +231,45 @@ define([
 
                 // Totals row — use currency from first line (all lines share same currency)
                 let totalCurrency = (arrLine01_detail[0] || {})._2_currency_display || '';
-                objResult.totalWorkingBudgetDisplay    = buildCurrencyAmount(totalCurrency, objResult.totalWorkingBudget);
-                objResult.totalThisAmountDisplay       = buildCurrencyAmount(totalCurrency, objResult.totalThisAmount);
-                objResult.totalAccumulateAmountDisplay = buildCurrencyAmount(totalCurrency, objResult.totalAccumulateAmount);
-                objResult.totalBalanceDisplay          = buildCurrencyAmount(totalCurrency, objResult.totalBalance);
+                objResult.totalWorkingBudgetDisplay =
+                    objResult.totalWorkingBudget === 0 &&
+                    arrLine01_detail.every(e =>
+                        e._24_working_budget === "" ||
+                        e._24_working_budget === null ||
+                        e._24_working_budget === undefined
+                    )
+                        ? { currency: '', amount: '' }
+                        : buildCurrencyAmount(totalCurrency, objResult.totalWorkingBudget);
+
+                objResult.totalThisAmountDisplay =
+                    objResult.totalThisAmount === 0 &&
+                    arrLine01_detail.every(e =>
+                        e._25_this_amount === "" ||
+                        e._25_this_amount === null ||
+                        e._25_this_amount === undefined
+                    )
+                        ? { currency: '', amount: '' }
+                        : buildCurrencyAmount(totalCurrency, objResult.totalThisAmount);
+
+                objResult.totalAccumulateAmountDisplay =
+                    objResult.totalAccumulateAmount === 0 &&
+                    arrLine01_detail.every(e =>
+                        e._26_accumulate_amount === "" ||
+                        e._26_accumulate_amount === null ||
+                        e._26_accumulate_amount === undefined
+                    )
+                        ? { currency: '', amount: '' }
+                        : buildCurrencyAmount(totalCurrency, objResult.totalAccumulateAmount);
+
+                objResult.totalBalanceDisplay =
+                    objResult.totalBalance === 0 &&
+                    arrLine01_detail.every(e =>
+                        e._27_balance === "" ||
+                        e._27_balance === null ||
+                        e._27_balance === undefined
+                    )
+                        ? { currency: '', amount: '' }
+                        : buildCurrencyAmount(totalCurrency, objResult.totalBalance);
 
                 arrResDatas.push(objResult);
             }
@@ -233,13 +287,23 @@ define([
         }
 
         const buildCurrencyAmount = (currency, amount) => {
-            if (!amount && amount !== 0) return { currency: '', amount: '' };
+            if (!amount && amount !== 0) {
+                return { currency: '', amount: '' };
+            }
+
             let formatted = constFormat.formatNumber(amount, 0, {
                 groupSeparator: ',',
                 decimalSeparator: '.',
             });
-            if (!formatted || formatted === '0') return { currency: '', amount: '' };
-            return { currency: currency || '', amount: formatted };
+
+            if (!formatted) {
+                return { currency: '', amount: '' };
+            }
+
+            return {
+                currency: currency || '',
+                amount: formatted
+            };
         }
 
         const formatDateOrdinal = (date) => {

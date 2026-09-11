@@ -83,28 +83,30 @@
                         <td colspan="35">
                             <b>Date</b>
                         </td>
-                        <td colspan="70">
+                        <td colspan="65">
                                <p> ${result.date}</p>
                         </td>
                     </tr>
 
                     <tr>
                         <td colspan="35">
-                            <b>Date</b>
+                            <b>P.O. NO.</b>
                         </td>
-                        <td colspan="70">
+                        <td colspan="65">
                            <p> ${result.poNumber}</p>
                         </td>
                     </tr>
 
                     <tr>
                         <td colspan="35">
-                            <b>Date</b>
+                            <b>YOUR REF.</b>
                         </td>
-                        <td colspan="70">
+                        <td colspan="65">
                            <p> ${result.yourRef}</p>
                         </td>
                     </tr>
+
+                    ${libPdf.rowcol100}
                 </table>
             </td>
         </tr>
