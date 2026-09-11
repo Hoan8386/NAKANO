@@ -5,6 +5,7 @@
  *  19 Aug 2026         Huy Pham                Init, create file
  *  03 Sep 2026         Phu Pham                Add button ROP (SG) trên màn hình Bill from mr. Quân (https://app.clickup.com/t/3773072/86d3w9cnt)
  *  09 Sep 2026         Thanh Hoan              Add button RPO (VN) trên màn hình Requisition  from mr. Quân (https://app.clickup.com/t/3773072/86d3w9a1h)
+ *  10 Sep 2026         Thanh Hoan              Add button PO (VN) trên màn hình Purchase Order  from mr. Quân (https://app.clickup.com/t/3773072/86d3w9emj)
  */
 /**
  * @NApiVersion 2.1
@@ -42,6 +43,7 @@ define([
         switch (newRec.type) {
             case 'purchaseorder':
                 addBtnPrint(scriptContext, 'scv_print_po_sg');
+                addBtnPrint(scriptContext, 'scv_print_po_vn');
                 break;
             case 'purchaserequisition':
                 addBtnPrint(scriptContext, 'scv_print_rpo_sg');

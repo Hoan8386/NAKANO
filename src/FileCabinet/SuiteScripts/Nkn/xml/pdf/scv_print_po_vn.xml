@@ -1,0 +1,316 @@
+<?xml version = "1.0"?><!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
+<pdf>
+<head>
+    <meta name="title" value="Print PO (VN)"/>
+    <link name="ScvFont" type="font" subtype="opentype" src="${libPdf.font.arial?html}" src-bold="${libPdf.font.arial_bold?html}" src-italic="${libPdf.font.arial_italic?html}" src-bolditalic="${libPdf.font.arial_bolditalic?html}" bytes="2" />
+    <style type="text/css">
+        ${libPdf.css}
+
+        body {
+            font-size: 10pt;
+        }
+        table {
+            font-size: 10pt;
+        }
+        .border-none,
+        .border-none td,
+        .border-none th {
+            border: none;
+           
+        }
+    </style>
+
+</head>
+<body padding="0.3in 0.5in 0.5in 0.5in" size="A4" >
+   <table border-bottom="1">
+        <tr>
+            <td colspan="20">${result.tagImgLogo} </td>
+            <td colspan="35">
+                <p style="margin:3px 0"  class="fs-12"> <b>${subsidiary.legalname} </b></p>
+                <p style="margin:3px 0" >${subsidiary.mainaddress_text}</p>
+                 <table class="border-none  " style="padding:0px; margin:0px">
+                    <tr>
+                        <td style="padding:0px; margin:0px"> 
+                            <p> Tel: ${subsidiary.custrecord_scv_sub_tel_phone} </p> 
+                        </td>
+                        <td style=" border-right: none; padding:0px; margin:0px">
+                            <p> Fax: ${subsidiary.fax}</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td colspan="40" class="align-center" style="margin:3px 0">
+                <b class="fs-16 " >PURCHASE ORDER</b>
+            </td>
+        </tr>
+   </table>
+
+   <p class="fs-12"><b>PROJECT: ${result.project}</b></p>
+
+   <table>
+        <tr>
+            <td colspan="60">
+                <table class="border-table"  border-top="1">
+                    <tr>
+                        <td><b>SUB-CONTRACTOR'S NAME &amp; ADDRESS</b></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p> ${result.subCon}</p>
+                            <p> ${result.subConAddress}</p>
+                            <table class="border-none">
+                                <tr>
+                                    <td> 
+                                        <p> TEL:  ${result.subConPhone}</p> 
+                                    </td>
+                                    <td style=" border-right: none;">
+                                        <p> FAX:  ${result.subConFax}</p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><b>ATTENTION:</b> <span>  ${result.attention} </span> </td>
+                    </tr>
+                </table>
+            </td>
+
+             <td colspan="35">
+                <table class="border-table "  width="100%"  border-top="1"> 
+                    <tr>
+                        <td colspan="35">
+                            <b>Date</b>
+                        </td>
+                        <td colspan="70">
+                               <p> ${result.date}</p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="35">
+                            <b>Date</b>
+                        </td>
+                        <td colspan="70">
+                           <p> ${result.poNumber}</p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="35">
+                            <b>Date</b>
+                        </td>
+                        <td colspan="70">
+                           <p> ${result.yourRef}</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+   </table>
+
+   <p> The provision and conditions attached are part of this order which is placed and accepted upon such provisions and conditions.
+    It is also condition of this order that sub-contractor shall follow strictly all attached instructions and specification. </p>
+
+    <table class="border-table"  border-top="1" width="100%">
+        <tr>
+            <td colspan="100" class="align-center"> 
+                <p><b>DESCRIPTION</b></p>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="100">
+                <table class="border-none" >
+                    <tr style="margin-bottom:20px">
+                        <td colspan="100" style=" border-right: none;"> 
+                            <p class="align-center"> ${result.workItemCode} </p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="35">
+                            <p class="align-right"><b>SCOPE OF WORK: </b></p>
+                        </td>
+                        <td colspan="1"></td>
+                        <td colspan="64" style="border-right: none;">
+                             <p> <b> ${result.scopeOfWork}</b></p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="35">
+                            <p class="align-right"><b>CONTRACT PRICE: </b></p>
+                        </td>
+                        <td colspan="1"></td>
+                        <td colspan="64" style="border-right: none;">
+                            <p>${result.contractPrice}</p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="35">
+                            <p class="align-right"><b>VAT: </b></p>
+                        </td>
+                        <td colspan="1"></td>
+                        <td colspan="64" style="border-right: none;">
+                            <p>${result.vat}</p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="35">
+                            <p class="align-right"><b>GRAND TOTAL PRICE: </b></p>
+                        </td>
+                        <td colspan="1"></td>
+                        <td colspan="64" style="border-right: none;">
+                            <p>${result.grandTotalPrice}</p>
+                        </td>
+                    </tr>
+
+
+                    <tr style="height:40px">
+                        <td colspan="35">
+                        </td>
+                        <td colspan="1"></td>
+                        <td colspan="64" style="border-right: none;">
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="35">
+                            <p class="align-right"><b>TYPE OF CONTRACT: </b></p>
+                        </td>
+                        <td colspan="1"></td>
+                        <td colspan="64" style="border-right: none;">
+                            <p>${result.typeOfContract}</p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="35">
+                            <p class="align-right"><b>DATE OF COMMENCEMENT: </b></p>
+                        </td>
+                        <td colspan="1"></td>
+                        <td colspan="64" style="border-right: none;">
+                            <p>${result.commencementDate}</p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="35">
+                            <p class="align-right"><b>DATE OF COMPLETION: </b></p>
+                        </td>
+                        <td colspan="1"></td>
+                        <td colspan="64" style="border-right: none;">
+                            <p>${result.workItemCode}</p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="35">
+                            <p class="align-right"><b>RETENTION: </b></p>
+                        </td>
+                        <td colspan="1"></td>
+                        <td colspan="64" style="border-right: none;">
+                            <p>${result.retention}</p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="35">
+                            <p class="align-right"><b>INSURANCE: </b></p>
+                        </td>
+                        <td colspan="1"></td>
+                        <td colspan="64" style="border-right: none;">
+                            <p>${result.insurance}</p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="35">
+                            <p class="align-right"><b>WARRANTY: </b></p>
+                        </td>
+                        <td colspan="1"></td>
+                        <td colspan="64" style="border-right: none;">
+                            <p>${result.warranty}</p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="35">
+                            <p class="align-right"><b>MAINTENANCE: </b></p>
+                        </td>
+                        <td colspan="1"></td>
+                        <td colspan="64" style="border-right: none;">
+                            <p>${result.maintenance}</p>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="35" class="valign-top">
+                            <p class="align-right"><b>ATTACHMENTS: </b></p>
+                        </td>
+                        <td colspan="1"></td>
+                        <td colspan="64" style="border-right: none;">
+                            <p>${result.attachments}</p>
+                        </td>
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    <table width="100%" class="border-table mt-5"  border-top="1">
+        <tr>
+            <td colspan="100" class="align-center">
+                <p> <b>TERMS OF PAYMENT</b> </p>
+            </td>
+        </tr>
+
+         <tr>
+             <td colspan="100">
+                <table width="100%" class="border-none">
+                    
+                    <tr>
+                        <td style=" border-right: none;">
+                            <p style=" margin-left: 30px;">${result.termsOfPayment}</p>
+                            <br/>
+                            <p>Please indicate our P.O. number on every of your invoices.</p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    <table width="100%" class="mt-5" border-bottom="1" >
+        <tr>
+            <td colspan="50" class="align-center">
+                <p><b>${(subsidiary.legalname!"")?upper_case}</b></p>
+                <table width="80%" border-bottom="1" height="50px">
+                    <tr>
+                        <td ></td>
+                    </tr>
+                </table>
+                <p class="p-5"><b></b></p>
+            </td>
+
+            <td colspan="50" class="align-center">
+                <p><b>${result.subCon}</b></p>
+                <table width="80%" border-bottom="1"  height="50px">
+                    <tr>
+                        <td ></td>
+                    </tr>
+                </table>
+                <p class="p-5"><b></b></p>
+            </td>
+        </tr>
+    </table>
+    <p  class="align-right"> Note: Please endorse, sign and return us one copy. </p>
+
+</body>
+</pdf>
