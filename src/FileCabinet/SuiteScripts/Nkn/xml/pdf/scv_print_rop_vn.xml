@@ -1,0 +1,468 @@
+<?xml version="1.0"?>
+<!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
+<pdf>
+<head>
+    <meta name="title" value="Print ROP (VN)"/>
+    <link name="ScvFont" type="font" subtype="opentype" src="${libPdf.font.arial?html}" src-bold="${libPdf.font.arial_bold?html}" src-italic="${libPdf.font.arial_italic?html}" src-bolditalic="${libPdf.font.arial_bolditalic?html}" bytes="2" />
+    <style type="text/css">
+        ${libPdf.css}
+        body {
+            font-size: 10pt;
+        }
+        table {
+            font-size: 10pt;
+        }
+        .under-line {
+            border-bottom: 1px solid #000000;
+        }
+        input {
+            display: inline;
+        }
+
+        .dotted-border {
+            border-top: 1px dotted #000000;
+        }
+    </style>
+</head>
+    <body padding="0.3in 0.3in 1in 0.3in" size="A4">
+    <table width="100%">
+        <tr>
+            <td colspan="100" class="align-center">
+                 ${results.tagImgLogo}
+            </td>
+        </tr>
+        
+        <tr>
+            <td colspan="100" class="align-center">
+                <b><u> RECOMMENDATION OF PAYMENT </u> </b> 
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="100" class="align-right">
+                ${results.docNumber}
+            </td>
+        </tr>
+
+        <tr>
+            <td class="under-line" colspan="35">
+                <table width="100%">
+                    <tr>
+                        <td colspan="30">
+                            <b>P.J Name: </b>
+                        </td>
+                        <td colspan="70"> <b> ${results.pjName}</b></td>
+                    </tr>
+                </table>
+            </td>
+
+            <td colspan="10"></td>
+
+            <td class="under-line" colspan="55">
+                <table width="100%">
+                    <tr>
+                        <td colspan="45">
+                            <b>Vendor: </b>
+                        </td>
+                        <td colspan="55">${results.vendor}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="under-line" colspan="35">
+                <table width="100%">
+                    <tr>
+                        <td colspan="30">
+                            <b>P.J Code: </b>
+                        </td>
+                        <td colspan="70">${results.pjCode}</td>
+                    </tr>
+                </table>
+            </td>
+
+            <td colspan="10"></td>
+
+            <td class="under-line" colspan="55">
+                <table width="100%">
+                    <tr>
+                        <td colspan="45">
+                            <b>Date of Invoice Received: </b>
+                        </td>
+                        <td colspan="55">${results.dateInvoiceReceived}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td class="under-line" colspan="35">
+                <table width="100%">
+                    <tr>
+                        <td colspan="30">
+                            <b>P/O No.</b>
+                        </td>
+                        <td colspan="70">${results.poNo}</td>
+                    </tr>
+                </table>
+            </td>
+
+            <td colspan="10"></td>
+
+            <td class="under-line" colspan="55">
+                <table width="100%">
+                    <tr>
+                        <td colspan="45">
+                            <b>Due Date of Payment:</b>
+                        </td>
+                        <td colspan="55">${results.dueDate}</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        
+
+        {libPdf.rowcol100}
+    </table>
+
+    <table width="100%" class="border-table mt-5">
+        <thead>
+            <tr>
+                <th colspan="11" class="align-center">
+                    W/B No.
+                </th>
+                <th colspan="14" class="align-center">
+                    Contract Amount
+                </th>
+                <th colspan="14" class="align-center">
+                    Prev. Approved<br/>amount
+                </th>
+                <th colspan="14" class="align-center">
+                    This Approved<br/>amount
+                </th>
+                <th colspan="14" class="align-center">
+                    Accumulate<br/>amount
+                </th>
+                <th colspan="5" class="align-center">
+                    %
+                </th>
+                <th colspan="14" class="align-center">
+                    Balance
+                </th>
+                <th colspan="14" class="align-center">
+                    <span> Retention</span>
+                    <br/>
+                        <input type="checkbox"
+                        name="retentionCashHeader"
+                        value="true"
+                        readonly="true"/>
+                        <span> cash or A/C</span>
+
+                    <br/>
+                        <input type="checkbox"
+                        name="retentionBGHeader"
+                        value="true"
+                        readonly="true"/>
+                        <span> B/G</span>
+                </th>
+            </tr>
+            ${libPdf.rowcol100}
+        </thead>
+
+        <tbody>
+
+            <#list results.arrLine as line>
+                <tr>
+                    <td colspan="11" class="align-center">
+                        ${line.wbNo}
+                    </td>
+
+                    <td colspan="14" class="align-right">
+                        ${line.contractAmount.currency}
+                        ${line.contractAmount.amount}
+                    </td>
+
+                    <td colspan="14" class="align-right">
+                        ${line.prevApprovedAmount.currency}
+                        ${line.prevApprovedAmount.amount}
+                    </td>
+
+                    <td colspan="14" class="align-right">
+                        ${line.thisApprovedAmount.currency}
+                        ${line.thisApprovedAmount.amount}
+                    </td>
+
+                    <td colspan="14" class="align-right">
+                        ${line.accumulateAmount.currency}
+                        ${line.accumulateAmount.amount}
+                    </td>
+
+                    <td colspan="5" class="align-center">
+                        ${line.percent}
+                    </td>
+
+                    <td colspan="14" class="align-right">
+                        ${line.balance.currency}
+                        ${line.balance.amount}
+                    </td>
+
+                    <td colspan="14" class="align-center">
+                        ${line.retention.amount}
+                        <input type="checkbox"
+                            name="retentionCash"
+                            value="true"
+                            checked="${line.retentionCash}"
+                            readonly="true"/>
+                        <input type="checkbox"
+                            name="retentionBG"
+                            value="true"
+                            checked="${line.retentionBG}"
+                            readonly="true"/>
+                    </td>
+                </tr>
+            </#list>
+
+            <tr>
+                <td colspan="11">Total exc VAT</td>
+                <td colspan="14" class="align-right">${results.totalContractAmount.currency} ${results.totalContractAmount.amount}</td>
+                <td colspan="14" class="align-right">${results.totalPrevApprovedAmount.currency} ${results.totalPrevApprovedAmount.amount}</td>
+                <td colspan="14" class="align-right">${results.totalThisApprovedAmount.currency} ${results.totalThisApprovedAmount.amount}</td>
+                <td colspan="14" class="align-right">${results.totalAccumulateAmount.currency} ${results.totalAccumulateAmount.amount}</td>
+                <td colspan="5" class="align-center"><#if results.totalPercent?has_content>${results.totalPercent?string["0.##"]}%</#if></td>
+                <td colspan="14" class="align-right">${results.totalBalance.currency} ${results.totalBalance.amount}</td>
+                <td colspan="14" class="align-right">${results.totalRetention.currency} ${results.totalRetention.amount}</td>
+            </tr>
+            <tr>
+                <td colspan="11">Total incl VAT</td>
+                <td colspan="14" class="align-right">${results.totalInclVatContractAmount.currency} ${results.totalInclVatContractAmount.amount}</td>
+                <td colspan="14" class="align-right">${results.totalInclVatPrevApprovedAmount.currency} ${results.totalInclVatPrevApprovedAmount.amount}</td>
+                <td colspan="14" class="align-right">${results.totalInclVatThisApprovedAmount.currency} ${results.totalInclVatThisApprovedAmount.amount}</td>
+                <td colspan="14" class="align-right">${results.totalInclVatAccumulateAmount.currency} ${results.totalInclVatAccumulateAmount.amount}</td>
+                <td colspan="5" class="align-center"><#if results.totalInclVatPercent?has_content>${results.totalInclVatPercent?string["0.##"]}%</#if></td>
+                <td colspan="14" class="align-right">${results.totalInclVatBalance.currency} ${results.totalInclVatBalance.amount}</td>
+                <td colspan="14">&nbsp;</td>
+            </tr>
+
+        </tbody>
+    </table>
+    <table width="100%" class="border-table mt-5" >
+        <thead class="pt-3">
+             <tr >
+                <th colspan="14" class="align-center"><b>GD</b></th>
+                <th colspan="14" class="align-center"><b>CMS</b></th>
+                <th colspan="14" class="align-center"><b>QS/C&amp;P</b></th>
+                <th colspan="14" class="align-center"><b>Admin</b></th>
+                <th colspan="14" class="align-center"><b>Account</b></th>
+                <th colspan="15" class="align-center"><b>CM</b></th>
+                <th colspan="15" class="align-center"><b>PM</b></th>
+                {libPdf.rowcol100}
+            </tr>
+        </thead>
+       
+
+        <tr height="50px">
+            <td colspan="14" rowspan="3"></td>
+            <td colspan="14" rowspan="3"></td>
+            <td colspan="14" rowspan="3"></td>
+            <td colspan="14" rowspan="3"></td>
+            <td colspan="14" rowspan="3"></td>
+            <td colspan="15" rowspan="3"></td>
+            <td colspan="15" rowspan="3"></td>
+        </tr>
+
+        <tr />
+        <tr />
+
+        <tr>
+            <td colspan="14">Date:</td>
+            <td colspan="14">Date:</td>
+            <td colspan="14">Date:</td>
+            <td colspan="14">Date:</td>
+            <td colspan="14">Date:</td>
+            <td colspan="15">Date:</td>
+            <td colspan="15">Date:</td>
+        </tr>
+    </table>
+
+
+    <table width="100%" class="mt-5">
+        <tr>
+            <td colspan="30">
+                <table width="100%" class="border-table" border-top="1">
+                    <tr>
+                        <td>USD</td>
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td>VN</td>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+
+            <td colspan="60"></td>
+            {libPdf.rowcol100}
+        </tr>
+        <tr>
+            <td colspan="30">
+                <table width="100%">
+                    <tr>
+                        <td colspan="100">
+                            Attach with
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="100">
+                            <input type="checkbox"
+                                name="subConPaymentRequest"
+                                value="true"
+                                checked="${results.subConPaymentRequest}"
+                                readonly="true"/>
+                            <span style="white-space: nowrap;">Sub-con payment request</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="100">
+                            <input type="checkbox"
+                                name="handoverInspectionSheet"
+                                value="true"
+                                checked="${results.handoverInspectionSheet}"
+                                readonly="true"/>
+                            <span style="white-space: nowrap;">Handover or inspection sheet</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="100">
+                            <input type="checkbox"
+                                name="redInvoice"
+                                value="true"
+                                checked="${results.redInvoice}"
+                                readonly="true"/>
+                            <span style="white-space: nowrap;">Red invoice</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="100">
+                            <input type="checkbox"
+                                name="previousRopPo"
+                                value="true"
+                                checked="${results.previousRopPo}"
+                                readonly="true"/>
+                            <span style="white-space: nowrap;">Previous ROP + PO</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="100">
+                            <input type="checkbox"
+                                name="bankGuarantee"
+                                value="true"
+                                checked="${results.bankGuarantee}"
+                                readonly="true"/>
+                            <span style="white-space: nowrap;">Bank Guarantee</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="100">
+                            <input type="checkbox"
+                                name="liquidationContract"
+                                value="true"
+                                checked="${results.liquidationContract}"
+                                readonly="true"/>
+                            <span style="white-space: nowrap;">Liquidation contract</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="100">
+                            <input type="checkbox"
+                                name="bankRemittance"
+                                value="true"
+                                checked="${results.bankRemittance}"
+                                readonly="true"/>
+                            <span style="white-space: nowrap;">Bank Remittance</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="100">
+                            <input type="checkbox"
+                                name="other"
+                                value="true"
+                                checked="${results.other}"
+                                readonly="true"/>
+                            <span style="white-space: nowrap;">Others</span>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td colspan="10"></td>
+            <td colspan="60">
+                <table width="100%" border="1">
+                    <tr>
+                        <td colspan="100">
+                            <table width="100%">
+                                <tr>
+                                    <td colspan="100">
+                                        Summary description of payment:
+                                    </td>
+                                </tr>
+                                <tr class="dotted-border" >
+                                    <td colspan="100">
+                                        ${results.summaryDescriptionOfPayment}
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr border-top="1" >
+                        <td colspan="100">
+                            <table width="100%">
+                                <tr>
+                                    <td colspan="100">
+                                        Remark:
+                                    </td>
+                                </tr>
+                                <tr class="dotted-border" >
+                                    <td colspan="100">
+                                        ${results.remark}
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr border-top="1" class="dotted-border" >
+                        <td colspan="100">
+                            <table width="100%">
+                                <tr>
+                                    <td colspan="100">
+                                        Reason of excess from PO (if any):
+                                    </td>
+                                </tr>
+                                <tr class="dotted-border">
+                                    <td colspan="100">
+                                        ${results.reasonOfExcessFromPO}
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+           
+        </tr>
+    </table>
+
+    <table width="100%">
+        <tr>
+            <td colspan="100" height="25"></td>
+        </tr>
+        <tr>
+            <td colspan="100" class="align-center">
+                <b><u>NAKANO VIETNAM CO., LTD</u></b>
+            </td>
+        </tr>
+    </table>
+</body>
+</pdf>
