@@ -5,11 +5,11 @@
  *  Date                Author                  Description
  *  27 Aug 2026         Huy Pham			    Init, create file, PMP_WBS Import, from ms.Phương Anh(https://app.clickup.com/t/3773072/86d453pe8)
  */
-define(['N/search', 'N/record', 'N/query', 'N/error',
+define(['N/record', 'N/query', 'N/error',
     '../olib/alasql/alasql.min@4.6.6.js', 
     '../lib/scv_lib_function.js',
     '../cons/scv_cons_format.js',
-],(search, record, query, error,
+],(record, query, error,
     alasql,
     lbf,
     constFormat,
@@ -72,6 +72,9 @@ define(['N/search', 'N/record', 'N/query', 'N/error',
             },
             {
                 id: "custpage_col_item", label: "Item", type: "text"
+            },
+            {
+                id: "custpage_col_unit", label: "Unit", type: "text"
             },
             {
                 id: "custpage_col_class", label: "Class", type: "text"
@@ -144,7 +147,7 @@ define(['N/search', 'N/record', 'N/query', 'N/error',
             objRes.custpage_col_date_yyyymmdd = constFormat.dateToChar(objRes.custpage_col_date);
 
             if(lbf.isContainValue(objRes.custpage_col_qty) && lbf.isContainValue(objRes.custpage_col_rate)){
-                objRes.custpage_col_etc_revenue = objRes.custpage_col_qty * objRes.custpage_col_rate;
+                objRes.custpage_col_etc_cost = objRes.custpage_col_qty * objRes.custpage_col_rate;
             }
 
             if(objRes.custpage_col_etc_cost < 0){
@@ -212,6 +215,7 @@ define(['N/search', 'N/record', 'N/query', 'N/error',
                     custrecord_scv_wbs_class: objResRawLine.custpage_col_class,
                     cseg_paactivitycode: objResRawLine.custpage_col_workitemcode,
                     custrecord_scv_wbs_item: objResRawLine.custpage_col_item,
+                    custrecord_scv_wbs_units: objResRawLine.custpage_col_unit,
                     custrecord_scv_wbs_qty: objResRawLine.custpage_col_qty,
                     custrecord_scv_wbs_rate: objResRawLine.custpage_col_rate,
                     etc: {
@@ -240,6 +244,7 @@ define(['N/search', 'N/record', 'N/query', 'N/error',
                 custpage_col_class as custrecord_scv_wbs_class,
                 custpage_col_workitemcode as cseg_paactivitycode,
                 custpage_col_item as custrecord_scv_wbs_item,
+                custpage_col_unit as custrecord_scv_wbs_units,
                 0 as custrecord_scv_wbs_qty,
                 0 as custrecord_scv_wbs_rate
             FROM ?
@@ -318,7 +323,7 @@ define(['N/search', 'N/record', 'N/query', 'N/error',
                 wbsRec.setValue("enddate", constFormat.parseDate(params.custpage_wbs_enddate));
             }
         }
-
+        
         for(let i = 0; i < resultLines.length; i++){
             let objResLine = resultLines[i];
             
@@ -331,6 +336,28 @@ define(['N/search', 'N/record', 'N/query', 'N/error',
             wbsRec.setCurrentSublistText(sublistId, "custrecord_scv_wbs_class", objResLine.custrecord_scv_wbs_class);
             wbsRec.setCurrentSublistText(sublistId, "cseg_paactivitycode", objResLine.cseg_paactivitycode);
             wbsRec.setCurrentSublistText(sublistId, "custrecord_scv_wbs_item", objResLine.custrecord_scv_wbs_item);
+            wbsRec.setCurrentSublistText(sublistId, "custrecord_scv_wbs_units", objResLine.custrecord_scv_wbs_units);
+            wbsRec.setCurrentSublistValue(sublistId, "custrecord_scv_wbs_line_key", objResLine.key);
+            
+            if(objResLine.custrecord_scv_wbs_item){
+                let itemId = wbsRec.getCurrentSublistValue(sublistId, "custrecord_scv_wbs_item");
+                if(itemId){
+                    wbsRec.setCurrentSublistValue(sublistId, "costcalculationtype", "ItemBasedCostCalculationDefinition");
+                    wbsRec.setCurrentSublistValue(sublistId, "costitem", itemId);
+                }
+            }
+            /**
+             * ItemBasedCostCalculationDefinition: costitem + costvendor
+             * ProjectResourceBasedCostCalculationDefinition: resourceentity + resourceitem
+             */
+
+            /* wbsRec.setCurrentSublistValue(sublistId, "costcalculationtype", "ItemBasedCostCalculationDefinition");
+            wbsRec.setCurrentSublistValue(sublistId, "costitem", 43);
+            wbsRec.setCurrentSublistValue(sublistId, "costvendor", 24); */
+
+            /* wbsRec.setCurrentSublistValue(sublistId, "costcalculationtype", "ProjectResourceBasedCostCalculationDefinition");
+            wbsRec.setCurrentSublistValue(sublistId, "resourceitem", 43);
+            wbsRec.setCurrentSublistValue(sublistId, "resourceentity", 7); */
 
             wbsRec.commitLine(sublistId);
 

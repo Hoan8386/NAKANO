@@ -14,19 +14,28 @@ define(['N/runtime', 'N/record', 'N/file',
 
     '../cons/scv_cons_form.js',
     '../cons/scv_cons_format.js',
+    '../cons/scv_cons_queue_job.js',
+    '../cons/scv_cons_datastore.js',
 ],
     
     (runtime, record, file,
         commonWbsImport,
         constForm,
         constFormat,
+        constQueueJob,
+        constDataStore,
     ) => {
         const CurrentScript = {
             ID: "customscript_scv_sl_wbs_import",
             DEPLOYID_UI: "customscript_scv_sl_wbs_import",
             DEPLOYID_DATA: "customdeploy_scv_sl_wbs_import_svc"
         }
-
+        const JobScript = {
+            TYPE: "SCHEDULED_SCRIPT",
+            ID: "customscript_scv_ss_wbs_import",
+            DEPLOYID: "customdeploy_scv_ss_wbs_import",
+            PARAMSID: "custscript_scv_ss_wbs_import_param"
+        };
         /**
          * Defines the Suitelet script trigger point.
          * @param {Object} scriptContext
@@ -37,6 +46,8 @@ define(['N/runtime', 'N/record', 'N/file',
         const onRequest = (scriptContext) => {
             constForm.setContext(scriptContext);
             constForm.setServiceScript(CurrentScript.ID, CurrentScript.DEPLOYID_DATA);
+
+            constQueueJob.setInfoJobScript(JobScript.TYPE, JobScript.ID, JobScript.DEPLOYID, JobScript.PARAMSID);
 
             let request = scriptContext.request;
             let params = request.parameters;
@@ -82,6 +93,13 @@ define(['N/runtime', 'N/record', 'N/file',
             });
             constForm.addButton({id: "custpage_btn_upload", label: "Upload File", functionName: "uploadResult()"},);
             constForm.addButton({id: "custpage_btn_download", label: "Template Import", functionName: "downloadTemplate('" + fileDownloadUrl + "')"},);
+
+            let objPopupQueue = constQueueJob.getPopupQueueJobStatusScript();
+            constForm.addButton({
+                id: "custpage_btn_queue",
+                label: "Queue Status",
+                functionName: `openStatusQueue('${objPopupQueue.url}', ${objPopupQueue.width}, ${objPopupQueue.height}, '${objPopupQueue.title}')`
+            });
 
             if(!_params.custpage_wbs_timelinetype){
                 _params.custpage_wbs_timelinetype = commonWbsImport.Stores.TimeLineType.Global.ID;
@@ -292,10 +310,47 @@ define(['N/runtime', 'N/record', 'N/file',
                 return objResponse;
             }
 
-            try{
-                let arrResLines = commonWbsImport.prepareResultLines(_params, arrLine);
+            let curUser = runtime.getCurrentUser();
 
-                objResponse.internalid = commonWbsImport.createWbs(_params, arrResLines);
+            try{
+                constDataStore.setDataStore("wbs_import", {
+                    params: {
+                        custpage_project: _params.custpage_project,
+                        custpage_wbs_description: _params.custpage_wbs_description,
+                        custpage_wbs_timelinetype: _params.custpage_wbs_timelinetype,
+                        custpage_wbs_startdate: _params.custpage_wbs_startdate,
+                        custpage_wbs_enddate: _params.custpage_wbs_enddate,
+                    },
+                    lines: arrLine
+                });
+
+                if(arrLine.length <= 200){
+                    let dataFileName = "logtemp_wbs_import_" + curUser.id + "_" + curUser.email + "_" + Date.now() +".json"; 
+                    constDataStore.saveDataStoreFile({
+                        key: "wbs_import",
+                        fileName: dataFileName,
+                    });
+
+                    let arrResLines = commonWbsImport.prepareResultLines(_params, arrLine);
+
+                    objResponse.internalid = commonWbsImport.createWbs(_params, arrResLines);
+                }
+                else{
+                    let dataFileName = "wbs_import_" + curUser.id + "_" + curUser.email + "_" + Date.now() +".json"; 
+                    let dataFileId = constDataStore.saveDataStoreFile({
+                        key: "wbs_import",
+                        fileName: dataFileName,
+                    });
+                    
+                    constQueueJob.createQueueJobScript(JSON.stringify({
+                        dataFileId: dataFileId,
+                        dataFileName: dataFileName
+                    }));
+                    constQueueJob.processQueueJobScript();
+
+                    objResponse.msg = `Large data is being processed in the background. Click button [Queue Status] to view the progress.`;
+                }
+                
             }
             catch(err){
                 objResponse.success = false;

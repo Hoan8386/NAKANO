@@ -209,6 +209,10 @@ define([
             window.disableButton("secondarycustpage_btn_submit", val);
         }
 
+        const openStatusQueue = (_urlPopup, _width, _height, _title) =>{
+            nlExtOpenWindow(_urlPopup, 'popupStatusQueue', _width, _height, this, true, _title);
+        }
+
         return {
             pageInit,
             fieldChanged,
@@ -216,6 +220,7 @@ define([
             uploadResult,
             submitResult,
             downloadTemplate,
+            openStatusQueue,
         };
 
     });

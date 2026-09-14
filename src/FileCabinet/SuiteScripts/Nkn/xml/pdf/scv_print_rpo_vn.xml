@@ -330,52 +330,76 @@
 
         <tbody>
             <#list result.lines as line>
-                <tr height="27px">
-                    <td colspan="10" align="center">
-                        ${line.wbNo}
-                    </td>
+            <tr height="27px">
+                <td colspan="10" align="center">
+                    ${line.wbNo}
+                </td>
 
-                    <td colspan="20">
-                        <table width="100%" class="border-none">
-                            <tr>
-                                <td width="30%" align="left">${line.workingBudget.currency}</td>
-                                <td width="70%" align="right" style=" border-right: none;">${line.workingBudget.amount}</td>
-                            </tr>
-                        </table>
-                    </td>
+                <td colspan="20">
+                    <table width="100%" class="border-none">
+                        <tr>
+                            <td width="30%" align="left">
+                                <#if line.workingBudget.amount?has_content>
+                                    ${line.workingBudget.currency}
+                                </#if>
+                            </td>
+                            <td width="70%" align="right" style="border-right: none;">
+                                ${line.workingBudget.amount}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
 
-                    <td colspan="20">
-                        <table width="100%" class="border-none">
-                            <tr>
-                                <td width="30%" align="left">${line.thisAmount.currency}</td>
-                                <td width="70%" align="right" style=" border-right: none;">${line.thisAmount.amount}</td>
-                            </tr>
-                        </table>
-                    </td>
+                <td colspan="20">
+                    <table width="100%" class="border-none">
+                        <tr>
+                            <td width="30%" align="left">
+                                <#if line.thisAmount.amount?has_content>
+                                    ${line.thisAmount.currency}
+                                </#if>
+                            </td>
+                            <td width="70%" align="right" style="border-right: none;">
+                                ${line.thisAmount.amount}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
 
-                    <td colspan="20">
-                        <table width="100%" class="border-none">
-                            <tr>
-                                <td width="30%" align="left">${line.accumulateAmount.currency}</td>
-                                <td width="70%" align="right" style=" border-right: none;">${line.accumulateAmount.amount}</td>
-                            </tr>
-                        </table>
-                    </td>
+                <td colspan="20">
+                    <table width="100%" class="border-none">
+                        <tr>
+                            <td width="30%" align="left">
+                                <#if line.accumulateAmount.amount?has_content>
+                                    ${line.accumulateAmount.currency}
+                                </#if>
+                            </td>
+                            <td width="70%" align="right" style="border-right: none;">
+                                ${line.accumulateAmount.amount}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
 
-                    <td colspan="20">
-                        <table width="100%" class="border-none">
-                            <tr>
-                                <td width="30%" align="left">${line.balance.currency}</td>
-                                <td width="70%" align="right" style=" border-right: none;">${line.balance.amount}</td>
-                            </tr>
-                        </table>
-                    </td>
+                <td colspan="20">
+                    <table width="100%" class="border-none">
+                        <tr>
+                            <td width="30%" align="left">
+                                <#if line.balance.amount?has_content>
+                                    ${line.balance.currency}
+                                </#if>
+                            </td>
+                            <td width="70%" align="right" style="border-right: none;">
+                                ${line.balance.amount}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
 
-                    <td colspan="10">
-                        ${line.remarks}
-                    </td>
-                </tr>
-            </#list>
+                <td colspan="10">
+                    ${line.remarks}
+                </td>
+            </tr>
+        </#list>
 
             <tr>
                 <td colspan="10" align="center">
@@ -385,8 +409,14 @@
                 <td colspan="20">
                     <table width="100%" class="border-none">
                         <tr>
-                            <td width="30%" align="left">${result.totalWorkingBudgetDisplay.currency}</td>
-                            <td width="70%" align="right" style=" border-right: none;">${result.totalWorkingBudgetDisplay.amount}</td>
+                            <td width="30%" align="left">
+                                <#if result.totalWorkingBudgetDisplay.amount?has_content>
+                                    ${result.totalWorkingBudgetDisplay.currency}
+                                </#if>
+                            </td>
+                            <td width="70%" align="right" style="border-right: none;">
+                                ${result.totalWorkingBudgetDisplay.amount}
+                            </td>
                         </tr>
                     </table>
                 </td>
@@ -394,8 +424,14 @@
                 <td colspan="20">
                     <table width="100%" class="border-none">
                         <tr>
-                            <td width="30%" align="left">${result.totalThisAmountDisplay.currency}</td>
-                            <td width="70%" align="right" style=" border-right: none;">${result.totalThisAmountDisplay.amount}</td>
+                            <td width="30%" align="left">
+                                <#if result.totalThisAmountDisplay.amount?has_content>
+                                    ${result.totalThisAmountDisplay.currency}
+                                </#if>
+                            </td>
+                            <td width="70%" align="right" style="border-right: none;">
+                                ${result.totalThisAmountDisplay.amount}
+                            </td>
                         </tr>
                     </table>
                 </td>
@@ -403,8 +439,14 @@
                 <td colspan="20">
                     <table width="100%" class="border-none">
                         <tr>
-                            <td width="30%" align="left">${result.totalAccumulateAmountDisplay.currency}</td>
-                            <td width="70%" align="right" style=" border-right: none;">${result.totalAccumulateAmountDisplay.amount}</td>
+                            <td width="30%" align="left">
+                                <#if result.totalAccumulateAmountDisplay.amount?has_content>
+                                    ${result.totalAccumulateAmountDisplay.currency}
+                                </#if>
+                            </td>
+                            <td width="70%" align="right" style="border-right: none;">
+                                ${result.totalAccumulateAmountDisplay.amount}
+                            </td>
                         </tr>
                     </table>
                 </td>
@@ -412,8 +454,14 @@
                 <td colspan="20">
                     <table width="100%" class="border-none">
                         <tr>
-                            <td width="30%" align="left">${result.totalBalanceDisplay.currency}</td>
-                            <td width="70%" align="right" style=" border-right: none;">${result.totalBalanceDisplay.amount}</td>
+                            <td width="30%" align="left">
+                                <#if result.totalBalanceDisplay.amount?has_content>
+                                    ${result.totalBalanceDisplay.currency}
+                                </#if>
+                            </td>
+                            <td width="70%" align="right" style="border-right: none;">
+                                ${result.totalBalanceDisplay.amount}
+                            </td>
                         </tr>
                     </table>
                 </td>
