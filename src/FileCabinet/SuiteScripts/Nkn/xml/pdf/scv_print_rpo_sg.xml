@@ -73,7 +73,7 @@
                             CLAIMANT No.: 
                         </td>
                         <td colspan="70">
-                            ${results.headers.claimantNo}
+                            ${result.claimantNo}
                         </td>
                     </tr>
                     <tr>

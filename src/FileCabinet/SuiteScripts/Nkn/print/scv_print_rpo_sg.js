@@ -110,7 +110,7 @@ define([
                 subsidiary: objLineFirst._1_subsidiary,
                 project: objLineFirst._2_projects_display,
                 poNo: objLineFirst._3_p_o_no,
-                claimantNo: objLineFirst._4_claimant_no,
+                // claimantNo: objLineFirst._4_claimant_no,
                 scopeOfWork: objLineFirst._5_scope_of_work,
                 gst: objLineFirst._7_gst,
                 typeOfContract: objLineFirst._8_type_of_contract_display,
@@ -148,8 +148,14 @@ define([
                     'companyname'
                 ]).companyname;
 
+                let vendorId = constSearch.getDataLookupFieldsStore(lkStores.vendors, 'vendor', objLineVendor.povendor, [
+                    'entityid'
+                ]).entityid;
+                
+                log.error("hoan check entity id" ,vendorId)
                 let objResult = {
                     vendor: vendorName,
+                    claimantNo:vendorId,
                     vendorQtnRef: {},
 
                     workingBudget: 0,
