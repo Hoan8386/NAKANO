@@ -152,7 +152,6 @@ define([
                     'entityid'
                 ]).entityid;
                 
-                log.error("hoan check entity id" ,vendorId)
                 let objResult = {
                     vendor: vendorName,
                     claimantNo:vendorId,
