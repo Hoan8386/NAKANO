@@ -1,0 +1,257 @@
+<?xml version = "1.0"?><!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
+<pdf>
+<head>
+    <meta name="title" value="Print RPO (ID)"/>
+    <link name="ScvFont" type="font" subtype="opentype" src="${libPdf.font.arial?html}" src-bold="${libPdf.font.arial_bold?html}" src-italic="${libPdf.font.arial_italic?html}" src-bolditalic="${libPdf.font.arial_bolditalic?html}" bytes="2" />
+    <style type="text/css">
+        ${libPdf.css}
+
+        body {
+            font-size: 10pt;
+        }
+        table { 
+            font-size: 10pt;
+        }
+        table.info-rows td { padding-bottom: 4px; }
+    </style>
+
+</head>
+<body padding="0.3in 0.3in 1in 0.3in" size="A4" >
+    <#list results.datas as data>
+
+        <table width="100%">
+            <tr>
+                <td  class="fs-12"> <b>PT INDOKANONO </b></td>
+            </tr>
+
+            <tr>
+                <td  class="fs-12"> <b>REQUEST FOR PURCHASE ORDER </b></td>
+            </tr>
+        </table>
+
+        <table width="100%">
+            <tr>
+                <td width="60%">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td style="width: 40%;">PO. NO.</td>
+                            <td style="width: 3%;">:</td>
+                            <td style="width: 57%;">${results.headers.poNumber!}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 40%;">PROJECT NAME</td>
+                            <td style="width: 3%;">:</td>
+                            <td style="width: 57%;">${results.headers.project!}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 40%;">CLAIMANT</td>
+                            <td style="width: 3%;">:</td>
+                            <td style="width: 57%;">${data.claimantNo!}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 40%;">VENDOR</td>
+                            <td style="width: 3%;">:</td>
+                            <td style="width: 57%;">${data.vendor!}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 40%;">VENDOR STATUS</td>
+                            <td style="width: 3%;">:</td>
+                            <td style="width: 57%;">${data.vendorST!}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 40%;">VENDOR NPWP</td>
+                            <td style="width: 3%;">:</td>
+                            <td style="width: 57%;">${data.vendorTax!}</td>
+                        </tr>
+                        <tr>
+                            <td style="width: 40%;">CONTRACT PRICE</td>
+                            <td style="width: 3%;">:</td>
+                            <td style="width: 57%;">
+                                <table style="width: 100%;">
+                                    <tr>
+                                        <td width="10%"></td>
+                                        <td width="20%">
+                                            <table style="width: 100%;" class="border-table" border-top="1">
+                                                <tr>
+                                                    <td class="align-center">RP</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="align-center">VAT</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                        <td width="5%"></td>
+                                        <td width="70%">
+                                            <table style="width: 100%;">
+                                                <tr border-bottom="1">
+                                                    <td>${data.rb!}</td>
+                                                </tr>
+                                                <tr border-bottom="1">
+                                                    <td>${data.vat!}</td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 40%;">SCOPE OF WORK</td>
+                            <td style="width: 3%;">:</td>
+                            <td style="width: 57%;"><b>${results.headers.scopeOfWork!}</b></td>
+                        </tr>
+                        <tr>
+                            <td style="width: 40%;">TERM OF PAYMENT</td>
+                            <td style="width: 3%;">:</td>
+                            <td style="width: 57%;">${results.headers.termsOfPayment!}</td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td width="40%">
+                    <table style="width: 100%;">
+                        <tr>
+                            <td width="67%" class="align-right">Request Date</td>
+                            <td width="3%">:</td>
+                            <td width="30%">${results.headers.requestDate!}</td>
+                        </tr>
+                        <tr>
+                            <td width="67%" class="align-right">Commence Date</td>
+                            <td width="3%">:</td>
+                            <td width="30%">${results.headers.commenceDate!}</td>
+                        </tr>
+                        <tr>
+                            <td width="67%" class="align-right">Completion Date</td>
+                            <td width="3%">:</td>
+                            <td width="30%">${results.headers.completionDate!}</td>
+                        </tr>
+                        <tr>
+                            <td width="67%" class="align-right">Insurance</td>
+                            <td width="3%">:</td>
+                            <td width="30%">${results.headers.insurance!}</td>
+                        </tr>
+                        <tr>
+                            <td width="67%" class="align-right">Condition Of Contract</td>
+                            <td width="3%">:</td>
+                            <td width="30%">${results.headers.conditionsOfContract!}</td>
+                        </tr>
+                        <tr>
+                            <td width="67%" class="align-right">Maintainance Period</td>
+                            <td width="3%">:</td>
+                            <td width="30%">${results.headers.maintenancePeriod!}</td>
+                        </tr>
+                        <tr>
+                            <td width="67%" class="align-right">Type of Contract</td>
+                            <td width="3%">:</td>
+                            <td width="30%">${results.headers.typeOfContract!}</td>
+                        </tr>
+                        <tr>
+                            <td width="67%" class="align-right">Repeat Order</td>
+                            <td width="3%">:</td>
+                            <td width="30%">${results.headers.repeatOrder!}</td>
+                        </tr>
+                        <tr>
+                            <td width="67%" class="align-right">SBUJK Certificate</td>
+                            <td width="3%">:</td>
+                            <td width="30%">${results.headers.sbujkCertificate!}</td>
+                        </tr>
+                        <tr>
+                            <td width="67%" class="align-right">Release Retention After</td>
+                            <td width="3%">:</td>
+                            <td width="30%">${results.headers.retention!}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <table width="100%" class="border-table" cellpadding="2">
+            <thead>
+                <tr>
+                    <th colspan="10" class="align-center">WORK ITEM<br/>NO</th>
+                    <th colspan="30" class="align-center">DESCRIPTION</th>
+                    <th colspan="12" class="align-center">NETTO / WORKING<br/>BUDGET</th>
+                    <th colspan="12" class="align-center">CONTRACT<br/>SUM</th>
+                    <th colspan="12" class="align-center">CONTRACT<br/>COST</th>
+                    <th colspan="12" class="align-center">EXPECTED</th>
+                    <th colspan="12" class="align-center">BALANCE</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <#list data.lines as line>
+                    <tr>
+                        <td colspan="10" class="align-center">${line.workItemNo!}</td>
+                        <td colspan="30">${line.description!}</td>
+                        <td colspan="12" class="align-right">${line.nettoWorkingBudget!}</td>
+                        <td colspan="12" class="align-right">${line.contractSum!}</td>
+                        <td colspan="12" class="align-right">${line.contractCost!}</td>
+                        <td colspan="12" class="align-right">${line.expected!}</td>
+                        <td colspan="12" class="align-right">${line.balance!}</td>
+                    </tr>
+                </#list>
+
+                <tr>
+                    <td colspan="10"></td>
+                    <td colspan="30" class="align-center"><b>SUBTOTAL</b></td>
+                    <td colspan="12" class="align-right">${data.nettoWorkingBudget!}</td>
+                    <td colspan="12" class="align-right">${data.contractSum!}</td>
+                    <td colspan="12" class="align-right">${data.contractCost!}</td>
+                    <td colspan="12" class="align-right">${data.expected!}</td>
+                    <td colspan="12" class="align-right">${data.balance!}</td>
+                </tr>
+
+                <tr>    
+                    <td colspan="20" class="align-center"></td>
+                    <td colspan="20">VAT</td>
+                    <td colspan="12" class="align-right">${data.vatNettoWorkingBudget!}</td>
+                    <td colspan="12" class="align-right">${data.vatContractSum!}</td>
+                    <td colspan="12" class="align-right">${data.vatContractCost!}</td>
+                    <td colspan="12" class="align-right">${data.vatExpected!}</td>
+                    <td colspan="12" class="align-right">${data.vatBalance!}</td>
+                </tr>
+
+                <tr>
+                    <td colspan="40" class="align-center"><b>GRAND TOTAL</b></td>
+                    <td colspan="12" class="align-right">${data.grandTotalNettoWorkingBudget!}</td>
+                    <td colspan="12" class="align-right">${data.grandTotalContractSum!}</td>
+                    <td colspan="12" class="align-right">${data.grandTotalContractCost!}</td>
+                    <td colspan="12" class="align-right">${data.grandTotalExpected!}</td>
+                    <td colspan="12" class="align-right">${data.grandTotalBalance!}</td>
+                </tr>
+            </tbody>
+
+            {libPdf.rowcol100}
+        </table>
+
+        <table width="100%" class="border-table mt-5" border-top="1">
+            <tr style="height: 140px;">
+                <td colspan="100"></td>
+            </tr>
+            <tr>
+                <td colspan="14" class="align-center"><b>PRESIDENT DIRECTOR</b></td>
+                <td colspan="14" class="align-center"><b>VICE PRESIDENT DIR.</b></td>
+                <td colspan="14" class="align-center"><b>COST PLANNING.</b></td>
+                <td colspan="14" class="align-center"><b>COST CONTROL MGR</b></td>
+                <td colspan="14" class="align-center"><b>COST CONTROL</b></td>
+                <td colspan="14" class="align-center"><b>PM &amp; ADVISOR</b></td>
+                <td colspan="16" class="align-center"><b>SE / QS</b></td>
+            </tr>
+            <tr style="height: 70px;">
+                <td colspan="14"></td>
+                <td colspan="14"></td>
+                <td colspan="14"></td>
+                <td colspan="14"></td>
+                <td colspan="14"></td>
+                <td colspan="14"></td>
+                <td colspan="16"></td>
+            </tr>
+            {libPdf.rowcol100}
+        </table>
+        <#if data_has_next>
+            <pbr/>
+        </#if>
+
+    </#list>
+</body>
+</pdf>

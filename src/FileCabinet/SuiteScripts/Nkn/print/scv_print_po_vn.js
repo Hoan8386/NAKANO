@@ -96,7 +96,6 @@ define([
             let objResult = {};
             let objLineFirst = arrLine01[0] ?? {};
 
-            log.error("hoan arrLine01" , arrLine01);
             let workItemCode = [];
             let contractPrice = 0;
             let vat = 0;
