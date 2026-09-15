@@ -8,20 +8,18 @@
  * @NApiVersion 2.1
  * @NScriptType Suitelet
  */
-define(['N/runtime',
+define(['N/runtime', 'N/search',
 
     '../cons/scv_cons_form.js',
-    '../cons/scv_cons_format.js',
-    '../cons/scv_cons_queue_job.js',
+    '../cons/scv_cons_search.js',
 
     '../common/scv_common_wbs2rpo.js',
 ],
 
-    (runtime,
+    (runtime, search,
 
         constForm,
-        constFormat,
-        constQueueJob,
+        constSearch,
 
         commonWbs2Rpo,
     ) => {
@@ -30,18 +28,10 @@ define(['N/runtime',
             DEPLOYID_UI: "customdeploy_scv_sl_wbs2rpo",
             DEPLOYID_DATA: "customdeploy_scv_sl_wbs2rpo_svc"
         };
-        const JobScript = {
-            TYPE: "MAP_REDUCE",
-            ID: "customscript_scv_mr_wbs2rpo",
-            DEPLOYID: "customdeploy_scv_mr_wbs2rpo",
-            PARAMSID: "custscript_scv_mr_wbs2rpo_params"
-        };
 
         const onRequest = (scriptContext) => {
             constForm.setContext(scriptContext);
             constForm.setServiceScript(CurrentScript.ID, CurrentScript.DEPLOYID_DATA);
-
-            constQueueJob.setInfoJobScript(JobScript.TYPE, JobScript.ID, JobScript.DEPLOYID, JobScript.PARAMSID);
 
             let request = scriptContext.request;
             let params = request.parameters;
@@ -52,6 +42,12 @@ define(['N/runtime',
                 let objResponse = {data: []};
 
 				switch(params.action){
+                    case "getVendors":
+                        objResponse.data = commonWbs2Rpo.getVendors(params);
+                        break;
+                    case "getSalesTaxItem":
+                        objResponse.data = commonWbs2Rpo.getSalesTaxItem(params);
+                        break;
                     case "submitResult":
                         objResponse.data = submitResult(params);
                         break;
@@ -68,7 +64,11 @@ define(['N/runtime',
         }
 
         const onCreateFormUI = (_params) =>{
-            constForm.createForm("Create Request Purchase Order from WBS", '../cssl/scv_cs_sl_wbs2rpo.js');
+            let curUser = runtime.getCurrentUser();
+
+            constForm.createForm("Create Request Purchase Order from WBS", '../cssl/scv_cs_sl_wbs2rpo.js', {
+                pagination: true
+            });
 
             constForm.addPageLink(commonWbs2Rpo.getListSavedSearch(), true);
 
@@ -78,15 +78,14 @@ define(['N/runtime',
                 styleSubmit: true
             });
 
-            let objPopupQueue = constQueueJob.getPopupQueueJobStatusScript();
-            constForm.addButton({
-                id: "custpage_btn_queue",
-                label: "Queue Status",
-                functionName: `openStatusQueue('${objPopupQueue.url}', ${objPopupQueue.width}, ${objPopupQueue.height}, '${objPopupQueue.title}')`
-            });
-
             let mainGrp = constForm.addFieldGroup({id: "fieldgrp_filter", label: "Filter"});
             let defaultGrp = constForm.addFieldGroup({id: "fieldgrp_default", label: "Default value for RPO"});
+
+            if(!_params.custpage_subsidiary){
+                _params.custpage_subsidiary = curUser.subsidiary.toString();
+            }
+
+            commonWbs2Rpo.initParamsDefault(_params);
 
             //#region Tab Filter
             constForm.addField({
@@ -107,17 +106,27 @@ define(['N/runtime',
 
             constForm.addField({
                 id: 'custpage_employee', label: "Project Manager",
-                type: "select", source: "employee",
+                type: "select", 
                 container: mainGrp.id
             }, false, {
+                lookup: {
+                    data: getEmployees(_params),
+                    valueExpr: "internalid",
+                    displayExpr: "name",
+                },
                 defaultValue: !!_params.custpage_employee ? _params.custpage_employee.split(",") : ""
             });
 
             constForm.addField({
                 id: 'custpage_def_vendor', label: "Vendor",
-                type: "select", source: "vendor",
+                type: "select", 
                 container: defaultGrp.id
             }, false, {
+                lookup: {
+                    data: commonWbs2Rpo.getVendors(_params),
+                    valueExpr: "internalid",
+                    displayExpr: "name",
+                },
                 defaultValue: !!_params.custpage_def_vendor ? _params.custpage_def_vendor.split(",") : ""
             });
 
@@ -142,53 +151,7 @@ define(['N/runtime',
                 id: "custpage_sl_result",
                 type: "LIST",
                 label : "Result",
-                columns: [
-                    {
-                        id: "custpage_col_chk", label: "Select", type: "checkbox"
-                    },
-                    {
-                        id: "custpage_col_projectcode", label: "Project Code", type: "text"
-                    },
-                    {
-                        id: "custpage_col_workitemcode", label: "Work Item Code", type: "text"
-                    },
-                    {
-                        id: "custpage_col_item", label: "Item", type: "text"
-                    },
-                    {
-                        id: "custpage_col_description", label: "Description", type: "text"
-                    },
-                    {
-                        id: "custpage_col_classcode", label: "Class Code", type: "text"
-                    },
-                    {
-                        id: "custpage_col_unit", label: "Unit", type: "text"
-                    },
-                    {
-                        id: "custpage_col_rpo_qty", label: "RPO Quantity", type: "float"
-                    },
-                    {
-                        id: "custpage_col_rpo_rate", label: "RPO Rate", type: "float"
-                    },
-                    {
-                        id: "custpage_col_rpt_tax", label: "RPO Tax", type: "text"
-                    },
-                    {
-                        id: "custpage_col_vendor", label: "Vendor", type: "text"
-                    },
-                    {
-                        id: "custpage_col_rpo_amount", label: "RPO Amount", type: "float"
-                    },
-                    {
-                        id: "custpage_col_rpo_taxamount", label: "RPO Tax Amount", type: "float"
-                    },
-                    {
-                        id: "custpage_col_wbs_qty", label: "WBS Quantity", type: "float"
-                    },
-                    {
-                        id: "custpage_col_linekey", label: "Line Key", type: "text"
-                    },
-                ],
+                columns: commonWbs2Rpo.getColumns(_params),
             });
 
             resultSublist.addMarkAllButtons();
@@ -203,26 +166,26 @@ define(['N/runtime',
         const submitResult = (_params) =>{
             let objResponse = {
                 success: true,
-                msg: "Success."
+                msg: "Success.",
+                internalid: "",
+                url: "",
             };
 
             try{
-                let arrResult = [];
+                let arrResult = _params.arrLines ? JSON.parse(_params.arrLines) : [];
 
-                if(arrResult.length <= 30){
+                objResponse.internalid = commonWbs2Rpo.createRPO(_params, arrResult);
 
-                    objResponse.msg = "Success: " + arrResult.length + " (Records)";
+                if(objResponse.internalid){
+                    objResponse.url = `/app/accounting/transactions/purchreq.nl?id=${objResponse.internalid}`;
+
+                    let tranid = search.lookupFields({
+                        type: "purchaserequisition", id: objResponse.internalid, columns: "tranid"
+                    }).tranid;
+
+                    objResponse.msg = `Success: <a href="${objResponse.url}" target="_blank">${tranid}</a>`;
                 }
-                else{
-                    constQueueJob.createQueueJobScript(JSON.stringify({
-                        custpage_bz_org: _params.custpage_bz_org,
-                        custpage_wbs2rpo: _params.custpage_wbs2rpo,
-                        custpage_bz_vendor: _params.custpage_bz_vendor,
-                        custpage_fromdt: _params.custpage_fromdt,
-                        custpage_todt: _params.custpage_todt,
-                    }));
-                    constQueueJob.processQueueJobScript();
-                }
+                
             }
             catch(err){
                 log.error("Error: Try.catch.submitResult", err)
@@ -231,6 +194,33 @@ define(['N/runtime',
             }
 
             return objResponse;
+        }
+
+        const getEmployees = (_params) => {
+            let filters = [];
+
+            let resultSearch =  constSearch.createSearchWithFilter({
+                type: "employee",
+                filters: [
+                    ["isinactive","is","F"],
+                    "AND",
+                    ["isjobresource","is","T"]
+                ],
+                columns: [
+                    "internalid", 
+                    "entityid"
+                ]
+            }, filters);
+            
+            resultSearch = resultSearch.runPaged({pageSize: 1000});
+
+            let arrResult = constSearch.fetchResultSearchAllPage(resultSearch, function(_objTmpl, _column){
+                return constSearch.getObjResultFromSearchByKey(_objTmpl, _column, [
+                    "internalid", "name"
+                ]);
+            });
+            
+            return arrResult;
         }
 
         return {

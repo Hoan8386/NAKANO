@@ -26,7 +26,17 @@ define(["N/search",
 		}
         if (_params.subsidiary) {
 			filters.push(search.createFilter({
-				name: 'subsidiary', operator: 'anyof', values: _params.subsidiary.toString().split(",")
+				name: 'subsidiary', join: 'job', operator: 'anyof', values: _params.subsidiary.toString().split(",")
+			}));
+		}
+        if (_params.project) {
+			filters.push(search.createFilter({
+				name: 'project', operator: 'anyof', values: _params.project.toString().split(",")
+			}));
+		}
+        if (_params.projectmanager) {
+			filters.push(search.createFilter({
+				name: 'projectmanager', join: "job", operator: 'anyof', values: _params.projectmanager.toString().split(",")
 			}));
 		}
 

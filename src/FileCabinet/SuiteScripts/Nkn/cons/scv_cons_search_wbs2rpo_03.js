@@ -29,6 +29,11 @@ define(["N/search",
 				name: 'subsidiary', operator: 'anyof', values: _params.subsidiary.toString().split(",")
 			}));
 		}
+        if (_params.project) {
+			filters.push(search.createFilter({
+				name: 'custrecord_scv_project_source', join: 'cseg_scv_sg_proj', operator: 'anyof', values: _params.project.toString().split(",")
+			}));
+		}
 
         return constSearch.getDataSource(ID, filters, [], Records);
     };
