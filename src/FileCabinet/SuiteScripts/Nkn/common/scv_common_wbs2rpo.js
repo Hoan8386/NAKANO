@@ -4,7 +4,7 @@
  *  Date                Author                  Description
  *  15 Sep 2026         Huy Pham                Init, create file. Create RPO (Requisition) from Project_WBS, from ms.Ngọc(https://app.clickup.com/t/3773072/14yhnhmfjj0)
  */
-define(['N/search', 'N/record',
+define(['N/search', 'N/record', 'N/url', 'N/runtime',
     '../lib/scv_lib_function.js',
 
     '../cons/scv_cons_search.js',
@@ -13,7 +13,7 @@ define(['N/search', 'N/record',
     '../cons/scv_cons_search_wbs2rpo_01.js',
     '../cons/scv_cons_search_wbs2rpo_02.js',
     '../cons/scv_cons_search_wbs2rpo_03.js',
-], (search, record,
+], (search, record, url, runtime,
     lbf,
 
     constSearch,
@@ -106,8 +106,45 @@ define(['N/search', 'N/record',
         return arrResult;
     }
 
-    const addBtnCreateRPO = () => {
+    const validateCreateRPO = (curRec) =>{
+        if(!curRec.id) return false;
 
+        let arrProject01 = constSearchWbs2Rpo01.getDataSource({
+            internalid: curRec.id,
+        });
+        if (arrProject01.length === 0) {
+            return false;
+        }
+
+        return true;
+    }
+
+    const addBtnCreateRPO = (scriptContext) => {
+        if(scriptContext.type !== "view") return;
+
+        if(runtime.executionContext !== runtime.ContextType.USER_INTERFACE) return;
+
+        let newRec = scriptContext.newRecord;
+
+        if(!validateCreateRPO(newRec)) return null;
+
+        let form = scriptContext.form;
+        
+        let urlScript = url.resolveScript({
+            scriptId: 'customscript_scv_sl_wbs2rpo',
+            deploymentId: 'customdeploy_scv_sl_wbs2rpo',
+            params: {
+                custpage_subsidiary: newRec.getValue("subsidiary"),
+                custpage_project: newRec.id,
+                isSearch: "T",
+            }
+        });
+
+        form.addButton({
+            id: "custpage_scv_btn_wbs2rpo",
+            label: "Create RPO",
+            functionName: "window.open('" + urlScript + "');"
+        });
     }
 
     const initParamsDefault = (params) => {

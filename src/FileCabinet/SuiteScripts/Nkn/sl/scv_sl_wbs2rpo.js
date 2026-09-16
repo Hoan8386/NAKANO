@@ -190,7 +190,7 @@ define(['N/runtime', 'N/search',
             catch(err){
                 log.error("Error: Try.catch.submitResult", err)
                 objResponse.success = false;
-                objResponse.msg = err.message;
+                objResponse.msg = err?.message || err;
             }
 
             return objResponse;

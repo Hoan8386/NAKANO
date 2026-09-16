@@ -4,6 +4,7 @@
  *  Date                Author                  Description
  *  20 Aug 2026         Huy Pham                Init, create file. Chức năng tạo tự động & Update  Project segment khi tạo & update Project, from ms.Phương Anh(https://app.clickup.com/t/3773072/86d43037h)
  *  24 Aug 2026         Huy Pham                Sinh mã Project Code, from ms.Phương Anh(https://app.clickup.com/t/3773072/86d444yau)
+ *  15 Sep 2026         Huy Pham                Create RPO (Requisition) from Project_WBS, from ms.Ngọc(https://app.clickup.com/t/3773072/14yhnhmfjj0)
  */
 /**
  * @NApiVersion 2.1
@@ -12,11 +13,13 @@
 define([
         '../common/scv_common_project_code.js',
         '../common/scv_common_project2csegproject.js',
+        '../common/scv_common_wbs2rpo.js',
     ],
 
     (
         commProjectCode,
         commProject2CsegProject,
+        commonWbs2Rpo,
     ) => {
         /**
          * Defines the function definition that is executed before record is loaded.
@@ -28,7 +31,7 @@ define([
          * @since 2015.2
          */
         const beforeLoad = (scriptContext) => {
-            
+            commonWbs2Rpo.addBtnCreateRPO(scriptContext);
         }
 
         /**
@@ -69,7 +72,7 @@ define([
         }
 
         return {
-            //beforeLoad,
+            beforeLoad,
             beforeSubmit,
             afterSubmit
         }
