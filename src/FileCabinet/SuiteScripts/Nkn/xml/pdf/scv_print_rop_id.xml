@@ -1,0 +1,150 @@
+<?xml version="1.0"?>
+<!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
+<pdf>
+<head>
+    <meta name="title" value="Print ROP (ID)"/>
+    <link name="ScvFont" type="font" subtype="opentype" src="${libPdf.font.arial?html}" src-bold="${libPdf.font.arial_bold?html}" src-italic="${libPdf.font.arial_italic?html}" src-bolditalic="${libPdf.font.arial_bolditalic?html}" bytes="2" />
+    <style type="text/css">
+        ${libPdf.css}
+        body {
+            font-size: 10pt;
+        }
+        table {
+            font-size: 10pt;
+        }
+        .under-line {
+            border-bottom: 1px solid #000000;
+        }
+        input {
+            display: inline;
+        }
+
+        .dotted-border {
+            border-top: 1px dotted #000000;
+        }
+    </style>
+</head>
+    <body padding="0.3in 0.3in 1in 0.3in" size="A4">
+        <table width="100%">
+            <tr>
+                <td colspan="30" >
+                    ${result.tagImgLogo} 
+                </td>
+                  <td colspan="70" >
+                    <span>${subsidiary.legalname}  </span>
+                </td>
+            </tr>
+            
+            <tr>
+                <td colspan="100" class="align-center fs-13">
+                    <b><u> RECOMMENDATION OF PAYMENT </u> </b> 
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="60" >
+                </td>
+                <td colspan="40" >
+                    <table class="border-table" border-top="1">
+                        <tr>
+                            <td>Voucher No.</td>
+                                ${result.docNumber}
+                            <td></td>
+                        </tr>
+                         <tr>
+                            <td>Date </td>
+                            <td>${result.date}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            {libPdf.rowcol100}
+        </table>
+
+        <table>
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                                <p><b>1.  PROJECT NO.</b></p>
+                            </td>
+                            <td>
+                                <table class="border-table" border-top="1"> 
+                                    <tr>
+                                        <td> ${result.pjCode}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                                <p><b>3.  PROJECT NAME</b></p>
+                            </td>
+                            <td>
+                                <table class="border-table" border-top="1"> 
+                                    <tr>
+                                        <td><p>${result.pjName}</p></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+
+            </tr>
+
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                                <p><b>2.  CLAIMANT NO. </b></p>
+                            </td>
+                            <td>
+                                <table class="border-table" border-top="1"> 
+                                    <tr>
+                                        <td>${result.claimantNo}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                                <p><b>4. CLAIMANT NAME</b></p>
+                            </td>
+                            <td>
+                                <table class="border-table" border-top="1"> 
+                                    <tr>
+                                        <td><p>${result.claimantName}</p></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                
+            </tr>
+        </table>
+</body>
+</pdf>

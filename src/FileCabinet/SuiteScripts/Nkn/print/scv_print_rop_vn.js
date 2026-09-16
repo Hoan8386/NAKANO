@@ -93,7 +93,12 @@ define([
             let arrLine01 = constSearchRopVn01.getDataSource({ internalid: curRec.id });
             let arrLine02 = constSearchRopVn02.getDataSource();
             let objLineFirst = arrLine01[0];
-            let objLookup = objLineFirst.objLookup || {};
+            let projectId = curRec.getValue('cseg_scv_sg_proj');
+            let objLookup = search.lookupFields({
+                type: 'customrecord_cseg_scv_sg_proj',
+                id: projectId,
+                columns: ['custrecord_scv_project_source.entityid' , 'custrecord_scv_project_source.companyname' ]
+            });
 
             const arrLine = [];
             let totalContractAmount = 0, totalPrevApprovedAmount = 0, totalThisApprovedAmount = 0, totalAccumulateAmount = 0, totalBalance = 0, totalRetention = 0, totalTaxAmount = 0;
