@@ -3,8 +3,7 @@
  * Key:
  * =======================================================================================
  *  Date                Author                  Description
- *  10 Sep 2026         Thanh Hoan              Add button PO (VN) trên màn hình Purchase Order  from mr. Quân (https://app.clickup.com/t/3773072/86d3w9emj)
- *  15 Sep 2026         Thanh Hoan              Init, create file, PO_INDO, from mr.Quân(https://app.clickup.com/t/3773072/86d3w9emj)
+ *  15 Sep 2026         Thanh Hoan              Init, create file, PO (ID), from mr.Quân(https://app.clickup.com/t/3773072/86d3w9emj)
  */
 define([
     "N/record", "N/url", 'N/runtime',
@@ -37,7 +36,6 @@ define([
                 internalid: curRec.id
             });
             if(arrLine01.length == 0) return false;
-            log.error("hoan check 1")
             return true;
         }
 
@@ -55,7 +53,6 @@ define([
                     printFile: "scv_print_po_id",
                 }
             });
-            log.error("hoan check 2")
 
             form.addButton({
                 id: "custpage_scv_btn_print_po_id_pdf",
@@ -66,7 +63,6 @@ define([
 
         const generateFilePDF = (_params) => {
             commonExtPerformance.startTime("scv_print_po_id");
-            log.error("hoan check 3")
             let curRec = record.load({ type: _params.recordType, id: _params.recordId });
 
             if (!validatePrint(curRec)){
@@ -95,64 +91,67 @@ define([
             let arrLine01 = constSearchPrintPOID01.getDataSource({
                 internalid: curRec.id
             });
+
+            // log.error("hoan arrLine01" , arrLine01);
             let objResult = {};
             let objLineFirst = arrLine01[0] ?? {};
 
-            let workItemCode = [];
-            let contractPrice = 0;
-            let vat = 0;
-            let grandTotalPrice = 0;
+            let contractPrice = null;
+            let vat = null;
 
             arrLine01.forEach(item => {
-                if (item._10_work_item_code) {
-                    workItemCode.push(item._10_work_item_code);
+                let contract_price_item = null;
+                if (item._12_contract_price) {
+                        contract_price_item = item._12_contract_price * 1
+                    }
+                
+                let vat_item = null;
+                if (item._13_vat) {
+                    vat_item = item._13_vat * 1;
                 }
-
-                contractPrice += Number(item._12_contract_price) || 0;
-                vat += Number(item._13_vat) || 0;
-                grandTotalPrice += Number(item._14_grand_total_price) || 0;
+                contractPrice +=contract_price_item;
+                vat +=vat_item;
             });
-
-            workItemCode = workItemCode.join(", ");
             objResult = {
                 project: objLineFirst._1_projects_display || "",
                 subCon: objLineFirst._2_sub_contractor_s_name || "",
                 subConAddress: objLineFirst._3_sub_contractor_s_address || "",
                 subConPhone: objLineFirst._4_sub_contractor_s_phone || "",
-                subConFax: objLineFirst._5_sub_contractor_s_fax || "",
-                attention: objLineFirst._6_attention_display || "",
-                date: objLineFirst._7_date || "",
-                poNumber: objLineFirst._8_p_o_no || "",
-                yourRef: objLineFirst._9_your_ref || "",
-                workItemCode: workItemCode || "",
-                scopeOfWork: objLineFirst._11_scope_of_work || "",
-                contractPrice: contractPrice ,
-                vat: vat ,
-                grandTotalPrice: grandTotalPrice ,
-                typeOfContract: objLineFirst._15_type_of_contract_display || "",
-                commencementDate: objLineFirst._16_date_of_commencement || "",
-                completionDate: objLineFirst._17_date_of_completion || "",
-                retention: objLineFirst._18_retention_display || "",
-                insurance: objLineFirst._19_insurance_display || "",
-                warranty: objLineFirst._20_warranty_display || "",
-                maintenance: objLineFirst._21_maintenance || "",
-                attachments: objLineFirst._22_attachments.replace(/\r?\n/g, '<br/>') || "",
-                termsOfPayment:  objLineFirst._23_terms_of_payment.replace(/\r?\n/g, '<br/>') ||  "" ,
-            };
-
-            if(!isNaN(objResult.contractPrice)){
-                objResult.contractPrice = formatNumberByKey(objResult.contractPrice);
-            }
-            if(!isNaN(objResult.vat)){
-                objResult.vat = formatNumberByKey(objResult.vat);
-            }
-            if(!isNaN(objResult.grandTotalPrice)){
-                objResult.grandTotalPrice = formatNumberByKey(objResult.grandTotalPrice);
-            }
-
+                attention: objLineFirst._5_attention_display || "",
+                date: objLineFirst._6_date || "",
+                poNumber: objLineFirst._7_p_o_no || "",
+                yourRef: objLineFirst._8_your_ref || "",
+                workItemCode: objLineFirst._9_work_item_code || "",
+                scopeOfWork: objLineFirst._10_scope_of_work || "",
+                currency: objLineFirst._11_currency_display || "",
+                contractPrice:  contractPrice === 0 &&
+                    arrLine01.every(e =>
+                        e._12_contract_price === "" ||
+                        e._12_contract_price === null ||
+                        e._12_contract_price === undefined
+                    )
+                        ? { currency: '', amount: '' }
+                        : buildCurrencyAmount(objLineFirst._11_currency_display, contractPrice),
+                vat: vat === 0 &&
+                    arrLine01.every(e =>
+                        e._13_vat === "" ||
+                        e._13_vat === null ||
+                        e._13_vat === undefined 
+                    )
+                        ? { currency: '', amount: '' }
+                        : buildCurrencyAmount(objLineFirst._11_currency_display, vat),
+                typeOfContract: objLineFirst._14_type_of_contract_display || "",
+                commencementDate: objLineFirst._15_date_of_commencement || "",
+                completionDate: objLineFirst._16_date_of_completion || "",
+                retention: objLineFirst._17_retention_display || "",
+                insurance: objLineFirst._18_insurance_display || "",
+                warranty: objLineFirst._19_warranty_display || "",
+                maintenance: objLineFirst._20_maintenance || "",
+                termsOfPayment: objLineFirst._21_terms_of_payment || ""
+            };          
             libPdf.formatDataXMLWithObject(objResult);
 
-             objResult.tagImgLogo =  libPdf.createImageBySubsidiaryV2(subsidiaryRec, 120);
+            objResult.tagImgLogo =  libPdf.createImageBySubsidiaryV2(subsidiaryRec, 120);
 
             renderer.addCustomDataSource({
                 format: "OBJECT",
@@ -168,6 +167,23 @@ define([
                 groupSeparator: ',',
                 decimalSeparator: '.',
             });
+        }
+
+        const buildCurrencyAmount = (currency, amount) => {
+            if (!amount && amount !== 0) {
+                return { currency: '', amount: '' };
+            }
+
+            let formatted = formatNumberByKey(amount);
+
+            if (!formatted) {
+                return { currency: '', amount: '' };
+            }
+
+            return {
+                currency: currency || '',
+                amount: formatted
+            };
         }
 
         return { addBtnPrint, generateFilePDF };

@@ -291,7 +291,7 @@ define([
                 return { currency: '', amount: '' };
             }
 
-            let formatted = constFormat.formatNumber(amount, 0, {
+            let formatted = constFormat.formatNumber(amount, 2, {
                 groupSeparator: ',',
                 decimalSeparator: '.',
             });

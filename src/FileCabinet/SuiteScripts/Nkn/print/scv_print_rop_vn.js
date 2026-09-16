@@ -95,12 +95,6 @@ define([
             let objLineFirst = arrLine01[0];
             let objLookup = objLineFirst.objLookup || {};
 
-            const buildCurrencyAmount = (currency, amount) => {
-                if (amount === null || amount === undefined || amount === '') return { currency: '', amount: '' };
-                let formatted = constFormat.formatNumber(amount, 0, { groupSeparator: ',', decimalSeparator: '.' });
-                return { currency: currency || '', amount: formatted || '' };
-            };
-
             const arrLine = [];
             let totalContractAmount = 0, totalPrevApprovedAmount = 0, totalThisApprovedAmount = 0, totalAccumulateAmount = 0, totalBalance = 0, totalRetention = 0, totalTaxAmount = 0;
             let hasContractAmount = false, hasPrevApprovedAmount = false, hasThisApprovedAmount = false, hasAccumulateAmount = false, hasBalance = false, hasRetention = false, hasTaxAmount = false;
@@ -220,22 +214,9 @@ define([
             return renderer;
         };
         const buildCurrencyAmount = (currency, amount) => {
-            if (amount === null || amount === undefined || amount === '') {
-                return {
-                    currency: '',
-                    amount: ''
-                };
-            }
-
-            const formatted = constFormat.formatNumber(amount, 0, {
-                groupSeparator: ',',
-                decimalSeparator: '.',
-            });
-
-            return {
-                currency: currency || '',
-                amount: formatted || ''
-            };
+                if (amount === null || amount === undefined || amount === '') return { currency: '', amount: '' };
+                let formatted = constFormat.formatNumber(amount, 2, { groupSeparator: ',', decimalSeparator: '.' });
+                return { currency: currency || '', amount: formatted || '' };
         };
 
         return { addBtnPrint, generateFilePDF };

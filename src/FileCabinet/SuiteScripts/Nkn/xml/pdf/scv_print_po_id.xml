@@ -16,7 +16,6 @@
         .border-none td,
         .border-none th {
             border: none;
-           
         }
     </style>
 
@@ -39,32 +38,71 @@
                     </tr>
                 </table>
             </td>
-            <td colspan="40" class="align-center" style="margin:3px 0">
-                <b class="fs-16 " >PURCHASE ORDER</b>
+            <td colspan="40" class="align-center">
+                <table style="width: 100%;">
+                    <tr>
+                        <td class="align-right">
+                            <p >FORM 1: SUB-CONTRACTOR</p>
+                        </td>
+                    </tr>
+                    <tr height="40px">
+                        <td style="background-color:blue; color:white; font-weight:900;"  class=" valign-middle ">
+                            <b class="fs-16" >PURCHASE ORDER</b>
+                        </td>
+                    </tr>
+                </table>
             </td>
         </tr>
    </table>
 
-   <p class="fs-12"><b>PROJECT: ${result.project}</b></p>
+    <table border-top="1" class="mt-1">
+        <tr class="py-3">
+            <td> 
+                <p class="fs-12">PROJECT: ${result.project}</p>
+            </td>
+        </tr>
+    </table>
 
-   <table>
+    <table>
         <tr>
             <td colspan="60">
-                <table class="border-table"  border-top="1">
+                <table class="border-table" border-top="1">
                     <tr>
                         <td><b>SUB-CONTRACTOR'S NAME &amp; ADDRESS</b></td>
                     </tr>
                     <tr>
                         <td>
-                            <p> ${result.subCon}</p>
-                            <p> ${result.subConAddress}</p>
+                            <p>${result.subCon}</p>
+                            <p>${result.subConAddress}</p>
                             <table class="border-none">
                                 <tr>
-                                    <td> 
-                                        <p> TEL:  ${result.subConPhone}</p> 
+                                    <td style=" border-right: none;" >
+                                        <p>TEL: ${result.subConPhone}</p>
                                     </td>
-                                    <td style=" border-right: none;">
-                                        <p> FAX:  ${result.subConFax}</p>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>ATTENTION:</b> <span>${result.attention}</span></td>
+                    </tr>
+                </table>
+            </td>
+
+            <td colspan="35">
+                <table class="border-table" width="100%" border-top="1">
+                    <tr>
+                        <td colspan="100">
+                            <table class="border-none" width="100%">
+                                <tr>
+                                    <td colspan="35">
+                                        <b>Date</b>
+                                    </td>
+                                    <td colspan="5">
+                                        <b>:</b>
+                                    </td>
+                                    <td colspan="60" style=" border-right: none;">
+                                        <p>${result.date}</p>
                                     </td>
                                 </tr>
                             </table>
@@ -72,49 +110,50 @@
                     </tr>
 
                     <tr>
-                        <td><b>ATTENTION:</b> <span>  ${result.attention} </span> </td>
-                    </tr>
-                </table>
-            </td>
-
-             <td colspan="35">
-                <table class="border-table "  width="100%"  border-top="1"> 
-                    <tr>
-                        <td colspan="35">
-                            <b>Date</b>
-                        </td>
-                        <td colspan="65">
-                               <p> ${result.date}</p>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td colspan="35">
-                            <b>P.O. NO.</b>
-                        </td>
-                        <td colspan="65">
-                           <p> ${result.poNumber}</p>
+                        <td colspan="100">
+                            <table class="border-none" width="100%">
+                                <tr>
+                                    <td colspan="35">
+                                        <b>P.O. NO.</b>
+                                    </td>
+                                    <td colspan="5">
+                                        <b>:</b>
+                                    </td>
+                                    <td colspan="60" style=" border-right: none;">
+                                        <p>${result.poNumber}</p>
+                                    </td>
+                                </tr>
+                            </table>
                         </td>
                     </tr>
 
                     <tr>
-                        <td colspan="35">
-                            <b>YOUR REF.</b>
-                        </td>
-                        <td colspan="65">
-                           <p> ${result.yourRef}</p>
+                        <td colspan="100">
+                            <table class="border-none" width="100%">
+                                <tr>
+                                    <td colspan="35">
+                                        <b>YOUR REF.</b>
+                                    </td>
+                                    <td colspan="5">
+                                        <b>:</b>
+                                    </td>
+                                    <td colspan="60" style=" border-right: none;">
+                                        <p>${result.yourRef}</p>
+                                    </td>
+                                </tr>
+                            </table>
                         </td>
                     </tr>
 
                     ${libPdf.rowcol100}
                 </table>
+
+                <p class="align-center">(SA 0112)</p>
             </td>
         </tr>
+    </table>
 
-   </table>
-
-   <p> The provision and conditions attached are part of this order which is placed and accepted upon such provisions and conditions.
-    It is also condition of this order that sub-contractor shall follow strictly all attached instructions and specification. </p>
+   <p> The provision and conditions attached are part of this order which is placed and accepted upon such provisions and conditions. It is also condition of this order that sub-contractor shall follow strictly all attached instructions and specification. </p>
 
     <table class="border-table"  border-top="1" width="100%">
         <tr>
@@ -126,141 +165,78 @@
         <tr>
             <td colspan="100">
                 <table class="border-none" >
-                    <tr style="margin-bottom:20px">
+                    <tr style="margin-bottom:10px">
                         <td colspan="100" style=" border-right: none;"> 
                             <p class="align-center"> ${result.workItemCode} </p>
                         </td>
                     </tr>
 
                     <tr>
-                        <td colspan="35">
-                            <p class="align-right"><b>SCOPE OF WORK: </b></p>
-                        </td>
-                        <td colspan="1"></td>
-                        <td colspan="64" style="border-right: none;">
-                             <p> <b> ${result.scopeOfWork}</b></p>
-                        </td>
+                        <td colspan="10"></td>
+                        <td colspan="35"><p>SCOPE OF WORK</p></td>
+                        <td colspan="2"><p>:</p></td>
+                        <td colspan="53" style="border-right: none;"><p>${result.scopeOfWork}</p></td>
                     </tr>
-
                     <tr>
-                        <td colspan="35">
-                            <p class="align-right"><b>CONTRACT PRICE: </b></p>
-                        </td>
-                        <td colspan="1"></td>
-                        <td colspan="64" style="border-right: none;">
-                            <p>${result.contractPrice}</p>
-                        </td>
+                        <td colspan="10"></td>
+                        <td colspan="35"><p>CONTRACT PRICE</p></td>
+                        <td colspan="2"><p>:</p></td>
+                        <td colspan="53" style="border-right: none;"><p>${result.contractPrice.currency} ${result.contractPrice.amount} </p></td>
                     </tr>
-
                     <tr>
-                        <td colspan="35">
-                            <p class="align-right"><b>VAT: </b></p>
-                        </td>
-                        <td colspan="1"></td>
-                        <td colspan="64" style="border-right: none;">
-                            <p>${result.vat}</p>
-                        </td>
+                        <td colspan="10"></td>
+                        <td colspan="35"><p>VAT (12% x 11/12)</p></td>
+                        <td colspan="2"><p>:</p></td>
+                        <td colspan="53" style="border-right: none;"><p>${result.vat.currency} ${result.vat.amount}</p></td>
                     </tr>
-
                     <tr>
-                        <td colspan="35">
-                            <p class="align-right"><b>GRAND TOTAL PRICE: </b></p>
-                        </td>
-                        <td colspan="1"></td>
-                        <td colspan="64" style="border-right: none;">
-                            <p>${result.grandTotalPrice}</p>
-                        </td>
+                        <td colspan="10"></td>
+                        <td colspan="35"><p>TYPE OF CONTRACT</p></td>
+                        <td colspan="2"><p>:</p></td>
+                        <td colspan="53" style="border-right: none;"><p>${result.typeOfContract}</p></td>
                     </tr>
-
-
-                    <tr style="height:40px">
-                        <td colspan="35">
-                        </td>
-                        <td colspan="1"></td>
-                        <td colspan="64" style="border-right: none;">
-                        </td>
-                    </tr>
-
                     <tr>
-                        <td colspan="35">
-                            <p class="align-right"><b>TYPE OF CONTRACT: </b></p>
-                        </td>
-                        <td colspan="1"></td>
-                        <td colspan="64" style="border-right: none;">
-                            <p>${result.typeOfContract}</p>
-                        </td>
+                        <td colspan="10"></td>
+                        <td colspan="35"><p>DATE OF COMMENCEMENT</p></td>
+                        <td colspan="2"><p>:</p></td>
+                        <td colspan="53" style="border-right: none;"><p>${result.commencementDate}</p></td>
                     </tr>
-
                     <tr>
-                        <td colspan="35">
-                            <p class="align-right"><b>DATE OF COMMENCEMENT: </b></p>
-                        </td>
-                        <td colspan="1"></td>
-                        <td colspan="64" style="border-right: none;">
-                            <p>${result.commencementDate}</p>
-                        </td>
+                        <td colspan="10"></td>
+                        <td colspan="35"><p>DATE COMPLETION</p></td>
+                        <td colspan="2"><p>:</p></td>
+                        <td colspan="53" style="border-right: none;"><p>${result.completionDate}</p></td>
                     </tr>
-
                     <tr>
-                        <td colspan="35">
-                            <p class="align-right"><b>DATE OF COMPLETION: </b></p>
-                        </td>
-                        <td colspan="1"></td>
-                        <td colspan="64" style="border-right: none;">
-                            <p>${result.workItemCode}</p>
-                        </td>
+                        <td colspan="10"></td>
+                        <td colspan="35"><p>RETENTION</p></td>
+                        <td colspan="2"><p>:</p></td>
+                        <td colspan="53" style="border-right: none;"><p>${result.retention}</p></td>
                     </tr>
-
                     <tr>
-                        <td colspan="35">
-                            <p class="align-right"><b>RETENTION: </b></p>
-                        </td>
-                        <td colspan="1"></td>
-                        <td colspan="64" style="border-right: none;">
-                            <p>${result.retention}</p>
-                        </td>
+                        <td colspan="10"></td>
+                        <td colspan="35"><p>INSURANCE</p></td>
+                        <td colspan="2"><p>:</p></td>
+                        <td colspan="53" style="border-right: none;"><p>${result.insurance}</p></td>
                     </tr>
-
                     <tr>
-                        <td colspan="35">
-                            <p class="align-right"><b>INSURANCE: </b></p>
-                        </td>
-                        <td colspan="1"></td>
-                        <td colspan="64" style="border-right: none;">
-                            <p>${result.insurance}</p>
-                        </td>
+                        <td colspan="10"></td>
+                        <td colspan="35"><p>WARANTY</p></td>
+                        <td colspan="2"><p>:</p></td>
+                        <td colspan="53" style="border-right: none;"><p>${result.warranty}</p></td>
                     </tr>
-
                     <tr>
-                        <td colspan="35">
-                            <p class="align-right"><b>WARRANTY: </b></p>
-                        </td>
-                        <td colspan="1"></td>
-                        <td colspan="64" style="border-right: none;">
-                            <p>${result.warranty}</p>
+                        <td colspan="10"></td>
+                        <td colspan="35"><p>MAINTENANCE</p></td>
+                        <td colspan="2"><p>:</p></td>
+                        <td colspan="53" style="border-right: none;"><p>${result.maintenance}</p></td>
+                    </tr>
+                    <tr class="mt-5">
+                        <td colspan="10"></td>
+                        <td colspan="90" style="border-right: none;">
+                            <p>THE CONTRACT PRICE IS SUBJECT TO WITHHOLDING INCOME TAX IN ACCORDANCE WITH THE APPLICABLE TAX REGULATIONS SUPPORTED BY VALID CERTIFICATION</p>
                         </td>
                     </tr>
-
-                    <tr>
-                        <td colspan="35">
-                            <p class="align-right"><b>MAINTENANCE: </b></p>
-                        </td>
-                        <td colspan="1"></td>
-                        <td colspan="64" style="border-right: none;">
-                            <p>${result.maintenance}</p>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td colspan="35" class="valign-top">
-                            <p class="align-right"><b>ATTACHMENTS: </b></p>
-                        </td>
-                        <td colspan="1"></td>
-                        <td colspan="64" style="border-right: none;">
-                            <p>${result.attachments}</p>
-                        </td>
-                    </tr>
-
                 </table>
             </td>
         </tr>
@@ -276,12 +252,11 @@
          <tr>
              <td colspan="100">
                 <table width="100%" class="border-none">
-                    
                     <tr>
-                        <td style=" border-right: none;">
+                        <td style=" border-right: none; min-height: 100px;"  >
                             <p style=" margin-left: 30px;">${result.termsOfPayment}</p>
                             <br/>
-                            <p>Please indicate our P.O. number on every of your invoices.</p>
+                            <!-- <p class="fs-8">Please indicate our P.O. number on every of your invoices.</p> -->
                         </td>
                     </tr>
                 </table>
@@ -289,30 +264,83 @@
         </tr>
     </table>
 
-    <table width="100%" class="mt-5" border-bottom="1" >
+    <table class="mt-5" width="100%" border-bottom="1">
         <tr>
-            <td colspan="50" class="align-center">
-                <p><b>${(subsidiary.legalname!"")?upper_case}</b></p>
-                <table width="80%" border-bottom="1" height="50px">
-                    <tr>
-                        <td ></td>
-                    </tr>
-                </table>
-                <p class="p-5"><b></b></p>
+            <td colspan="100">
+                <p class="fs-12">
+                    <b>${subsidiary.legalname}</b>
+                </p>
+            </td>
+        </tr>
+
+        <tr height="80px">
+            <td colspan="100"></td>
+        </tr>
+
+        <tr class="mb-2">
+            <td colspan="30" style="border-bottom: 1px solid black;">
             </td>
 
-            <td colspan="50" class="align-center">
-                <p><b>${result.subCon}</b></p>
-                <table width="80%" border-bottom="1"  height="50px">
-                    <tr>
-                        <td ></td>
-                    </tr>
-                </table>
-                <p class="p-5"><b></b></p>
+            <td colspan="3">
+            </td>
+
+            <td colspan="2"></td>
+
+            <td colspan="33" style="border-bottom: 1px dotted black;">
+            </td>
+
+            <td colspan="2"></td>
+
+            <td colspan="30" style="border-bottom: 1px dotted black;">
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="33">
+                <p class="fs-12" >
+                    PRESIDENT DIRECTOR
+                </p>
+            </td>
+
+            <td colspan="2"></td>
+
+            <td colspan="33">
+                <p >
+                    COMPANY'S CHOP &amp; SIGN
+                </p>
+            </td>
+
+            <td colspan="2"></td>
+
+            <td colspan="30">
+                <p >
+                    DATE
+                </p>
             </td>
         </tr>
     </table>
-    <p  class="align-right"> Note: Please endorse, sign and return us one copy. </p>
 
+    <table class="mt-1"  width="100%" border-top="1">
+        <tr>
+            <td  class="align-right">
+                <p>
+                    Note : Please endorse, sign and return us the duplicate copy
+                </p>
+            </td>
+
+            
+        </tr>
+
+        <tr>
+            
+
+            <td class="align-right" >
+                <p>
+                    FRM/PCH/08/03/24
+                </p>
+            </td>
+        </tr>
+    </table>
+   
 </body>
 </pdf>
