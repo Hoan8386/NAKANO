@@ -157,20 +157,20 @@
                             <td colspan="13">${item.invRefNo}</td>
                             <td colspan="11">${item.poNo}</td>
                             <td colspan="11">${item.workItemDisplay}</td>
-                            <td colspan="13">${item.contract}</td>
-                            <td colspan="13">${item.approvedAccumulation}</td>
-                            <td colspan="13">${item.prevApproved}</td>
-                            <td colspan="13">${item.currentlyApproved}</td>
-                            <td colspan="13">${item.presentRetention}</td>
+                            <td colspan="13" class="align-center">${item.contract}</td>
+                            <td colspan="13" class="align-center">${item.approvedAccumulation}</td>
+                            <td colspan="13" class="align-center">${item.prevApproved}</td>
+                            <td colspan="13" class="align-center">${item.currentlyApproved}</td>
+                            <td colspan="13" class="align-center">${item.presentRetention}</td>
                         </tr>
                     </#list>
                     <tr>
                         <td colspan="35"></td>
-                        <td colspan="13">${result.totalContract}</td>
-                        <td colspan="13">${result.totalApprovedAccumulation}</td>
-                        <td colspan="13">${result.totalPrevApproved}</td>
-                        <td colspan="13">${result.totalCurrentlyApproved}</td>
-                        <td colspan="13">${result.totalPresentRetention}</td>
+                        <td colspan="13" class="align-center">${result.totalContract}</td>
+                        <td colspan="13" class="align-center">${result.totalApprovedAccumulation}</td>
+                        <td colspan="13" class="align-center">${result.totalPrevApproved}</td>
+                        <td colspan="13" class="align-center">${result.totalCurrentlyApproved}</td>
+                        <td colspan="13" class="align-center">${result.totalPresentRetention}</td>
                     </tr>
             </tbody>
         </table>
