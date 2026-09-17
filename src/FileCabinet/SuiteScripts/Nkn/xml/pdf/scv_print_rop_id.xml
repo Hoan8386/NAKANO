@@ -239,7 +239,7 @@
 
                 <tr class="mt-3">
                     <td colspan="100" class="align-right">
-                        ROP Date : ${result.ropDate}
+                        ROP Date : ${result.date}
                     </td>
                 </tr>
             ${libPdf.rowcol100}

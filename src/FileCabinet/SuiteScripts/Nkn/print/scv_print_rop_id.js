@@ -85,7 +85,7 @@ define([
             return filePDF;
         };
 
-        const rennderPDF = (curRec) =>{
+        const rennderPDF = (curRec) => {
             let subsidiaryId = curRec.getValue("subsidiary");
             let subsidiaryRec = record.load({type: "subsidiary", id: subsidiaryId});
 
@@ -93,19 +93,25 @@ define([
 
             renderer.addRecord('subsidiary', subsidiaryRec);
 
-            let objResult ={}
+            let objResult = {};
             const arrVendbill = constSearchRopId01.getDataSource({
                 internalid: curRec.id
             });
-            const arrPrevApproval = constSearchRopId02.getDataSource({internalid:curRec.id});
+            const arrPrevApproval = constSearchRopId02.getDataSource({
+                internalid: curRec.id
+            });
+
             let projectId = curRec.getValue('cseg_scv_sg_proj');
             let objLookup = search.lookupFields({
                 type: 'customrecord_cseg_scv_sg_proj',
                 id: projectId,
-                columns: ['custrecord_scv_project_source.entityid' , 'custrecord_scv_project_source.companyname' ]
+                columns: [
+                    'custrecord_scv_project_source.entityid',
+                    'custrecord_scv_project_source.companyname'
+                ]
             });
 
-            log.error("hoan arrVendbill" , arrVendbill);
+
             let objLineFirst = arrVendbill[0] ?? {};
 
             let totalContract = 0;
@@ -113,6 +119,7 @@ define([
             let totalCurrentlyApproved = 0;
             let totalPresentRetention = 0;
             let totalApprovedAccumulation = 0;
+
             let arrItem = arrVendbill.map(item => {
                 let objSS2 = arrPrevApproval.find(itemSS2 =>
                     itemSS2.po_internal_id === item.po_internal_id &&
@@ -143,36 +150,36 @@ define([
             });
 
             objResult = {
-                tagImgLogo:libPdf.createImageBySubsidiaryV2(subsidiaryRec,120),
-                pjName:objLookup['custrecord_scv_project_source.companyname'] || '',
-                pjCode:objLookup['custrecord_scv_project_source.entityid'] || '',
-                docNumber:objLineFirst._1_document_number || '',
-                date:objLineFirst._2_date || '',
-                claimantNo:objLineFirst._3_claimant_no || '',
-                claimantName:objLineFirst._4_claimant_name || '',
-                memo:objLineFirst._10_memo || '',
-                remark:objLineFirst._11_remark || '',
-                ropReceivedOn:objLineFirst._12_rop_received_on || '',
-                paymentDate:objLineFirst._13_payment_date || '',
-                vat:objLineFirst._14_vat || '',
-                retention:objLineFirst._15_retetion || '',
-                retentionDisplay:objLineFirst._15_retetion_display || '',
+                tagImgLogo: libPdf.createImageBySubsidiaryV2(subsidiaryRec, 120),
+                pjName: objLookup['custrecord_scv_project_source.companyname'] || '',
+                pjCode: objLookup['custrecord_scv_project_source.entityid'] || '',
+                docNumber: objLineFirst._1_document_number || '',
+                date: objLineFirst._2_date || '',
+                claimantNo: objLineFirst._3_claimant_no || '',
+                claimantName: objLineFirst._4_claimant_name || '',
+                memo: objLineFirst._10_memo || '',
+                remark: objLineFirst._11_remark || '',
+                ropReceivedOn: objLineFirst._12_rop_received_on || '',
+                paymentDate: objLineFirst._13_payment_date || '',
+                vat: objLineFirst._14_vat || '',
+                retention: objLineFirst._15_retetion || '',
+                retentionDisplay: objLineFirst._15_retetion_display || '',
                 arrItem,
-                totalContract:formatNumberByKey(totalContract),
-                totalApprovedAccumulation:formatNumberByKey(totalApprovedAccumulation),
-                totalPrevApproved:formatNumberByKey(totalPrevApproved),
-                totalCurrentlyApproved:formatNumberByKey(totalCurrentlyApproved),
-                totalPresentRetention:formatNumberByKey(totalPresentRetention)
+                totalContract: formatNumberByKey(totalContract),
+                totalApprovedAccumulation: formatNumberByKey(totalApprovedAccumulation),
+                totalPrevApproved: formatNumberByKey(totalPrevApproved),
+                totalCurrentlyApproved: formatNumberByKey(totalCurrentlyApproved),
+                totalPresentRetention: formatNumberByKey(totalPresentRetention)
             };
 
             renderer.addCustomDataSource({
                 format: "OBJECT",
                 alias: 'result',
                 data: objResult
-            })
+            });
 
             return renderer;
-        }
+        };
 
         const formatNumberByKey = (_number) =>{
             return constFormat.formatNumber(_number, 2, {
