@@ -27,29 +27,29 @@
     <body padding="0.3in 0.3in 1in 0.3in" size="A4">
         <table width="100%">
             <tr>
-                <td colspan="30" >
+                <td colspan="20" >
                     ${result.tagImgLogo} 
                 </td>
-                  <td colspan="70" >
+                  <td colspan="80" >
                     <span>${subsidiary.legalname}  </span>
                 </td>
             </tr>
             
             <tr>
-                <td colspan="100" class="align-center fs-13">
+                <td colspan="100" class="align-center fs-14">
                     <b><u> RECOMMENDATION OF PAYMENT </u> </b> 
                 </td>
             </tr>
 
-            <tr>
+            <tr class="mt-5">
                 <td colspan="60" >
                 </td>
                 <td colspan="40" >
                     <table class="border-table" border-top="1">
                         <tr>
                             <td>Voucher No.</td>
-                                ${result.docNumber}
-                            <td></td>
+                              
+                            <td>  ${result.docNumber}</td>
                         </tr>
                          <tr>
                             <td>Date </td>
@@ -58,26 +58,21 @@
                     </table>
                 </td>
             </tr>
-            {libPdf.rowcol100}
+            ${libPdf.rowcol100}
         </table>
 
-        <table>
+        <table class="mt-5">
             <tr>
                 <td>
                     <table>
                         <tr>
-                            <td>
-                                <p><b>1.  PROJECT NO.</b></p>
+                            <td colspan="40">
+                                <p><b>1.PROJECT NO.</b></p>
                             </td>
-                            <td>
+                            <td colspan="60">
                                 <table class="border-table" border-top="1"> 
                                     <tr>
                                         <td> ${result.pjCode}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
                                     </tr>
                                 </table>
                             </td>
@@ -88,10 +83,10 @@
                 <td>
                     <table>
                         <tr>
-                            <td>
+                            <td colspan="40">
                                 <p><b>3.  PROJECT NAME</b></p>
                             </td>
-                            <td>
+                            <td colspan="60">
                                 <table class="border-table" border-top="1"> 
                                     <tr>
                                         <td><p>${result.pjName}</p></td>
@@ -108,18 +103,13 @@
                 <td>
                     <table>
                         <tr>
-                            <td>
+                            <td colspan="40">
                                 <p><b>2.  CLAIMANT NO. </b></p>
                             </td>
-                            <td>
+                            <td colspan="60">
                                 <table class="border-table" border-top="1"> 
                                     <tr>
                                         <td>${result.claimantNo}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
                                     </tr>
                                 </table>
                             </td>
@@ -130,10 +120,10 @@
                 <td>
                     <table>
                         <tr>
-                            <td>
+                            <td colspan="40">
                                 <p><b>4. CLAIMANT NAME</b></p>
                             </td>
-                            <td>
+                            <td colspan="60">
                                 <table class="border-table" border-top="1"> 
                                     <tr>
                                         <td><p>${result.claimantName}</p></td>
@@ -146,5 +136,151 @@
                 
             </tr>
         </table>
+
+        <table class="border-table mt-5">
+            <thead>
+                <tr>
+                    <th colspan="13"> <b>INVOICE / REF <br/>NO.</b></th>
+                    <th colspan="11"> <b>PO NO.</b> </th>
+                    <th colspan="11"> <b>WORK ITEM </b> </th>
+                    <th colspan="13"> <b>CONTRACT</b></th>
+                    <th colspan="13"> <b>APPROVED<br/>ACCUMULATION</b></th>
+                    <th colspan="13"> <b>PREV. APPROVED<br/>(Incl. Retention)</b></th>
+                    <th colspan="13"> <b>CURRENTLY<br/>APPROVED</b></th>
+                    <th colspan="13"> <b>PRESENT<br/>RETENTION (${result.retentionDisplay})</b></th>
+                </tr>
+            </thead>
+
+            <tbody>
+                   <#list result.arrItem as item>
+                        <tr>
+                            <td colspan="13">${item.invRefNo}</td>
+                            <td colspan="11">${item.poNo}</td>
+                            <td colspan="11">${item.workItemDisplay}</td>
+                            <td colspan="13">${item.contract}</td>
+                            <td colspan="13">${item.approvedAccumulation}</td>
+                            <td colspan="13">${item.prevApproved}</td>
+                            <td colspan="13">${item.currentlyApproved}</td>
+                            <td colspan="13">${item.presentRetention}</td>
+                        </tr>
+                    </#list>
+                    <tr>
+                        <td colspan="35"></td>
+                        <td colspan="13">${result.totalContract}</td>
+                        <td colspan="13">${result.totalApprovedAccumulation}</td>
+                        <td colspan="13">${result.totalPrevApproved}</td>
+                        <td colspan="13">${result.totalCurrentlyApproved}</td>
+                        <td colspan="13">${result.totalPresentRetention}</td>
+                    </tr>
+            </tbody>
+        </table>
+        <table class="mt-5">
+                <tr class="py-3"> 
+                    <td colspan="20">
+                        <b>5. ROP Received On</b>
+                    </td>
+
+                    <td colspan="2"></td>
+
+                    <td colspan="28" border="1">
+                        ${result.ropReceivedOn}
+                    </td>
+
+                    <td colspan="5"></td>
+
+                    <td colspan="15">
+                        <b>6. Payment Date</b>
+                    </td>
+
+                    <td colspan="30" border="1">
+                        ${result.paymentDate}
+                    </td>
+                </tr>
+
+                <tr class="py-3">
+                    <td colspan="15">
+                        <b>7. Description</b>
+                    </td>
+                    <td colspan="2">
+                        :
+                    </td>
+                    <td colspan="83" border-bottom="1">
+                        ${result.memo}
+                    </td>
+                </tr>
+
+                <tr class="py-3">
+                    <td colspan="15">
+                        <b>8. VAT</b>
+                    </td>
+                    <td colspan="2">
+                        :
+                    </td>
+                    <td colspan="83" border-bottom="1">
+                        ${result.vat}
+                    </td>
+                </tr>
+
+                <tr class="py-3">
+                    <td colspan="15">
+                        <b>9. Remarks</b>
+                    </td>
+                    <td colspan="2">
+                        :
+                    </td>
+                    <td colspan="83"  border-bottom="1">
+                        ${result.remark}
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="100"></td>
+                </tr>
+
+                <tr class="mt-3">
+                    <td colspan="100" class="align-right">
+                        ROP Date : ${result.ropDate}
+                    </td>
+                </tr>
+            ${libPdf.rowcol100}
+        </table>
+
+        <table class="border-table align-center" border-top="1">
+                <tr height="20">
+                    <th colspan="50"><b>HEAD OFFICE</b></th>
+                    <th colspan="50"><b>SITE OFFICE</b></th>
+                </tr>
+
+                <tr height="20">
+                    <th colspan="17"><b>APPROVED BY</b></th>
+                    <th colspan="17"><b>VERIFIED BY</b></th>
+                    <th colspan="16"><b>CHECKED BY</b></th>
+
+                    <th colspan="17"><b>APPROVED BY</b></th>
+                    <th colspan="17"><b>VERIFIED BY</b></th>
+                    <th colspan="16"><b>ISSUED BY</b></th>
+                </tr>
+                <tr height="100">
+                    <td colspan="17">
+                    </td>
+
+                    <td colspan="17">
+                    </td>
+
+                    <td colspan="16">
+                    </td>
+
+                    <td colspan="17">
+                    </td>
+
+                    <td colspan="17">
+                    </td>
+
+                    <td colspan="16">
+                    </td>
+                </tr>
+        </table>
+
+        <p class="align-right">FRM/PCH/09/03/13</p>
 </body>
 </pdf>

@@ -93,12 +93,11 @@ define([
 
             renderer.addRecord('subsidiary', subsidiaryRec);
 
-            const showNullDisplay = (_value) => _value?.toString() ? _value : "Not Applicable";
             let objResult ={}
             const arrVendbill = constSearchRopId01.getDataSource({
                 internalid: curRec.id
             });
-
+            const arrPrevApproval = constSearchRopId02.getDataSource({internalid:curRec.id});
             let projectId = curRec.getValue('cseg_scv_sg_proj');
             let objLookup = search.lookupFields({
                 type: 'customrecord_cseg_scv_sg_proj',
@@ -109,27 +108,61 @@ define([
             log.error("hoan arrVendbill" , arrVendbill);
             let objLineFirst = arrVendbill[0] ?? {};
 
+            let totalContract = 0;
+            let totalPrevApproved = 0;
+            let totalCurrentlyApproved = 0;
+            let totalPresentRetention = 0;
+            let totalApprovedAccumulation = 0;
+            let arrItem = arrVendbill.map(item => {
+                let objSS2 = arrPrevApproval.find(itemSS2 =>
+                    itemSS2.po_internal_id === item.po_internal_id &&
+                    itemSS2.ori_line_id === item.ori_line_id
+                ) || {};
+
+                let currentlyApproved = item._9_currently_approved * 1 || 0;
+                let prevApproved = objSS2._2_prev_approval * 1 || 0;
+                let approvedAccumulation = currentlyApproved + prevApproved || 0;
+                let retention = item._15_retetion * 1 || 0;
+
+                totalContract += item._8_contract * 1 || 0;
+                totalApprovedAccumulation += approvedAccumulation;
+                totalPrevApproved += prevApproved;
+                totalCurrentlyApproved += currentlyApproved;
+                totalPresentRetention += currentlyApproved * retention;
+
+                return {
+                    invRefNo: item._5_inv_ref_no || '',
+                    poNo: item._6_po_no || '',
+                    workItemDisplay: item._7_work_item_display || '',
+                    contract: formatNumberByKey(item._8_contract),
+                    approvedAccumulation: formatNumberByKey(approvedAccumulation),
+                    prevApproved: formatNumberByKey(prevApproved),
+                    currentlyApproved: formatNumberByKey(currentlyApproved),
+                    presentRetention: formatNumberByKey(currentlyApproved * retention)
+                };
+            });
+
             objResult = {
-                tagImgLogo: libPdf.createImageBySubsidiaryV2(subsidiaryRec, 120),
-                pjName: objLookup['custrecord_scv_project_source.companyname'] || '',
-                pjCode: objLookup['custrecord_scv_project_source.entityid'].split('') || '',
-                docNumber: objLineFirst._1_document_number || '',
-                date: objLineFirst._2_date || '',
-                claimantNo: objLineFirst._3_claimant_no.split('') || '',
-                claimantName: objLineFirst._4_claimant_name || '',
-                invRefNo: objLineFirst._5_inv_ref_no || '',
-                poNo: objLineFirst._6_po_no || '',
-                workItem: objLineFirst._7_work_item || '',
-                workItemDisplay: objLineFirst._7_work_item_display || '',
-                contract: objLineFirst._8_contract || '',
-                currentlyApproved: objLineFirst._9_currently_approved || '',
-                memo: objLineFirst._10_memo || '',
-                remark: objLineFirst._11_remark || '',
-                ropReceivedOn: objLineFirst._12_rop_received_on || '',
-                paymentDate: objLineFirst._13_payment_date || '',
-                vat: objLineFirst._14_vat || '',
-                retention: objLineFirst._15_retetion || '',
-                retentionDisplay: objLineFirst._15_retetion_display || '',
+                tagImgLogo:libPdf.createImageBySubsidiaryV2(subsidiaryRec,120),
+                pjName:objLookup['custrecord_scv_project_source.companyname'] || '',
+                pjCode:objLookup['custrecord_scv_project_source.entityid'] || '',
+                docNumber:objLineFirst._1_document_number || '',
+                date:objLineFirst._2_date || '',
+                claimantNo:objLineFirst._3_claimant_no || '',
+                claimantName:objLineFirst._4_claimant_name || '',
+                memo:objLineFirst._10_memo || '',
+                remark:objLineFirst._11_remark || '',
+                ropReceivedOn:objLineFirst._12_rop_received_on || '',
+                paymentDate:objLineFirst._13_payment_date || '',
+                vat:objLineFirst._14_vat || '',
+                retention:objLineFirst._15_retetion || '',
+                retentionDisplay:objLineFirst._15_retetion_display || '',
+                arrItem,
+                totalContract:formatNumberByKey(totalContract),
+                totalApprovedAccumulation:formatNumberByKey(totalApprovedAccumulation),
+                totalPrevApproved:formatNumberByKey(totalPrevApproved),
+                totalCurrentlyApproved:formatNumberByKey(totalCurrentlyApproved),
+                totalPresentRetention:formatNumberByKey(totalPresentRetention)
             };
 
             renderer.addCustomDataSource({
