@@ -192,6 +192,44 @@ define(['N/render', 'N/file', 'N/query', 'N/encode'],
             return Math.round(_number * precision) / precision;
         }
 
+        const getWHJPG = (f) => {
+            const hex = encode.convert({string: f.getContents(), inputEncoding: encode.Encoding.BASE_64, outputEncoding: encode.Encoding.HEX});
+            const bytes = hexToBytes(hex);
+            if (bytes.length < 4 || bytes[0] !== 0xFF || bytes[1] !== 0xD8) return null;
+            let i = 2;
+            while (i < bytes.length - 9) {
+                if (bytes[i] !== 0xFF) { i++; continue; }
+                while (bytes[i] === 0xFF) i++;
+                const marker = bytes[i];
+                if (marker === 0xD9 || marker === 0xDA) break;
+                if ([0xC0,0xC1,0xC2,0xC3,0xC5,0xC6,0xC7,0xC9,0xCA,0xCB,0xCD,0xCE,0xCF].includes(marker)) {
+                    return {width: (bytes[i + 6] << 8) | bytes[i + 7], height: (bytes[i + 4] << 8) | bytes[i + 5]};
+                }
+                if (marker >= 0xD0 && marker <= 0xD7 || marker === 0x01) { i++; continue; }
+                const length = (bytes[i + 1] << 8) | bytes[i + 2];
+                if (length < 2) break;
+                i += length + 1;
+            }
+            return null;
+        };
+
+        const createImageBySubsidiaryV3 = (subsidiaryRec, expectedWidth) => {
+            let logoId = subsidiaryRec.getValue('logo') || subsidiaryRec.getValue('pagelogo');
+            if (!logoId) return '';
+            let imgFile = file.load({id: logoId});
+            let type = String(imgFile.fileType || '').toUpperCase();
+            let imageWH = null;
+            if (type.includes('JPG') || type.includes('JPEG')) imageWH = getWHJPG(imgFile);
+            else if (type.includes('PNG')) imageWH = getPngWH(imgFile);
+            if (!imageWH) return '';
+            let width = imageWH.width;
+            let height = imageWH.height;
+            if (expectedWidth) {
+                width = expectedWidth;
+                height = Math.round(expectedWidth * imageWH.height / imageWH.width);
+            }
+            return `<img src="${unReTextXML(imgFile.url)}" alt="view" width="${width}" height="${height}" />`;
+        };
         return {
             formatNumber,
             formatNumberWithObject,
@@ -201,6 +239,7 @@ define(['N/render', 'N/file', 'N/query', 'N/encode'],
             formatDataXMLWithObject,
             formatDataXML,
             removeVietnameseTones,
+            createImageBySubsidiaryV3
         };
 
     });

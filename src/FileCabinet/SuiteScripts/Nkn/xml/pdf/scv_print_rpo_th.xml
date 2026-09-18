@@ -20,14 +20,14 @@
     <#list results.datas as data>
         <table width="100%" >
             <tr>
-                <td colspan="20">
+                <td colspan="30" valign="middle">
                     ${results.header.tagImgLogo}
                 </td>
-                <td colspan="80">
+                <td colspan="70" valign="middle">
                     ${subsidiary.legalname}
                 </td>
             </tr>
-            <tr>
+            <tr class="mt-5">
                 <td colspan="100" class="align-center">
                     <p class="fs-13 "> <b>REQUEST FOR PURCHASE ORDER</b></p>
                     <p  class="fs-11"> <b>(Request by Site)</b></p>

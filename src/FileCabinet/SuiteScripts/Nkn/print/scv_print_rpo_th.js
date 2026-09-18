@@ -214,10 +214,9 @@ define([
                 objResult.totalContractAmount = formatNumberByKey(objResult.totalContractAmount);
                 objResult.totalBalance56 = formatNumberByKey(objResult.totalBalance56);
 
-                log.error("hoan lines",objResult.lines)
                 arrResDatas.push(objResult);
             }
-            objResHeaders.tagImgLogo = libPdf.createImageBySubsidiaryV2(subsidiaryRec, 120);
+            objResHeaders.tagImgLogo = libPdf.createImageBySubsidiaryV3(subsidiaryRec, 140);
 
             renderer.addCustomDataSource({
                 format: "OBJECT",
