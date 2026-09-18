@@ -29,6 +29,10 @@ define(['N/record', 'N/search', 'N/query', 'N/runtime',
                 ID: 8,
                 NAME: "NKN ID"
             },
+            NknTh: {
+                ID: 5,
+                NAME: "NKN TH"
+            },
         }
 
         const SubsidiaryOption = {

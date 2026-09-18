@@ -93,6 +93,8 @@ define([
             let arrLine01 = constSearchPrintPOVN01.getDataSource({
                 internalid: curRec.id
             });
+
+            // log.error("hoan arrLine01" , arrLine01);
             let objResult = {};
             let objLineFirst = arrLine01[0] ?? {};
 
@@ -113,7 +115,7 @@ define([
 
             workItemCode = workItemCode.join(", ");
             objResult = {
-                project: objLineFirst._1_projects_display || "",
+                project: objLineFirst._1_projects || "",
                 subCon: objLineFirst._2_sub_contractor_s_name || "",
                 subConAddress: objLineFirst._3_sub_contractor_s_address || "",
                 subConPhone: objLineFirst._4_sub_contractor_s_phone || "",

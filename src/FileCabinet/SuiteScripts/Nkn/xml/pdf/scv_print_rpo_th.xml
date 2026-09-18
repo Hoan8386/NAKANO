@@ -1,0 +1,557 @@
+<?xml version = "1.0"?><!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
+<pdf>
+<head>
+    <meta name="title" value="Print RPO (ID)"/>
+    <link name="ScvFont" type="font" subtype="opentype" src="${libPdf.font.arial?html}" src-bold="${libPdf.font.arial_bold?html}" src-italic="${libPdf.font.arial_italic?html}" src-bolditalic="${libPdf.font.arial_bolditalic?html}" bytes="2" />
+    <style type="text/css">
+        ${libPdf.css}
+
+        body {
+            font-size: 10pt;
+        }
+        table { 
+            font-size: 10pt;
+        }
+        table.info-rows td { padding-bottom: 4px; }
+    </style>
+
+</head>
+<body padding="0.3in 0.3in 1in 0.3in" size="A4" >
+    <#list results.datas as data>
+        <table width="100%" >
+            <tr>
+                <td colspan="20">
+                    ${results.header.tagImgLogo}
+                </td>
+                <td colspan="80">
+                    ${subsidiary.legalname}
+                </td>
+            </tr>
+            <tr>
+                <td colspan="100" class="align-center">
+                    <p class="fs-13 "> <b>REQUEST FOR PURCHASE ORDER</b></p>
+                    <p  class="fs-11"> <b>(Request by Site)</b></p>
+                </td>
+            </tr>
+            ${libPdf.rowcol100}
+        </table >
+
+        <table>
+            <tr>
+                <td colspan="55" valign="top">
+                    <table>
+                        <tr>
+                            <td colspan="24"><b>Project Name</b></td>
+                            <td colspan="5"><b>:</b></td>
+                            <td colspan="71" border-bottom="1"><b>${results.header.pjName}</b></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="24"><b>P/O No.</b></td>
+                            <td colspan="5"><b>:</b></td>
+                            <td colspan="71" border-bottom="1">
+                                <p>${results.header.poNumber}</p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="24"><b>Vendor Name</b></td>
+                            <td colspan="5"><b>:</b></td>
+                            <td colspan="71" border-bottom="1">
+                                ${data.vendor}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="24"><b>Vendor No.</b></td>
+                            <td colspan="5"><b>:</b></td>
+                            <td colspan="71" border-bottom="1">
+                                ${data.vendorNo}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="24" valign="top"><b>Scope of Work</b></td>
+                            <td colspan="5" valign="top"><b>:</b></td>
+                            <td colspan="71" border-bottom="1">
+                                <p>${results.header.scopeOfWork}</p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="24"><b>Type of Payment</b></td>
+                            <td colspan="5"><b>:</b></td>
+                            <td colspan="71">
+                                <p>${results.header.typeOfContract}</p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="24"><b>Contract Amount</b></td>
+                            <td colspan="5"><b>:</b></td>
+                            <td colspan="71">
+                                <p>${data.contactAmount} Baht (VAT excluded)</p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="24"><b>Payment Amount</b></td>
+                            <td colspan="5"><b>:</b></td>
+                            <td colspan="71">
+                                <p>${results.header.termsOfPayment} Days after being Certified by P.M.</p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="29"></td>
+                            <td colspan="71">
+                                <p>${results.header.downPayment} % for Down Payment</p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="29"></td>
+                            <td colspan="71">
+                                <p>${results.header.monthlyProgress} % for Monthly Progress</p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="29"></td>
+                            <td colspan="71">
+                                <p>
+                                    ${results.header.installmentPayment} Installment payment as per condition of quotation
+                                </p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="29"></td>
+                            <td colspan="71">
+                                <p>
+                                    ${results.header.forDelivery} For Delivery
+                                </p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="24"><b>Retention</b></td>
+                            <td colspan="5"><b>:</b></td>
+                            <td colspan="71">
+                                <p>
+                                    ${results.header.retention}
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td colspan="45" valign="top">
+                    <table>
+                        <tr>
+                            <td colspan="43"><b>Date of Request</b></td>
+                            <td colspan="5"><b>:</b></td>
+                            <td colspan="52" border-bottom="1">
+                                <p>
+                                    ${results.header.requestDate}
+                                </p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="43"><b>Date of Commencement</b></td>
+                            <td colspan="5"><b>:</b></td>
+                            <td colspan="52" border-bottom="1">
+                                <p>
+                                    ${results.header.commenceDate}
+                                </p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="43"><b>Date of Completion</b></td>
+                            <td colspan="5"><b>:</b></td>
+                            <td colspan="52" border-bottom="1">
+                                <p>
+                                    ${results.header.completionDate}
+                                </p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="43" valign="top"><b>L.D. Penalty for Delay</b></td>
+                            <td colspan="5" valign="top"><b>:</b></td>
+                            <td colspan="52">
+                                <p>
+                                    ${results.header.ldPenaltyForDelay} (% of contract amount)
+                                </p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="43"></td>
+                            <td colspan="5"><b>:</b></td>
+                            <td colspan="52">
+                                <p>
+                                    ${results.header.maintenancePeriodDays} Baht / Day
+                                </p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="43"><b>Maintenance Period</b></td>
+                            <td colspan="5"><b>:</b></td>
+                            <td colspan="52">
+                                <p>
+                                    ${results.header.maintenancePeriodMonths} Month (s)
+                                </p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="48"></td>
+                            <td colspan="52">
+                                <i>(From Handing Over to the Owner)</i>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="43"><b>Performance Bond</b></td>
+                            <td colspan="5"><b>:</b></td>
+                            <td colspan="52">
+                                <p>
+                                    ${results.header.performanceBond} (% of contract amount)
+                                </p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="43"><b>Insurance</b></td>
+                            <td colspan="5"><b>:</b></td>
+                            <td colspan="52">
+                                <p>
+                                    ${results.header.insurance}
+                                </p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="43"><b>Warranty</b></td>
+                            <td colspan="5"><b>:</b></td>
+                            <td colspan="52">
+                                <p>
+                                    ${results.header.warranty} Month (s) from Handing
+                                </p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="48"></td>
+                            <td colspan="52">
+                                Over to the Owner
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="43"><b>Vendor Q'ty Ref. No.</b></td>
+                            <td colspan="5"><b>:</b></td>
+                            <td colspan="52" border-bottom="1">
+                                <p>
+                                    ${results.header.vendorQtyRefNo}
+                                </p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="43"><b>Date</b></td>
+                            <td colspan="5"><b>:</b></td>
+                            <td colspan="52" border-bottom="1">
+                                <p>
+                                    ${results.header.requestDate}
+                                </p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            ${libPdf.rowcol100}
+        </table>
+
+        <table width="100%" class="border-table mt-5">
+            <thead>
+                <tr class="valign-middle">
+                    <td colspan="12" align="center"></td>
+                    <td colspan="13" align="center">1</td>
+                    <td colspan="13" align="center">2</td>
+                    <td colspan="15" align="center">3</td>
+                    <td colspan="11" align="center">4</td>
+                    <td colspan="13" align="center">5</td>
+                    <td colspan="11" align="center">6</td>
+                    <td colspan="12" align="center">7</td>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td colspan="12">
+                        <p align="center">
+                            <b>WORK ITEM NO.</b>
+                        </p>
+                    </td>
+                    <td colspan="13">
+                        <p align="center">
+                            <b>WORKING BUDGET</b>
+                        </p>
+                    </td>
+                    <td colspan="13">
+                        <p align="center">
+                            <b>ACCUMULATE AMOUNT OF P/O</b>
+                        </p>
+                    </td>
+                    <td colspan="15">
+                        <p align="center">
+                            <b>ACCUMULATE SITE EXPENSE</b>
+                        </p>
+                    </td>
+                    <td colspan="11">
+                        <p align="center">
+                            <b>BALANCE (1-2-3)</b>
+                        </p>
+                    </td>
+                    <td colspan="13">
+                        <p align="center">
+                            <b>APPLICABLE BUDGET</b>
+                        </p>
+                    </td>
+                    <td colspan="11">
+                        <p align="center">
+                            <b>CONTRACT AMOUNT</b>
+                        </p>
+                    </td>
+                    <td colspan="12">
+                        <p align="center">
+                            <b>BALANCE (5-6)</b>
+                        </p>
+                    </td>
+                </tr>
+
+                <#list data.lines as result>
+                    <tr>
+                        <td colspan="12" align="center">
+                            ${result.workItemNo!""}
+                        </td>
+                        <td colspan="13" align="right">
+                            ${result.workingBudget!0}
+                        </td>
+                        <td colspan="13" align="right">
+                            ${result.accumulateAmount!0}
+                        </td>
+                        <td colspan="15" align="right">
+                            ${result.accumulateSiteExpense!0}
+                        </td>
+                        <td colspan="11" align="right">
+                            ${result.balance123!0}
+                        </td>
+                        <td colspan="13" align="right">
+                            ${result.applicableBudget!0}
+                        </td>
+                        <td colspan="11" align="right">
+                            ${result.contractAmount!0}
+                        </td>
+                        <td colspan="12" align="right">
+                            ${result.balance56!0}
+                        </td>
+                    </tr>
+                </#list>
+
+                <tr>
+                    <td colspan="12" align="center">
+                        <b>TOTAL</b>
+                    </td>
+                    <td colspan="13" align="right">
+                        <b>${data.totalWorkingBudget!0}</b>
+                    </td>
+                    <td colspan="13" align="right">
+                        <b>${data.totalAccumulateAmount!0}</b>
+                    </td>
+                    <td colspan="15" align="right">
+                        <b>${data.totalAccumulateSiteExpense!0}</b>
+                    </td>
+                    <td colspan="11" align="right">
+                        <b>${data.totalBalance123!0}</b>
+                    </td>
+                    <td colspan="13" align="right">
+                        <b>${data.totalApplicableBudget!0}</b>
+                    </td>
+                    <td colspan="11" align="right">
+                        <b>${data.totalContractAmount!0}</b>
+                    </td>
+                    <td colspan="12" align="right">
+                        <b>${data.totalBalance56!0}</b>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="100" align="left">
+                        <b>Remarks:</b> ${results.header.remark!""}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table width="100%" class="mt-5">
+            <tr>
+                <td colspan="25">
+                    <p><b>Conditions of Vendor</b></p>
+                </td>
+                <td colspan="3" align="center">:</td>
+                <td colspan="22" align="center">
+                    <p>${results.header.conditionsOfVendor}</p>
+                </td>
+
+                <td colspan="25">
+                    <p><b>B/Q / Schedule of Rates</b></p>
+                </td>
+                <td colspan="3" align="center">:</td>
+                <td colspan="22" align="center">
+                    <p>${results.header.bqScheduleOfRates}</p>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="25">
+                    <p><b>Conditions of Purchase</b></p>
+                </td>
+                <td colspan="3" align="center">:</td>
+                <td colspan="22" align="center">
+                    <p>${results.header.conditionsOfPurchase}</p>
+                </td>
+
+                <td colspan="25">
+                    <p><b>Drawing</b></p>
+                </td>
+                <td colspan="3" align="center">:</td>
+                <td colspan="22" align="center">
+                    <p>${results.header.drawing}</p>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="25">
+                    <p><b>Specification</b></p>
+                </td>
+                <td colspan="3" align="center">:</td>
+                <td colspan="22" align="center">
+                    <p>${results.header.specification}</p>
+                </td>
+
+                <td colspan="50"></td>
+            </tr>
+        </table>
+        
+        <table width="100%" class="mt-5" style="page-break-inside: avoid;" >
+            <tr>
+                <td colspan="26" align="center" class="align-center valign-middle" border="1" >
+                    <p>APPROVAL</p>
+                </td>
+                <td colspan="3"></td>
+                <td colspan="15" align="center" class="align-center valign-middle" border="1">
+                    <p>PO ISSUE<br/>PROCESS</p>
+                </td>
+                <td colspan="3"></td>
+                <td colspan="25" align="center" class="align-center valign-middle" border="1">
+                    <p>CHECKED BY PROCUREMENT<br/>DEPARTMENT</p>
+                </td>
+                <td colspan="3"></td>
+                <td colspan="25" align="center" class="align-center valign-middle" border="1">
+                    <p>ISSUED BY CONSTRUCTION<br/>DEPARTMENT</p>
+                </td>
+            </tr>
+
+            <tr height="10">
+                <td colspan="100"></td>
+            </tr>
+
+            <tr>
+                <td colspan="26">
+                    <table width="100%" class="border-table" border-top="1">
+                        <tr height="70">
+                            <td colspan="25"></td>
+                            <td colspan="25"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="25" class="align-center">
+                                <p>M.D.</p>
+                            </td>
+                            <td colspan="25" class="align-center">
+                                <p>A.M.D.</p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td colspan="3"></td>
+
+                <td colspan="15">
+                    <table width="100%" class="border-table" border-top="1">
+                        <tr height="70">
+                            <td colspan="50"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="50" class="align-center">
+                                <p>P.O. Sec.</p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td colspan="3"></td>
+
+                <td colspan="25">
+                    <table width="100%" class="border-table" border-top="1">
+                        <tr height="70">
+                            <td colspan="25"></td>
+                            <td colspan="25"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="25" class="align-center">
+                                <p>G.M.</p>
+                            </td>
+                            <td colspan="25" class="align-center">
+                                <p>Manager</p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td colspan="3"></td>
+
+                <td colspan="25">
+                    <table width="100%" class="border-table" border-top="1">
+                        <tr height="70">
+                            <td colspan="25"></td>
+                            <td colspan="25"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="25" class="align-center">
+                                <p>P.G.M.</p>
+                            </td>
+                            <td colspan="25" class="align-center">
+                                <p>P.M.</p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr class="mt-5">
+                <td colspan="100" class="align-right">
+                    <p><b> FM-PCM-012&nbsp;&nbsp;&nbsp;Rev.01(5Y)&nbsp;&nbsp;&nbsp; </b>effective date&nbsp;&nbsp;01/05/2022</p>
+                </td>
+            </tr>
+        </table>
+        <#if data_has_next><pbr/></#if>
+    </#list>
+</body>
+</pdf>

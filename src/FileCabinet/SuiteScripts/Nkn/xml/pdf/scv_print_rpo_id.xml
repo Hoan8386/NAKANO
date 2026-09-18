@@ -41,7 +41,7 @@
                         <tr>
                             <td style="width: 40%;">PROJECT NAME</td>
                             <td style="width: 3%;">:</td>
-                            <td style="width: 57%;">${results.headers.project!}</td>
+                            <td style="width: 57%;">${results.headers.pjName!}</td>
                         </tr>
                         <tr>
                             <td style="width: 40%;">CLAIMANT</td>
