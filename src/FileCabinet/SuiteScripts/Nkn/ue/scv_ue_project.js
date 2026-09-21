@@ -14,12 +14,14 @@ define([
         '../common/scv_common_project_code.js',
         '../common/scv_common_project2csegproject.js',
         '../common/scv_common_wbs2rpo.js',
+        '../common/scv_common_project_calculate.js',
     ],
 
     (
         commProjectCode,
         commProject2CsegProject,
         commonWbs2Rpo,
+        commonProjectCalc,
     ) => {
         /**
          * Defines the function definition that is executed before record is loaded.
@@ -32,6 +34,7 @@ define([
          */
         const beforeLoad = (scriptContext) => {
             commonWbs2Rpo.addBtnCreateRPO(scriptContext);
+            commonProjectCalc.addBtnCalcNetCost(scriptContext);
         }
 
         /**
