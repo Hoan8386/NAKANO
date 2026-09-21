@@ -97,10 +97,10 @@ define([
             const arrVendbill = constSearchRopId01.getDataSource({
                 internalid: curRec.id
             });
-            const arrPrevApproval = constSearchRopId02.getDataSource({
-                internalid: curRec.id
-            });
+            const arrPrevApproval = constSearchRopId02.getDataSource();
 
+            // log.error("hoan arrVendbill " ,arrVendbill)
+            // log.error("hoan arrPrevApproval " ,arrPrevApproval)
             let projectId = curRec.getValue('cseg_scv_sg_proj');
             let objLookup = search.lookupFields({
                 type: 'customrecord_cseg_scv_sg_proj',
@@ -123,11 +123,11 @@ define([
             let arrItem = arrVendbill.map(item => {
                 let objSS2 = arrPrevApproval.find(itemSS2 =>
                     itemSS2.po_internal_id === item.po_internal_id &&
-                    itemSS2.ori_line_id === item.ori_line_id
+                    itemSS2._3_ori_line_id === item.ori_line_id
                 ) || {};
 
                 let currentlyApproved = item._9_currently_approved * 1 || 0;
-                let prevApproved = objSS2._2_prev_approval * 1 || 0;
+                let prevApproved = objSS2._2_prev_approval_incl_retention * 1 || 0;
                 let approvedAccumulation = currentlyApproved + prevApproved || 0;
                 let retention = item._15_retetion * 1 || 0;
 

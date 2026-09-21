@@ -95,30 +95,34 @@ define([
 
             let arrLine01 = constSearchPrintRPOID01.getDataSource({ internalid: curRec.id });
             let objLineFirst = arrLine01[0] ?? {};
-            //  log.error("hoan arrLine01", arrLine01);
+              log.error("hoan arrLine01", arrLine01);
 
             const showBooleanDisplay = (checked) => checked ? "Yes" : "No";
             let projectId = curRec.getValue('cseg_scv_sg_proj');
-            let objLookup = search.lookupFields({
-                type: 'customrecord_cseg_scv_sg_proj',
-                id: projectId,
-                columns: ['custrecord_scv_project_source.entityid' , 'custrecord_scv_project_source.companyname' ]
-            });
+            let objLookup = {};
+
+            if (projectId) {
+                objLookup = search.lookupFields({
+                    type: 'customrecord_cseg_scv_sg_proj',
+                    id: projectId,
+                    columns: ['custrecord_scv_project_source.entityid', 'custrecord_scv_project_source.companyname']
+                }) || {};
+            }
             const objResHeaders = {
                 pjName: objLookup['custrecord_scv_project_source.companyname'] || '',
-                poNumber: objLineFirst._1_po_no,
-                scopeOfWork: objLineFirst._3_scope_of_work,
-                termsOfPayment: objLineFirst._4_terms_of_payment,
-                requestDate: objLineFirst._5_request_date,
-                commenceDate: objLineFirst._6_commence_date,
-                completionDate: objLineFirst._7_completion_date,
-                insurance: objLineFirst._8_insurance,
-                maintenancePeriod: objLineFirst._9_maintenance_period,
-                typeOfContract: objLineFirst._10_type_of_contract,
-                repeatOrder: showBooleanDisplay(objLineFirst._11_repeat_order),
-                sbujkCertificate: showBooleanDisplay(objLineFirst._12_sbujk_certificate),
-                retention: objLineFirst._13_retention,
-                conditionsOfContract: showBooleanDisplay(objLineFirst._14_conditions_of_contract)
+                poNumber: objLineFirst._1_po_no || '',
+                scopeOfWork: objLineFirst._3_scope_of_work || '',
+                termsOfPayment: objLineFirst._4_terms_of_payment || '',
+                requestDate: objLineFirst._5_request_date || '',
+                commenceDate: objLineFirst._6_commence_date || '',
+                completionDate: objLineFirst._7_completion_date || '',
+                insurance: objLineFirst._8_insurance || '',
+                maintenancePeriod: objLineFirst._9_maintenance_period || '',
+                typeOfContract: objLineFirst._10_type_of_contract || '',
+                repeatOrder: showBooleanDisplay(objLineFirst._11_repeat_order) ,
+                sbujkCertificate: showBooleanDisplay(objLineFirst._12_sbujk_certificate) ,
+                retention: objLineFirst._13_retention || '',
+                conditionsOfContract: showBooleanDisplay(objLineFirst._14_conditions_of_contract) ,
             };
 
             let arrLineItem = constRecord.getDataOfSublist(curRec, "item", ["lineuniquekey", "povendor"]);
@@ -245,6 +249,17 @@ define([
 
                 arrResDatas.push(objResult);
             }
+
+            log.error({
+                title: 'RPO ID render data',
+                details: JSON.stringify({
+                    recordId: curRec.id,
+                    projectId,
+                    dataCount: arrResDatas.length,
+                    headers: objResHeaders,
+                    datas: arrResDatas
+                })
+            });
             
             renderer.addCustomDataSource({
                 format: "OBJECT",

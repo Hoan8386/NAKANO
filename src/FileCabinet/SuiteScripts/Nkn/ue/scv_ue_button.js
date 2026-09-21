@@ -50,6 +50,7 @@ define([
                 addBtnPrint(scriptContext, 'scv_print_po_sg');
                 addBtnPrint(scriptContext, 'scv_print_po_vn');
                 addBtnPrint(scriptContext, 'scv_print_po_id');
+                addBtnPrint(scriptContext, 'scv_print_po_th');
                 break;
             case 'purchaserequisition':
                 addBtnPrint(scriptContext, 'scv_print_rpo_sg');

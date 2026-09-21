@@ -221,7 +221,7 @@
                 </tr>
             </tbody>
 
-            {libPdf.rowcol100}
+            ${libPdf.rowcol100}
         </table>
 
         <table width="100%" class="border-table mt-5" border-top="1">
@@ -246,7 +246,7 @@
                 <td colspan="14"></td>
                 <td colspan="16"></td>
             </tr>
-            {libPdf.rowcol100}
+            ${libPdf.rowcol100}
         </table>
         <#if data_has_next>
             <pbr/>

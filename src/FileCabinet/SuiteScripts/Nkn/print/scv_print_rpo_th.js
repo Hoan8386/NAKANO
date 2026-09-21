@@ -216,7 +216,7 @@ define([
 
                 arrResDatas.push(objResult);
             }
-            objResHeaders.tagImgLogo = libPdf.createImageBySubsidiaryV3(subsidiaryRec, 140);
+            objResHeaders.tagImgLogo = libPdf.createImageBySubsidiaryV2(subsidiaryRec, 140);
 
             renderer.addCustomDataSource({
                 format: "OBJECT",

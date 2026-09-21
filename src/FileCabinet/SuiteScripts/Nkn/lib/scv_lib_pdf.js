@@ -147,22 +147,20 @@ define(['N/render', 'N/file', 'N/query', 'N/encode'],
         }
 
         const createImageBySubsidiaryV2 = (subsidiaryRec, expectedWidth) => {
-            let logoId = subsidiaryRec.getValue('logo') || subsidiaryRec.getValue("pagelogo");
+            let logoId = subsidiaryRec.getValue('logo') || subsidiaryRec.getValue('pagelogo');
             if (!logoId) return '';
-
-            let imgFile = file.load({ id: logoId });
-            let { width, height } = getPngWH(imgFile) || { width: 100, height: 100 };
-            let logoUrl = imgFile.url;
-            let expectedHeight = height;
-
+            let imgFile = file.load({id: logoId});
+            let type = String(imgFile.fileType || '').toUpperCase();
+            let imageWH = null;
+            if (type.includes('JPG') || type.includes('JPEG')) imageWH = getWHJPG(imgFile);
+            else if (type.includes('PNG')) imageWH = getPngWH(imgFile);
+            if (!imageWH) return '';
+            let {width, height} = imageWH || {width: 100, height: 100};;
             if (expectedWidth) {
-                let ratio = roundNumber(width / height);
-                expectedHeight = roundNumber(expectedWidth / ratio);
-            } else expectedWidth = width;
-
-            let tagImg = `<img src="${unReTextXML(logoUrl)}" alt="view" style="width: ${expectedWidth}px; height: ${expectedHeight}px;" />`;
-
-            return tagImg;
+                height = Math.round(expectedWidth * height / width);
+                width = expectedWidth;
+            }
+            return `<img src="${unReTextXML(imgFile.url)}" alt="view" width="${width}" height="${height}" />`;
         };
 
         const u32BE = (b, o) => (((((b[o] * 256) + b[o + 1]) * 256) + b[o + 2]) * 256) + b[o + 3];
@@ -213,23 +211,7 @@ define(['N/render', 'N/file', 'N/query', 'N/encode'],
             return null;
         };
 
-        const createImageBySubsidiaryV3 = (subsidiaryRec, expectedWidth) => {
-            let logoId = subsidiaryRec.getValue('logo') || subsidiaryRec.getValue('pagelogo');
-            if (!logoId) return '';
-            let imgFile = file.load({id: logoId});
-            let type = String(imgFile.fileType || '').toUpperCase();
-            let imageWH = null;
-            if (type.includes('JPG') || type.includes('JPEG')) imageWH = getWHJPG(imgFile);
-            else if (type.includes('PNG')) imageWH = getPngWH(imgFile);
-            if (!imageWH) return '';
-            let width = imageWH.width;
-            let height = imageWH.height;
-            if (expectedWidth) {
-                width = expectedWidth;
-                height = Math.round(expectedWidth * imageWH.height / imageWH.width);
-            }
-            return `<img src="${unReTextXML(imgFile.url)}" alt="view" width="${width}" height="${height}" />`;
-        };
+       
         return {
             formatNumber,
             formatNumberWithObject,
@@ -239,7 +221,6 @@ define(['N/render', 'N/file', 'N/query', 'N/encode'],
             formatDataXMLWithObject,
             formatDataXML,
             removeVietnameseTones,
-            createImageBySubsidiaryV3
         };
 
     });
