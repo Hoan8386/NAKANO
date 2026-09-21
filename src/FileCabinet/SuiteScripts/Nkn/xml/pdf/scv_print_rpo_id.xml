@@ -27,6 +27,7 @@
             <tr>
                 <td  class="fs-12"> <b>REQUEST FOR PURCHASE ORDER </b></td>
             </tr>
+             ${libPdf.rowcol100}
         </table>
 
         <table width="100%">
@@ -163,6 +164,8 @@
                     </table>
                 </td>
             </tr>
+
+             ${libPdf.rowcol100}
         </table>
 
         <table width="100%" class="border-table" cellpadding="2">
@@ -221,7 +224,6 @@
                 </tr>
             </tbody>
 
-            ${libPdf.rowcol100}
         </table>
 
         <table width="100%" class="border-table mt-5" border-top="1">

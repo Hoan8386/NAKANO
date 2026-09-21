@@ -11,6 +11,8 @@
  *  15 Sep 2026         Thanh Hoan              Add button PO (ID), trên màn hình Purchase Order from mr.Quân(https://app.clickup.com/t/3773072/86d3w9emj)
  *  16 Sep 2026         Thanh Hoan              Add button ROP (ID), trên màn hình Bill from mr.Quân(https://app.clickup.com/t/3773072/86d3w9cnt)
  *  17 Sep 2026         Thanh Hoan              Add button RPO (TH), trên màn hình Requisition from mr.Quân(https://app.clickup.com/t/3773072/86d3w9a1h)
+ *  21 Sep 2026         Thanh Hoan              Add button PO (TH), trên màn hình Purchase Order from mr.Quân(https://app.clickup.com/t/3773072/86d3w9emj)
+ *  21 Sep 2026         Thanh Hoan              Add button ROP (TH), trên màn hình Vendorbill from mr.Quân(https://app.clickup.com/t/3773072/86d3w9cnt)
  */
 /**
  * @NApiVersion 2.1
@@ -62,6 +64,7 @@ define([
                 addBtnPrint(scriptContext, 'scv_print_rop_sg');
                 addBtnPrint(scriptContext, 'scv_print_rop_vn');
                 addBtnPrint(scriptContext, 'scv_print_rop_id');
+                addBtnPrint(scriptContext, 'scv_print_rop_th');
                 break;
         }
 

@@ -1,0 +1,274 @@
+<?xml version="1.0"?>
+<!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
+<pdf>
+<head>
+    <meta name="title" value="Print ROP (TH)"/>
+    <link name="ScvFont" type="font" subtype="opentype" src="${libPdf.font.arial?html}" src-bold="${libPdf.font.arial_bold?html}" src-italic="${libPdf.font.arial_italic?html}" src-bolditalic="${libPdf.font.arial_bolditalic?html}" bytes="2" />
+    <style type="text/css">
+        ${libPdf.css}
+        body {
+            font-size: 10pt;
+        }
+        table {
+            font-size: 10pt;
+        }
+        .under-line {
+            border-bottom: 1px solid #000000;
+        }
+        input {
+            display: inline;
+        }
+
+        .dotted-border {
+            border-top: 1px dotted #000000;
+        }
+    </style>
+
+    <macrolist>
+        <macro id="footerPage">
+            <table width="100%">
+                <tr>
+                    <td class="align-center">Page <span class="font-weight-bold"><pagenumber/></span> of <span class="font-weight-bold"><totalpages/></span></td>
+                </tr>
+            </table>
+        </macro>
+        <macro id="footerBlank">
+            <table width="100%">
+                <tr>
+                    <td></td>
+                </tr>
+            </table>
+        </macro>
+    </macrolist>
+</head>
+    <body padding="0.3in 0.3in 1in 0.3in" size="A4" footer="footerPage" footer-height="0.3in">
+        <table width="100%">
+            <tr>
+                <td colspan="40">
+                   <table width="100%" class="border-table" border-top="1">
+                        <tr>
+                            <td colspan="40" class="align-center"><b>Project Code</b></td>
+                            <td colspan="60" class="align-center"><b>Project Name</b></td>
+                        </tr>
+                        <tr height="30">
+                            <td colspan="40" class="align-center"><b>${result.pjCode}</b></td>
+                            <td colspan="60" class="align-center"><b>${result.pjName}</b></td>
+                        </tr>
+                        <tr>
+                            <td colspan="40" class="align-center"><b>Vendor Code</b></td>
+                            <td colspan="60" class="align-center"><b>Vendor Name</b></td>
+                        </tr>
+                        <tr height="30">
+                            <td colspan="40" class="align-center"><b>${result.vendorCode}</b></td>
+                            <td colspan="60" class="align-center"><b>${result.vendorName}</b></td>
+                        </tr>
+                    </table>
+                </td>
+                <td colspan="3"></td>
+                <td colspan="57">
+                    <table>
+                        <tr>
+                            <td colspan="45">
+                                ${result.tagImgLogo}
+                            </td>
+                            <td colspan="55" border-left="1">
+                                <b><span>RECOMMENDATION OF PAYMENT</span></b>
+                            </td>
+                        </tr>
+                        <tr height="15">
+                            <td colspan="100"></td>
+                        </tr>
+                        <tr>
+                            <td colspan="45">
+                                <p class="align-right">Reference No.:</p>
+                            </td>
+                            <td colspan="55">
+                                <b> ${result.docNo} </b>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="45">
+                                <p class="align-right">Create date:</p>
+                            </td>
+                            <td colspan="55">
+                                <b> ${result.date}</b>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <p class="mt-5">Invoice's Information</p>
+        <table width="100%" class="align-center border-table">
+            <thead>
+                <tr>
+                    <td><b>No.</b></td>
+                    <td><b>Invoice number</b></td>
+                    <td><b>PO number</b></td>
+                    <td><b>Work Item No.</b></td>
+                    <td><b>Contract amount</b></td>
+                    <td><b>Accu. Approval</b></td>
+                    <td><b>Prev. approval</b></td>
+                    <td><b>New approval</b></td>
+                    <td><b>Present Retention (%)</b></td>
+                    <td><b>VAT</b></td>
+                    <td><b>Status</b></td>
+                </tr>
+            </thead>
+            <tbody>
+                <#list arrItem as item>
+                    <tr>
+                        <td>${item.no}</td>
+                        <td>${item.invRefNo}</td>
+                        <td>${item.poNo}</td>
+                        <td>${item.workItemDisplay}</td>
+                        <td>${item.contract}</td>
+                        <td>${item.approvedAccumulation}</td>
+                        <td>${item.prevApproved}</td>
+                        <td>${item.newApproval}</td>
+                        <td>${item.presentRetention}</td>
+                        <td>${item.vat}</td>
+                        <td>${item.status}</td>
+                    </tr>
+                </#list>
+                <tr>
+                    <td colspan="4"> <b>TOTAL</b></td>
+                    <td>${totalContract}</td>
+                    <td>${totalApprovedAccumulation}</td>
+                    <td>${totalPrevApproved}</td>
+                    <td>${totalNewApproval}</td>
+                    <td>${totalPresentRetention}</td>
+                    <td>${totalVat}</td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table width="100%" class="align-center border-table mt-5" border-top="1">
+            <tr >
+                <td colspan="20" >Remark</td>
+                <td colspan="80">DRILLING &amp; GROUT EPOXY WITH HILTI HIT RE500 DB 20@0.20 M. TRANSPORTATION</td>
+            </tr>
+        </table>
+
+        <table width="100%" class="align-center mt-5">
+            <tr>
+                <td></td>
+                <td>
+                    <table class="border-table" border-top="1">
+                        <tr>
+                            <td><b>Total new approval (VAT-excluded)</b></td>
+                            <td>${totalNewApproval}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Total VAT</b></td>
+                            <td>${totalVat}</td>
+                        </tr>
+                        <tr>
+                            <td><b>Total new approval (VAT included)</b></td>
+                            <td>${totalNewApprovalVatIncluded}</td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <p> <b> Excess For Purchase Order</b> </p>
+        <table width="100%" class="align-center border-table mt-5">
+            <thead>
+                <tr>
+                    <td><b>Purchase Order</b></td>
+                    <td><b>Working Order</b></td>
+                    <td><b>Contract Amount</b></td>
+                    <td><b>Accu. Previous Payment</b></td>
+                    <td><b>This Month Payment</b></td>
+                    <td><b>Excess Payment</b></td>
+                    <td><b>Reason</b></td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr height="15">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr height="15">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr height="15">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr height="15">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr height="15">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr height="15">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="mt-5 "><b>Remark </b></p>
+        <table width="100%" class="align-center border-table" border-top="1">
+            <tbody>
+               
+                <tr>
+                    <td>
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <br/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <br/>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</pdf>

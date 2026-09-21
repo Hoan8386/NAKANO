@@ -95,7 +95,7 @@ define([
 
             let arrLine01 = constSearchPrintRPOID01.getDataSource({ internalid: curRec.id });
             let objLineFirst = arrLine01[0] ?? {};
-              log.error("hoan arrLine01", arrLine01);
+            // log.error("hoan arrLine01", arrLine01);
 
             const showBooleanDisplay = (checked) => checked ? "Yes" : "No";
             let projectId = curRec.getValue('cseg_scv_sg_proj');
@@ -250,16 +250,6 @@ define([
                 arrResDatas.push(objResult);
             }
 
-            log.error({
-                title: 'RPO ID render data',
-                details: JSON.stringify({
-                    recordId: curRec.id,
-                    projectId,
-                    dataCount: arrResDatas.length,
-                    headers: objResHeaders,
-                    datas: arrResDatas
-                })
-            });
             
             renderer.addCustomDataSource({
                 format: "OBJECT",
