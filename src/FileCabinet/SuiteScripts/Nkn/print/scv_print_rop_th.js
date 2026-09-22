@@ -38,7 +38,6 @@ define([
             let arrVendbill = constSearchRopTh01.getDataSource({
                 internalid: curRec.id
             });
-             log.error("hoan arrVendbill " ,arrVendbill)
             if(arrVendbill.length == 0) return false;
 
             return true;
@@ -67,14 +66,6 @@ define([
         };
 
         const generateFilePDF = (_params) => {
-            log.error({
-                title: 'ROP TH generateFilePDF',
-                details: {
-                    recordId: _params.recordId,
-                    recordType: _params.recordType,
-                    printFile: _params.printFile
-                }
-            });
             commonExtPerformance.startTime("scv_print_rop_th");
 
             let curRec = record.load({ type: _params.recordType, id: _params.recordId });
@@ -104,6 +95,9 @@ define([
                 internalid: curRec.id
             });
             const arrPrevApproval = constSearchRopTh02.getDataSource();
+            //  log.error("hoan arrVendbill " ,arrVendbill)
+            //  log.error("hoan arrPrevApproval " ,arrPrevApproval)
+
             let projectId = curRec.getValue('cseg_scv_sg_proj');
             let objLookup = {};
             if(projectId) {
@@ -173,6 +167,8 @@ define([
                 totalNewApprovalVatIncluded: formatNumberByKey(totalNewApproval + totalVat),
                 remark: objLineFirst._12_memo || ''
             };
+
+            // log.error("hoan arr",objResult.arrItem);
             renderer.addCustomDataSource({
                 format: "OBJECT",
                 alias: 'result',

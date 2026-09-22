@@ -17,9 +17,8 @@ define(["N/search",
 
     const Records = {};
 
-    const getDataSource = (_params) => {
+    const getDataSource = (_params = {}) => {
         let filters = [];
-
         return constSearch.getDataSource_Mixed(ID, filters, [], Records);
     };
 
