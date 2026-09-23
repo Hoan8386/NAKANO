@@ -95,7 +95,7 @@ define([
 
             let arrLine01 = constSearchPrintRPOID01.getDataSource({ internalid: curRec.id });
             let objLineFirst = arrLine01[0] ?? {};
-            // log.error("hoan arrLine01", arrLine01);
+            //  log.error("hoan arrLine01", arrLine01);
 
             const showBooleanDisplay = (checked) => checked ? "Yes" : "No";
             let projectId = curRec.getValue('cseg_scv_sg_proj');
@@ -109,7 +109,7 @@ define([
                 }) || {};
             }
             const objResHeaders = {
-                pjName: objLookup['custrecord_scv_project_source.companyname'] || '',
+                pjName: (objLookup['custrecord_scv_project_source.companyname'] || '').split(':').slice(1).join(':').trim(),
                 poNumber: objLineFirst._1_po_no || '',
                 scopeOfWork: objLineFirst._3_scope_of_work || '',
                 termsOfPayment: objLineFirst._4_terms_of_payment || '',
@@ -174,16 +174,12 @@ define([
                     if(lineUniqueKeys.indexOf(objLine01._0_po_line) !== -1) arrLine01_detail.push(objLine01);
                 }
 
-                let taxRate = 0;
-                let taxRateDisplay = "";
+                let totalVat = 0;
 
                 for(let i = 0; i < arrLine01_detail.length; i++){
                     let objLine01 = arrLine01_detail[i];
 
-                    if(!taxRate && objLine01._23_tax_rate){
-                        taxRate = parseFloat(objLine01._23_tax_rate) / 100;
-                        taxRateDisplay = objLine01._23_tax_rate;
-                    }
+                    totalVat += objLine01._23_vat * 1 || 0 ;
 
                     let objResDetail = {
                         rb: objLine01._2_rp * 1,
@@ -216,12 +212,11 @@ define([
                     objResult.lines.push(objResDetail);
                 }
 
-                objResult.taxRate = taxRateDisplay;
-                objResult.vatNettoWorkingBudget = objResult.nettoWorkingBudget * taxRate;
-                objResult.vatContractSum = objResult.contractSum * taxRate;
-                objResult.vatContractCost = objResult.contractCost * taxRate;
-                objResult.vatExpected = objResult.expected * taxRate;
-                objResult.vatBalance = objResult.balance * taxRate;
+                objResult.vatNettoWorkingBudget = objResult.nettoWorkingBudget * totalVat;
+                objResult.vatContractSum = objResult.contractSum * totalVat;
+                objResult.vatContractCost = objResult.contractCost * totalVat;
+                objResult.vatExpected = objResult.expected * totalVat;
+                objResult.vatBalance = objResult.balance * totalVat;
 
                 objResult.grandTotalNettoWorkingBudget = objResult.nettoWorkingBudget + objResult.vatNettoWorkingBudget;
                 objResult.grandTotalContractSum = objResult.contractSum + objResult.vatContractSum;
@@ -250,7 +245,6 @@ define([
                 arrResDatas.push(objResult);
             }
 
-            
             renderer.addCustomDataSource({
                 format: "OBJECT",
                 alias: 'results',

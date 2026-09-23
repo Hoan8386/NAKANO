@@ -21,7 +21,7 @@
 
         <table width="100%">
             <tr>
-                <td  class="fs-12"> <b>PT INDOKANONO </b></td>
+                <td  class="fs-12"> <b>PT INDONAKANO </b></td>
             </tr>
 
             <tr>
@@ -99,7 +99,7 @@
                         <tr>
                             <td style="width: 40%;">SCOPE OF WORK</td>
                             <td style="width: 3%;">:</td>
-                            <td style="width: 57%;"><b>${results.headers.scopeOfWork!}</b></td>
+                            <td style="width: 57%;">${results.headers.scopeOfWork!}</td>
                         </tr>
                         <tr>
                             <td style="width: 40%;">TERM OF PAYMENT</td>
@@ -206,7 +206,7 @@
 
                 <tr>    
                     <td colspan="20" class="align-center"></td>
-                    <td colspan="20">VAT</td>
+                    <td colspan="20"><b>VAT</b></td>
                     <td colspan="12" class="align-right">${data.vatNettoWorkingBudget!}</td>
                     <td colspan="12" class="align-right">${data.vatContractSum!}</td>
                     <td colspan="12" class="align-right">${data.vatContractCost!}</td>

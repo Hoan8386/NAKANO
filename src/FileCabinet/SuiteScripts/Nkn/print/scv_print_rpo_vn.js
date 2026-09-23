@@ -108,12 +108,22 @@ define([
             // arrLine01[0]._24_working_budget = null;
             // arrLine01[0]._26_accumulate_amount = "0";
             let projectId = curRec.getValue('cseg_scv_sg_proj');
-            let objLookup = search.lookupFields({
-                type: 'customrecord_cseg_scv_sg_proj',
-                id: projectId,
-                columns: ['custrecord_scv_project_source.entityid' , 'custrecord_scv_project_source.companyname' ]
-            });
-
+            // let objLookup = search.lookupFields({
+            //     type: 'customrecord_cseg_scv_sg_proj',
+            //     id: projectId,
+            //     columns: ['custrecord_scv_project_source.entityid' , 'custrecord_scv_project_source.companyname' ]
+            // });
+            let objLookup = {};
+            if(projectId) {
+                objLookup = search.lookupFields({
+                    type: 'customrecord_cseg_scv_sg_proj',
+                    id: projectId,
+                    columns: [
+                        'custrecord_scv_project_source.entityid',
+                        'custrecord_scv_project_source.companyname'
+                    ]
+                });
+            }
             let totalAmount = 0;
             arrLine01.forEach(item => {
                 totalAmount += Number(item._25_this_amount) || 0;

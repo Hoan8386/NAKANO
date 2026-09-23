@@ -102,11 +102,23 @@ define([
 
             const showBooleanDisplay = (checked) => checked ? "Yes" : "No";
             let projectId = curRec.getValue('cseg_scv_sg_proj');
-            let objLookup = search.lookupFields({
-                type: 'customrecord_cseg_scv_sg_proj',
-                id: projectId,
-                columns: ['custrecord_scv_project_source.entityid' , 'custrecord_scv_project_source.companyname' ]
-            });
+            // let objLookup = search.lookupFields({
+            //     type: 'customrecord_cseg_scv_sg_proj',
+            //     id: projectId,
+            //     columns: ['custrecord_scv_project_source.entityid' , 'custrecord_scv_project_source.companyname' ]
+            // });
+            
+            let objLookup = {};
+            if(projectId) {
+                objLookup = search.lookupFields({
+                    type: 'customrecord_cseg_scv_sg_proj',
+                    id: projectId,
+                    columns: [
+                        'custrecord_scv_project_source.entityid',
+                        'custrecord_scv_project_source.companyname'
+                    ]
+                });
+            }
             const objResHeaders = {
                 pjName: objLookup['custrecord_scv_project_source.companyname'] || '',
                 poNumber: objLineFirst._1_po_no || '',
