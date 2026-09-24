@@ -36,7 +36,6 @@ define([
         const validatePrint = (curRec) =>{
             let curUser = runtime.getCurrentUser();
 
-            // log.error("hoan check" , curUser);
             if(curUser.role !== constRole.Records.Administrator.ID && curUser.subsidiary != constSubsidiary.Records.NknVn.ID) return false;
 
             let arrLine01 = constSearchPrintRPOVN01.getDataSource({
@@ -105,14 +104,7 @@ define([
             
             let objLineFirst = arrLine01[0] ?? {};
             // log.error("Hoan",arrLine01)
-            // arrLine01[0]._24_working_budget = null;
-            // arrLine01[0]._26_accumulate_amount = "0";
             let projectId = curRec.getValue('cseg_scv_sg_proj');
-            // let objLookup = search.lookupFields({
-            //     type: 'customrecord_cseg_scv_sg_proj',
-            //     id: projectId,
-            //     columns: ['custrecord_scv_project_source.entityid' , 'custrecord_scv_project_source.companyname' ]
-            // });
             let objLookup = {};
             if(projectId) {
                 objLookup = search.lookupFields({
@@ -162,8 +154,6 @@ define([
                 compensationProposal: objLineFirst._31_compensation_proposal,
             };
 
-           
-
             let arrLineItem = constRecord.getDataOfSublist(curRec, "item", [
                 "lineuniquekey", "povendor",
             ]);
@@ -194,28 +184,43 @@ define([
                     lines: []
                 };
 
-                for (let i = 0; i < arrLine01_detail.length; i++) {
-                    let objLine01 = arrLine01_detail[i];
-                    let currency = objLine01._2_currency_display || '';
+                const arrGroup = alasql(`
+                    SELECT
+                        _23_w_b_no AS wbNo,
+                        _28_remark_memo_line AS remarks,
+                        SUM(_24_working_budget * 1) AS workingBudget,
+                        SUM(_25_this_amount * 1) AS thisAmount,
+                        SUM(_26_accumulate_amount * 1) AS accumulateAmount,
+                        SUM(_27_balance * 1) AS balance
+                    FROM ?
+                    GROUP BY
+                        _23_w_b_no,
+                        _28_remark_memo_line
+                `, [arrLine01_detail]);
+
+                for (let i = 0; i < arrGroup.length; i++) {
+                    let objLine01 = arrGroup[i];
+
+                    let currency = arrLine01_detail[0]._2_currency_display || '';
 
                     let workingBudgetVal = null;
-                    if (objLine01._24_working_budget) {
-                        workingBudgetVal = Number(objLine01._24_working_budget);
+                    if (objLine01.workingBudget) {
+                        workingBudgetVal = Number(objLine01.workingBudget);
                     }
 
                     let thisAmountVal = null;
-                    if (objLine01._25_this_amount) {
-                        thisAmountVal = Number(objLine01._25_this_amount);
+                    if (objLine01.thisAmount) {
+                        thisAmountVal = Number(objLine01.thisAmount);
                     }
 
                     let accumulateAmtVal = null;
-                    if (objLine01._26_accumulate_amount) {
-                        accumulateAmtVal = Number(objLine01._26_accumulate_amount);
+                    if (objLine01.accumulateAmount) {
+                        accumulateAmtVal = Number(objLine01.accumulateAmount);
                     }
 
                     let balanceVal = null;
-                    if (objLine01._27_balance) {
-                        balanceVal = Number(objLine01._27_balance);
+                    if (objLine01.balance) {
+                        balanceVal = Number(objLine01.balance);
                     }
 
                     objResult.totalWorkingBudget += workingBudgetVal;
@@ -227,7 +232,7 @@ define([
                     objResult.totalBalance += balanceVal;
 
                     let objResDetail = {
-                        wbNo:             objLine01._23_w_b_no,
+                        wbNo:             objLine01.wbNo,
                         currency:         currency,
                         workingBudget:    buildCurrencyAmount(currency, workingBudgetVal),
                         thisAmount:       buildCurrencyAmount(currency, thisAmountVal),
@@ -282,6 +287,7 @@ define([
                         : buildCurrencyAmount(totalCurrency, objResult.totalBalance);
 
                 arrResDatas.push(objResult);
+                // log.error("hoan objResult " ,objResult)
             }
 
             libPdf.formatDataXMLWithObject(objResHeaders);

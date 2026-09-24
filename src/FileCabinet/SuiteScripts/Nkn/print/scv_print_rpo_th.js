@@ -181,15 +181,27 @@ define([
                 }
 
                 let arrLine01_detail = arrLine01.filter(e => lineUniqueKeys.includes(e._0_po_line));
+                const arrGroup = alasql(`
+                    SELECT
+                        _15_work_item_no AS workItemNo,
+                        SUM(_16_working_budget * 1) AS workingBudget,
+                        SUM(_17_accumulate_amount * 1) AS accumulateAmount,
+                        SUM(_30_accumulate_site_expense * 1) AS accumulateSiteExpense,
+                        SUM(_31_applicable_budget * 1) AS applicableBudget,
+                        SUM(_4_contract_amount * 1) AS contractAmount
+                    FROM ?
+                    GROUP BY
+                        _15_work_item_no
+                `, [arrLine01_detail]);
 
-                for(let i = 0; i < arrLine01_detail.length; i++){
-                    let objLine01 = arrLine01_detail[i];
+                for(let i = 0; i < arrGroup.length; i++){
+                    let objLine01 = arrGroup[i];
 
-                    let workingBudget = objLine01._16_working_budget * 1 || 0;
-                    let accumulateAmount = objLine01._17_accumulate_amount * 1 || 0;
-                    let accumulateSiteExpense = objLine01._30_accumulate_site_expense * 1 || 0;
-                    let applicableBudget = objLine01._31_applicable_budget * 1 || 0;
-                    let contractAmount = objLine01._4_contract_amount * 1 || 0;
+                    let workingBudget = objLine01.workingBudget * 1 || 0;
+                    let accumulateAmount = objLine01.accumulateAmount * 1 || 0;
+                    let accumulateSiteExpense = objLine01.accumulateSiteExpense * 1 || 0;
+                    let applicableBudget = objLine01.applicableBudget * 1 || 0;
+                    let contractAmount = objLine01.contractAmount * 1 || 0;
 
                     let balance123 = workingBudget - accumulateAmount - accumulateSiteExpense;
                     let balance56 = applicableBudget - contractAmount;
@@ -205,7 +217,7 @@ define([
                     objResult.totalBalance56 += balance56;
 
                     let objResDetail = {
-                        workItemNo: objLine01._15_work_item_no,
+                        workItemNo: objLine01.workItemNo,
                         workingBudget: formatNumberByKey(workingBudget),
                         accumulateAmount: formatNumberByKey(accumulateAmount),
                         accumulateSiteExpense: formatNumberByKey(accumulateSiteExpense),
@@ -214,7 +226,6 @@ define([
                         contractAmount: formatNumberByKey(contractAmount),
                         balance56: formatNumberByKey(balance56)
                     };
-
                     objResult.lines.push(objResDetail);
                 }
 

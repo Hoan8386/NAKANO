@@ -125,7 +125,7 @@ define([
                 subCon: objLineFirst._2_sub_contractor_s_name || "",
                 subConAddress: objLineFirst._3_sub_contractor_s_address || "",
                 subConPhone: objLineFirst._4_sub_contractor_s_phone || "",
-                attention: objLineFirst._5_attention_display || "",
+                attention: objLineFirst._5_attention  || objLineFirst._5_attention_display || "",
                 date: objLineFirst._6_date || "",
                 poNumber: objLineFirst._7_p_o_no || "",
                 yourRef: objLineFirst._8_your_ref || "",

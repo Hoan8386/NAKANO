@@ -45,7 +45,7 @@
                             <b>FORM 1: SUB-CONTRACTOR</b>
                         </td>
                     </tr>
-                    <tr height="40px"  class="align-center">
+                    <tr height="40px"  class="align-right">
                         <td colspan="100" style=" font-weight:900;"  class=" valign-middle ">
                             <b class="fs-16" >PURCHASE ORDER</b>
                         </td>
@@ -186,7 +186,7 @@
                     </tr>
                     <tr>
                         <td colspan="10"></td>
-                        <td colspan="35"><p>VAT (12% x 11/12)</p></td>
+                        <td colspan="35"><p>VAT</p></td>
                         <td colspan="2"><p>:</p></td>
                         <td colspan="53" style="border-right: none;"><p>${result.vat.currency} ${result.vat.amount}</p></td>
                     </tr>

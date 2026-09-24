@@ -55,7 +55,7 @@ define([
                     recordId: curRec.id,
                     recordType: curRec.type,
                     printFile: "scv_print_rop_id",
-                }
+                }   
             });
 
             form.addButton({
@@ -129,14 +129,16 @@ define([
                 let currentlyApproved = item._9_currently_approved * 1 || 0;
                 let prevApproved = objSS2._2_prev_approval_incl_retention * 1 || 0;
                 let approvedAccumulation = currentlyApproved + prevApproved || 0;
-                let retention = item._15_retetion * 1 || 0;
+                let retention = parseFloat(item._15_retetion) || 0;
+                log.error("hoan retention" , retention)
 
                 totalContract += item._8_contract * 1 || 0;
                 totalApprovedAccumulation += approvedAccumulation;
                 totalPrevApproved += prevApproved;
                 totalCurrentlyApproved += currentlyApproved;
-                totalPresentRetention += currentlyApproved * retention;
-
+                
+                let retentionAmount = currentlyApproved * retention / 100;
+                totalPresentRetention += retentionAmount;
                 return {
                     invRefNo: item._5_inv_ref_no || '',
                     poNo: item._6_po_no || '',
@@ -145,7 +147,7 @@ define([
                     approvedAccumulation: formatNumberByKey(approvedAccumulation),
                     prevApproved: formatNumberByKey(prevApproved),
                     currentlyApproved: formatNumberByKey(currentlyApproved),
-                    presentRetention: formatNumberByKey(currentlyApproved * retention)
+                    presentRetention: formatNumberByKey(retentionAmount)
                 };
             });
 
@@ -155,6 +157,7 @@ define([
                 pjName: (objLookup['custrecord_scv_project_source.companyname'] || '').split(':').slice(1).join(':').trim(),
                 pjCode: objLookup['custrecord_scv_project_source.entityid'] || '',
                 docNumber: objLineFirst._1_document_number || '',
+                dateFormatDDMMYYYY: formatDate(objLineFirst._2_date) || '',
                 date: objLineFirst._2_date || '',
                 claimantNo: objLineFirst._3_claimant_no || '',
                 claimantName: objLineFirst._4_claimant_name || '',
@@ -173,6 +176,7 @@ define([
                 totalPresentRetention: formatNumberByKey(totalPresentRetention)
             };
 
+            log.error("hoan check objResult" ,objResult);
             renderer.addCustomDataSource({
                 format: "OBJECT",
                 alias: 'result',
@@ -189,5 +193,10 @@ define([
             });
         }
 
+        const formatDate = (_value) => {
+            if (!_value) return "";
+            let date = new Date(_value);
+            return `${String(date.getDate()).padStart(2, '0')}/${String(date.getMonth() + 1).padStart(2, '0')}/${date.getFullYear()}`;
+        }
         return { addBtnPrint, generateFilePDF };
     });

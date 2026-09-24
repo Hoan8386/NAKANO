@@ -95,7 +95,7 @@ define([
 
             let arrLine01 = constSearchPrintRPOID01.getDataSource({ internalid: curRec.id });
             let objLineFirst = arrLine01[0] ?? {};
-            // log.error("hoan arrLine01", arrLine01);
+            //  log.error("hoan arrLine01", arrLine01);
 
             const showBooleanDisplay = (checked) => checked ? "Yes" : "No";
             let projectId = curRec.getValue('cseg_scv_sg_proj');
@@ -174,35 +174,50 @@ define([
                     if(lineUniqueKeys.indexOf(objLine01._0_po_line) !== -1) arrLine01_detail.push(objLine01);
                 }
 
-                let totalVat = 0;
-
-                for(let i = 0; i < arrLine01_detail.length; i++){
+                 for(let i = 0; i < arrLine01_detail.length; i++){
                     let objLine01 = arrLine01_detail[i];
-
-                    totalVat += objLine01._23_vat * 1 || 0 ;
 
                     let objResDetail = {
                         rb: objLine01._2_rp * 1,
                         vat: objLine01._20_vat * 1,
-                        workItemNo: objLine01._15_work_item_no,
-                        description: libPdf.formatDataXML(objLine01._16_desciption) ,
-                        nettoWorkingBudget: objLine01._17_working_budget * 1,
-                        contractSum: objLine01._21_contract_sum * 1,
-                        contractCost: objLine01._18_contract_cost * 1,
-                        expected: objLine01._22_expected * 1,
-                        balance: objLine01._19_balance * 1
+                       
+                    };
+                     objResult.rb += objResDetail.rb;
+                     objResult.vat += objResDetail.vat;
+                }
+                const arrGroup = alasql(`
+                    SELECT
+                        _15_work_item_no AS workItemNo,
+                        _16_desciption AS description,
+                        SUM(_17_working_budget * 1) AS nettoWorkingBudget,
+                        SUM(_21_contract_sum * 1) AS contractSum,
+                        SUM(_18_contract_cost * 1) AS contractCost,
+                        SUM(_22_expected * 1) AS expected
+                    FROM ?
+                    GROUP BY
+                        _15_work_item_no,
+                        _16_desciption
+                `, [arrLine01_detail]);
+
+                for(let i = 0; i < arrGroup.length; i++){
+                    let objGroup = arrGroup[i];
+                    const objResDetail = {
+                        workItemNo: objGroup.workItemNo || '',
+                        description: libPdf.formatDataXML(objGroup.description || ''),
+                        nettoWorkingBudget: objGroup.nettoWorkingBudget || 0,
+                        contractSum: objGroup.contractSum || 0,
+                        contractCost: objGroup.contractCost || 0,
+                        expected: objGroup.expected || 0,
+                        balance: (objGroup.nettoWorkingBudget || 0) - (objGroup.contractCost || 0) - (objGroup.expected || 0)
                     };
 
-                    objResult.rb += objResDetail.rb;
-                    objResult.vat += objResDetail.vat;
+                    
                     objResult.nettoWorkingBudget += objResDetail.nettoWorkingBudget;
                     objResult.contractSum += objResDetail.contractSum;
                     objResult.contractCost += objResDetail.contractCost;
                     objResult.expected += objResDetail.expected;
                     objResult.balance += objResDetail.balance;
 
-                    objResDetail.rb = formatNumberByKey(objResDetail.rb);
-                    objResDetail.vat = formatNumberByKey(objResDetail.vat);
                     objResDetail.nettoWorkingBudget = formatNumberByKey(objResDetail.nettoWorkingBudget);
                     objResDetail.contractSum = formatNumberByKey(objResDetail.contractSum);
                     objResDetail.contractCost = formatNumberByKey(objResDetail.contractCost);
@@ -211,12 +226,13 @@ define([
 
                     objResult.lines.push(objResDetail);
                 }
+                
 
-                objResult.vatNettoWorkingBudget = objResult.nettoWorkingBudget * totalVat;
-                objResult.vatContractSum = objResult.contractSum * totalVat;
-                objResult.vatContractCost = objResult.contractCost * totalVat;
-                objResult.vatExpected = objResult.expected * totalVat;
-                objResult.vatBalance = objResult.balance * totalVat;
+                objResult.vatNettoWorkingBudget = 0;
+                objResult.vatContractSum = 0;
+                objResult.vatContractCost = objResult.vat;
+                objResult.vatExpected = 0;
+                objResult.vatBalance = 0;
 
                 objResult.grandTotalNettoWorkingBudget = objResult.nettoWorkingBudget + objResult.vatNettoWorkingBudget;
                 objResult.grandTotalContractSum = objResult.contractSum + objResult.vatContractSum;

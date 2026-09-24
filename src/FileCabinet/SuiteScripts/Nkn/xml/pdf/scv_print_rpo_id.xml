@@ -170,7 +170,7 @@
 
         <table width="100%" class="border-table" cellpadding="2">
             <thead>
-                <tr>
+                <tr style="background-color: #ccc;">
                     <th colspan="10" class="align-center">WORK ITEM<br/>NO</th>
                     <th colspan="30" class="align-center">DESCRIPTION</th>
                     <th colspan="12" class="align-center">NETTO / WORKING<br/>BUDGET</th>

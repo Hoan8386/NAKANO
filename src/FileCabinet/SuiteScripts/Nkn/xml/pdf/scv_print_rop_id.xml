@@ -30,9 +30,9 @@
                 <td colspan="20" >
                     ${result.tagImgLogo} 
                 </td>
-                  <td colspan="80" >
+                <!-- <td colspan="80" >
                     <span>${subsidiary.legalname}  </span>
-                </td>
+                </td> -->
             </tr>
             
             <tr>
@@ -53,7 +53,7 @@
                         </tr>
                          <tr>
                             <td>Date </td>
-                            <td>${result.date}</td>
+                            <td>${result.dateFormatDDMMYYYY}</td>
                         </tr>
                     </table>
                 </td>
@@ -147,7 +147,7 @@
                     <th colspan="13"> <b>APPROVED<br/>ACCUMULATION</b></th>
                     <th colspan="13"> <b>PREV. APPROVED<br/>(Incl. Retention)</b></th>
                     <th colspan="13"> <b>CURRENTLY<br/>APPROVED</b></th>
-                    <th colspan="13"> <b>PRESENT<br/>RETENTION (${result.retentionDisplay})</b></th>
+                    <th colspan="13"> <b>PRESENT<br/>RETENTION (${result.retention})</b></th>
                 </tr>
             </thead>
 
