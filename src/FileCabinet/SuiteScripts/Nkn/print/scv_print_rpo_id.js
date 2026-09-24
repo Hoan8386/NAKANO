@@ -95,7 +95,7 @@ define([
 
             let arrLine01 = constSearchPrintRPOID01.getDataSource({ internalid: curRec.id });
             let objLineFirst = arrLine01[0] ?? {};
-            //  log.error("hoan arrLine01", arrLine01);
+            // log.error("hoan arrLine01", arrLine01);
 
             const showBooleanDisplay = (checked) => checked ? "Yes" : "No";
             let projectId = curRec.getValue('cseg_scv_sg_proj');
@@ -185,7 +185,7 @@ define([
                         rb: objLine01._2_rp * 1,
                         vat: objLine01._20_vat * 1,
                         workItemNo: objLine01._15_work_item_no,
-                        description: objLine01._16_desciption,
+                        description: libPdf.formatDataXML(objLine01._16_desciption) ,
                         nettoWorkingBudget: objLine01._17_working_budget * 1,
                         contractSum: objLine01._21_contract_sum * 1,
                         contractCost: objLine01._18_contract_cost * 1,
@@ -244,6 +244,7 @@ define([
 
                 arrResDatas.push(objResult);
             }
+            libPdf.formatDataXMLWithObject(objResHeaders);
 
             renderer.addCustomDataSource({
                 format: "OBJECT",

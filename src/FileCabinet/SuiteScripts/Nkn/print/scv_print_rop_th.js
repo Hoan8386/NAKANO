@@ -151,7 +151,8 @@ define([
             });
             objResult = {
                 tagImgLogo: libPdf.createImageBySubsidiaryV2(subsidiaryRec, 120),
-                pjName: objLookup['custrecord_scv_project_source.companyname'] || '',
+                // pjName: objLookup['custrecord_scv_project_source.companyname'] || '',
+                pjName: (objLookup['custrecord_scv_project_source.companyname'] || '').split(':').slice(1).join(':').trim(),
                 pjCode: objLookup['custrecord_scv_project_source.entityid'] || '',
                 docNo: objLineFirst._1_document_number || '',
                 date: objLineFirst._2_date || '',

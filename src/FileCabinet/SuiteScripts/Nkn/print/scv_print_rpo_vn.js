@@ -130,7 +130,8 @@ define([
             });
             const objResHeaders = {
                 pjCode: objLookup['custrecord_scv_project_source.entityid'] || '',
-                pjName: objLookup['custrecord_scv_project_source.companyname'] || '',
+                // pjName: objLookup['custrecord_scv_project_source.companyname'] || '',
+                pjName: (objLookup['custrecord_scv_project_source.companyname'] || '').split(':').slice(1).join(':').trim(),
                 vendor: objLookup.companyname || '',
                 SCofWork:objLineFirst._1_scope_of_work,
                 totalAmount:libPdf.formatNumber(totalAmount),
@@ -161,8 +162,7 @@ define([
                 compensationProposal: objLineFirst._31_compensation_proposal,
             };
 
-            libPdf.formatDataXMLWithObject(objResHeaders);
-            objResHeaders.tagImgLogo = libPdf.createImageBySubsidiaryV2(subsidiaryRec, 120);
+           
 
             let arrLineItem = constRecord.getDataOfSublist(curRec, "item", [
                 "lineuniquekey", "povendor",
@@ -283,6 +283,9 @@ define([
 
                 arrResDatas.push(objResult);
             }
+
+            libPdf.formatDataXMLWithObject(objResHeaders);
+            objResHeaders.tagImgLogo = libPdf.createImageBySubsidiaryV2(subsidiaryRec, 120);
 
             renderer.addCustomDataSource({
                 format: "OBJECT",

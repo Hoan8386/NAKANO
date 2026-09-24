@@ -120,7 +120,8 @@ define([
                 });
             }
             const objResHeaders = {
-                pjName: objLookup['custrecord_scv_project_source.companyname'] || '',
+                // pjName: objLookup['custrecord_scv_project_source.companyname'] || '',
+                pjName: (objLookup['custrecord_scv_project_source.companyname'] || '').split(':').slice(1).join(':').trim(),
                 poNumber: objLineFirst._1_po_no || '',
                 scopeOfWork: objLineFirst._3_scope_of_work || '',
                 typeOfContract: objLineFirst._10_type_of_contract || '',
@@ -228,6 +229,7 @@ define([
 
                 arrResDatas.push(objResult);
             }
+            libPdf.formatDataXMLWithObject(objResHeaders);
             objResHeaders.tagImgLogo = libPdf.createImageBySubsidiaryV2(subsidiaryRec, 140);
 
             renderer.addCustomDataSource({

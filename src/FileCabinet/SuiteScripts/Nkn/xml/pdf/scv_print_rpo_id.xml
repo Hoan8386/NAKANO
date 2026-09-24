@@ -181,7 +181,7 @@
                 </tr>
             </thead>
 
-            <tbody>
+            <tbody class="fs-8">
                 <#list data.lines as line>
                     <tr>
                         <td colspan="10" class="align-center">${line.workItemNo!}</td>

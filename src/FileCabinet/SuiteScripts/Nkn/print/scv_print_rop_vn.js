@@ -190,9 +190,9 @@ define([
             const totalInclVatPercent = totalInclVatAccumulateAmount ? (totalInclVatContractAmount / totalInclVatAccumulateAmount) * 100 : '';
 
             const objResult = {
-                tagImgLogo: libPdf.createImageBySubsidiaryV2(subsidiaryRec, 120),
                 docNumber: objLineFirst._1_document_number || '',
-                pjName: objLookup['custrecord_scv_project_source.companyname'] || '',
+                // pjName: objLookup['custrecord_scv_project_source.companyname'] || '',
+                pjName: (objLookup['custrecord_scv_project_source.companyname'] || '').split(':').slice(1).join(':').trim(),
                 pjCode: objLookup['custrecord_scv_project_source.entityid'] || '',
                 poNo: objLineFirst._2_p_o_no || '',
                 vendor: objLineFirst._3_vendor || '',
@@ -226,8 +226,14 @@ define([
                 summaryDescriptionOfPayment: objLineFirst._25_summary_description_of_payment || '',
                 reasonOfExcessFromPO: objLineFirst._26_reason_of_excess_from_po_if_any || ''
             };
+            libPdf.formatDataXMLWithObject(objResult);
+            objResult.tagImgLogo = libPdf.createImageBySubsidiaryV2(subsidiaryRec, 120);
 
-            renderer.addCustomDataSource({ format: "OBJECT", alias: 'results', data: objResult });
+            renderer.addCustomDataSource({
+                format: "OBJECT",
+                alias: 'results',
+                data: objResult
+            });
             return renderer;
         };
         const buildCurrencyAmount = (currency, amount) => {
