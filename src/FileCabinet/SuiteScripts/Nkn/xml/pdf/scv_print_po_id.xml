@@ -23,12 +23,12 @@
 <body padding="0.3in 0.5in 0.5in 0.5in" size="A4" >
    <table border-bottom="1">
         <tr>
-            <td colspan="20">${result.tagImgLogo} </td>
+            <td colspan="25">${result.tagImgLogo} </td>
             <td colspan="35">
                 <p style="margin:3px 0"  class="fs-12"> <b>${subsidiary.legalname} </b></p>
-                <p style="margin:3px 0" >${subsidiary.mainaddress_text}</p>
+                <p style="margin:3px 0" class="fs-9" >${subsidiary.mainaddress_text}</p>
                  <table class="border-none  " style="padding:0px; margin:0px">
-                    <tr>
+                    <tr class="fs-9">
                         <td style="padding:0px; margin:0px"> 
                             <p> Tel: ${subsidiary.custrecord_scv_sub_tel_phone} </p> 
                         </td>
@@ -38,18 +38,19 @@
                     </tr>
                 </table>
             </td>
-            <td colspan="40" class="align-center">
+            <td colspan="35">
                 <table style="width: 100%;">
                     <tr>
-                        <td class="align-right">
-                            <p >FORM 1: SUB-CONTRACTOR</p>
+                        <td colspan="100" class="align-right fs-8">
+                            <b>FORM 1: SUB-CONTRACTOR</b>
                         </td>
                     </tr>
-                    <tr height="40px">
-                        <td style="background-color:blue; color:white; font-weight:900;"  class=" valign-middle ">
+                    <tr height="40px"  class="align-center">
+                        <td colspan="100" style=" font-weight:900;"  class=" valign-middle ">
                             <b class="fs-16" >PURCHASE ORDER</b>
                         </td>
                     </tr>
+                    ${libPdf.rowcol100}
                 </table>
             </td>
         </tr>
@@ -72,7 +73,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <p>${result.subCon}</p>
+                            <p><b> ${result.subCon}</b></p>
                             <p>${result.subConAddress}</p>
                             <table class="border-none">
                                 <tr>
@@ -231,10 +232,10 @@
                         <td colspan="2"><p>:</p></td>
                         <td colspan="53" style="border-right: none;"><p>${result.maintenance}</p></td>
                     </tr>
-                    <tr class="mt-5">
+                    <tr class="mt-5 ">
                         <td colspan="10"></td>
                         <td colspan="90" style="border-right: none;">
-                            <p>THE CONTRACT PRICE IS SUBJECT TO WITHHOLDING INCOME TAX IN ACCORDANCE WITH THE APPLICABLE TAX REGULATIONS SUPPORTED BY VALID CERTIFICATION</p>
+                            <p class="fs-8">THE CONTRACT PRICE IS SUBJECT TO WITHHOLDING INCOME TAX IN ACCORDANCE WITH THE APPLICABLE TAX REGULATIONS SUPPORTED BY VALID CERTIFICATION</p>
                         </td>
                     </tr>
                 </table>

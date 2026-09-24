@@ -6,7 +6,7 @@
  *  15 Sep 2026         Thanh Hoan              Init, create file, PO (ID), from mr.Quân(https://app.clickup.com/t/3773072/86d3w9emj)
  */
 define([
-    "N/record", "N/url", 'N/runtime',
+    "N/record", "N/url", 'N/runtime', 'N/search',
     "../lib/scv_lib_pdf.js",
     '../common/scv_common_ext_performent.js',
 
@@ -16,7 +16,7 @@ define([
     '../cons/scv_cons_subsidiary.js',
     '../cons/scv_cons_search_print_po_id_01.js',
 ], (
-        record, url, runtime,
+        record, url, runtime,search,
         libPdf,
         commonExtPerformance,
 
@@ -95,7 +95,15 @@ define([
             // log.error("hoan arrLine01" , arrLine01);
             let objResult = {};
             let objLineFirst = arrLine01[0] ?? {};
-
+            let projectId = curRec.getValue('cseg_scv_sg_proj');
+            let objLookup = search.lookupFields({
+                type: 'customrecord_cseg_scv_sg_proj',
+                id: projectId,
+                columns: [
+                    'custrecord_scv_project_source.entityid',
+                    'custrecord_scv_project_source.companyname'
+                ]
+            });
             let contractPrice = null;
             let vat = null;
 
@@ -113,7 +121,7 @@ define([
                 vat +=vat_item;
             });
             objResult = {
-                project: objLineFirst._1_projects_display || "",
+                project: (objLookup['custrecord_scv_project_source.companyname'] || '').split(':').slice(1).join(':').trim(),
                 subCon: objLineFirst._2_sub_contractor_s_name || "",
                 subConAddress: objLineFirst._3_sub_contractor_s_address || "",
                 subConPhone: objLineFirst._4_sub_contractor_s_phone || "",
