@@ -1,21 +1,19 @@
 /**
  * Nội dung: 
+ * Mapping:
  * =======================================================================================
  *  Date                Author                  Description
- *  19 Aug 2026         Huy Pham                Init, create file. Sinh số PO theo Project, from ms.Ngọc(https://app.clickup.com/t/3773072/86d41zjat)
- *  21 Sep 2026         Huy Pham                Check Working Budget, excess cost RPO, PO, from ms.Ngọc (https://app.clickup.com/t/3773072/14yhnhmftzf)
+ *  21 Sep 2026         Huy Pham                Init, create file. Check Working Budget, excess cost RPO, PO, from ms.Ngọc (https://app.clickup.com/t/3773072/14yhnhmftzf)
  */
 /**
  * @NApiVersion 2.1
  * @NScriptType UserEventScript
  */
 define([
-        '../common/scv_common_po_docnum.js',
         '../common/scv_common_checkbudget.js',
     ],
 
     (
-        commPODocNum,
         commonCheckBudget,
     ) => {
         /**
@@ -42,11 +40,7 @@ define([
         const beforeSubmit = (scriptContext) => {
             let triggerType = scriptContext.type;
             let newRec = scriptContext.newRecord;
-            let oldRec = scriptContext.oldRecord;
 
-            if (["create", "edit", "copy"].includes(triggerType)) {
-                commPODocNum.genPurchaseOrderNumber(newRec);
-            }
         }
 
         /**
@@ -58,12 +52,15 @@ define([
          * @since 2015.2
          */
         const afterSubmit = (scriptContext) => {
+            let triggerType = scriptContext.type;
+            let newRec = scriptContext.newRecord;
+
         }
 
         return {
             beforeLoad,
-            beforeSubmit,
-            //afterSubmit
+            /* beforeSubmit,
+            afterSubmit */
         }
 
     });

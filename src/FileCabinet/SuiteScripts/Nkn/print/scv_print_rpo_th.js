@@ -226,6 +226,7 @@ define([
                         contractAmount: formatNumberByKey(contractAmount),
                         balance56: formatNumberByKey(balance56)
                     };
+
                     objResult.lines.push(objResDetail);
                 }
 

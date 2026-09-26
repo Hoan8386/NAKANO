@@ -3,7 +3,7 @@
  * Mapping:
  * =======================================================================================
  *  Date                Author                  Description
- *  18 Sep 2026         Huy Pham                Init, create file. Tính toán Net Cost trên Project tab Financial, from mr.Bính (https://app.clickup.com/t/3773072/14yhnhmfqr2)
+ *  21 Sep 2026         Huy Pham                Init, create file. Check Working Budget, excess cost RPO, PO, from mr.Bính (https://app.clickup.com/t/3773072/14yhnhmftzf)
  */
 /**
  * @NApiVersion 2.1
@@ -12,19 +12,19 @@
 define([
     'N/redirect',
 
-    '../common/scv_common_project_calculate.js',
+    '../common/scv_common_checkbudget.js',
 ],
     
     (
         redirect,
 
-        commonProjectCalc,
+        commonCheckBudget,
     ) => {
         const onRequest = (scriptContext) => {
             let request = scriptContext.request;
             let params = request.parameters;
 
-            commonProjectCalc.calcNetCost(params);
+            commonCheckBudget.checkBudget(params);
 
             redirect.toRecord({
                 type: params.recordType,

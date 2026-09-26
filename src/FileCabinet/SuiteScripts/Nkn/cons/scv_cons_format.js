@@ -1,6 +1,6 @@
 /**
  * Nội dung: 
- * Version: 1.260811.14
+ * Version: 1.260924.16
  * =======================================================================================
  *  Date                Author                  Description
  *  06 Jul 2024         Huy Pham                Init & create file
@@ -43,6 +43,10 @@ define(['N/format', 'N/format/i18n', 'N/query',
 
     let currencyFormatter = null;
 
+    const parsePercent = (_value) => {
+        return parseFloat((_value ?? "").toString().replace("%", "")) || 0;
+    }
+
     const formatDate = (_value) =>{
         return !!_value ? format.format({type: "date", value: _value}) : "";
     }
@@ -68,7 +72,15 @@ define(['N/format', 'N/format/i18n', 'N/query',
     }
 
     const initCurrencyFormatter = (_currencyCode = "VND") =>{
-        currencyFormatter = formati18n.getCurrencyFormatter({currency: _currencyCode});
+        try{
+            currencyFormatter = formati18n.getCurrencyFormatter({currency: _currencyCode});
+        }
+        catch(err){
+            let currencyCode = constCurrency.getInfoCurrencyByName(_currencyCode)[0]?.symbol;
+            if(currencyCode){
+                currencyFormatter = formati18n.getCurrencyFormatter({currency: currencyCode});
+            }
+        }
 
         return currencyFormatter;
     }
@@ -450,6 +462,20 @@ define(['N/format', 'N/format/i18n', 'N/query',
         if(_currencyId == constCurrency.RECORDS.VND.ID){
             precision = 1;
         }
+        else if(!!_currencyId){
+            //Map {currencyId: precision} lưu trong Store, chỉ query currency chưa có trong map -> không query lại mỗi lần call
+            let objPrecision = constDataStore.getDataStore("CurrencyPrecision") || {};
+
+            if(objPrecision[_currencyId] === undefined){
+                let objCurrency = constCurrency.getFirstInfoCurrencyById(_currencyId.toString());
+
+                objPrecision[_currencyId] = Math.pow(10, (objCurrency?.currencyprecision ?? 2) * 1);
+
+                constDataStore.setDataStore("CurrencyPrecision", objPrecision);
+            }
+
+            precision = objPrecision[_currencyId];
+        }
         return Math.round(_number * precision) / precision;
     }
 
@@ -631,6 +657,7 @@ define(['N/format', 'N/format/i18n', 'N/query',
 
     return {
 		RECORDS,
+        parsePercent,
         formatDate,
         parseDate,
         formatNumber,

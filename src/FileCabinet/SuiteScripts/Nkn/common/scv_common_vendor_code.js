@@ -5,6 +5,7 @@
  * =======================================================================================
  *  Date                Author                  Description
  *  19 Aug 2026         Huy Pham                Init, create file. Sinh mã Vendor, from ms.Ngọc(https://app.clickup.com/t/3773072/86d42w9hv)
+ *  25 Sep 2026         Huy Pham                Fix mã Vendor bị NetSuite auto-generate đè khi create (https://app.clickup.com/t/3773072/86d42w9hv?comment=1300230000037758)
  */
 define(['N/search',
     '../cons/scv_cons_seqnumber.js',
@@ -87,6 +88,8 @@ define(['N/search',
 
         let entityid = prefix + curSeqNumber.toString().padStart(SEQ_LENGTH, '0');
 
+        //Tắt auto-numbering để NetSuite không ghi đè entityid bằng mã tự sinh của hệ thống
+        _vendorRec.setValue('autoname', false);
         _vendorRec.setValue('entityid', entityid);
 
         return entityid;

@@ -23,6 +23,18 @@ define([],
                 ID: 4,
                 NAME: "All"
             },
+            ReserveIndirectCost: {
+                ID: 5,
+                NAME: "Reserve Indirect Cost"
+            },
+            IndirectCostNo: {
+                ID: 6,
+                NAME: "Indirect Cost No"
+            },
+            StoreJobNo: {
+                ID: 7,
+                NAME: "Store job no"
+            },
         }
 
 

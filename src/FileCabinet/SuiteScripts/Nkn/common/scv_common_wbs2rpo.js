@@ -3,6 +3,7 @@
  * =======================================================================================
  *  Date                Author                  Description
  *  15 Sep 2026         Huy Pham                Init, create file. Create RPO (Requisition) from Project_WBS, from ms.Ngọc(https://app.clickup.com/t/3773072/14yhnhmfjj0)
+ *  23 Sep 2026         Huy Pham                Bổ sung logic Tax Code, from ms.Ngọc(https://app.clickup.com/t/3773072/14yhnhmfjj0?comment=1300230000034947)
  */
 define(['N/search', 'N/record', 'N/url', 'N/runtime',
     '../lib/scv_lib_function.js',
@@ -54,6 +55,9 @@ define(['N/search', 'N/record', 'N/url', 'N/runtime',
             },
             {
                 id: "custpage_col_description", label: "Description", type: "textarea", displayType: "entry",
+                displaySize: {
+                    width: 60, height: 3
+                }
             },
             {
                 id: "custpage_col_classcode", label: "Class Code", type: "select", source: "classification", displayType: "entry",
@@ -63,6 +67,9 @@ define(['N/search', 'N/record', 'N/url', 'N/runtime',
             },
             {
                 id: "custpage_col_rpo_qty", label: "RPO Quantity", type: "float", displayType: "entry",
+                displaySize: {
+                    width: 5, height: 1
+                }
             },
             {
                 id: "custpage_col_rpo_rate", label: "RPO Rate", type: "float", displayType: "entry",
@@ -251,6 +258,8 @@ define(['N/search', 'N/record', 'N/url', 'N/runtime',
         let objWbsDetail02_First = JSON.parse(objLinesFirts.custpage_col_customdata);
         let vendorId = params.custpage_def_vendor;
 
+        let taxCodeId = params.custpage_def_taxcode;
+
         lbf.setValueData(rpoRec, [
             "subsidiary", "cseg_scv_sg_proj",
             "custbody_scv_scope_of_work", 
@@ -264,7 +273,7 @@ define(['N/search', 'N/record', 'N/url', 'N/runtime',
         for(let i = 0; i < arrLines.length; i++){
             let objLine = arrLines[i];
 
-            let objCustomData = JSON.parse(objLinesFirts.custpage_col_customdata);
+            let objCustomData = JSON.parse(objLine.custpage_col_customdata);
 
             rpoRec.selectNewLine(sublistId);
 
@@ -281,7 +290,7 @@ define(['N/search', 'N/record', 'N/url', 'N/runtime',
                 objCustomData.project_segment, params.custpage_project,
                 objLine.custpage_col_classcode, objLine.custpage_col_unit,
                 objLine.custpage_col_rpo_qty, objLine.custpage_col_rpo_rate,
-                objLine.custpage_col_rpo_tax, objLine.custpage_col_linekey,
+                objLine.custpage_col_rpo_tax || taxCodeId, objLine.custpage_col_linekey,
             ]);
 
             rpoRec.commitLine(sublistId);

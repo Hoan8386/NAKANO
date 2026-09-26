@@ -330,11 +330,12 @@ define([], () => {
     }
 
     const parseNumber = (_val, _decimalDelimiter) =>{
-        if(_val === null || _val === undefined || _val === "") return 0;
+        // Ô trống giữ "" để phân biệt với giá trị 0 user nhập
+        if(_val === null || _val === undefined || _val === "") return "";
         if(typeof _val == "number") return _val;
 
         let strVal = _val.toString().trim();
-        if(!strVal) return 0;
+        if(!strVal) return "";
 
         if(_decimalDelimiter === Stores.DecimalDelimiter.Comma.VALUE){
             strVal = strVal.replaceAll(".", "").replace(",", ".");
@@ -376,7 +377,7 @@ define([], () => {
             let hasValue = false;
 
             arrColumns.forEach(objColumn => {
-                objLine[objColumn.id] = objColumn.type == "float" ? 0 : "";
+                objLine[objColumn.id] = "";
             });
 
             Object.keys(mapIdxToColumn).forEach(idx => {

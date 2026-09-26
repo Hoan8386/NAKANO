@@ -10,7 +10,7 @@ function() {
 		ID: "item",
 		RECORD_TYPE: [
 			"salesorder", "purchaseorder", "returnauthorization", "vendorreturnauthorization",
-			"invoice", "creditmemo", "vendorbill", "vendorcredit",
+			"invoice", "creditmemo", "vendorbill", "vendorcredit", "purchaserequisition",
 		]
 	}
 	const SUBLIST_LINE = {
@@ -39,14 +39,14 @@ function() {
 		let newRec = scriptContext.newRecord;
 		let sublistId = getSublistId(newRec.type);
 
-		initOriLineNum(scriptContext, sublistId, "custcol_scv_ori_lineid");
+		initOriLineNum(scriptContext, sublistId, "custcol_scv_origin_line_num");
 	}
 
 	const updOriLineNumTrans = (scriptContext) => {
 		let newRec = scriptContext.newRecord;
 		let sublistId = getSublistId(newRec.type);
 
-		updOriLineNum(scriptContext, sublistId, "custcol_scv_ori_lineid");
+		updOriLineNum(scriptContext, sublistId, "custcol_scv_origin_line_num");
 	}
 
 	const initOriLineNum = (scriptContext, sublistId, fieldId) => {
@@ -65,9 +65,9 @@ function() {
 		let triggerType = scriptContext.type;
 		let newRecord = scriptContext.newRecord;
 		if(["xedit", "delete"].includes(triggerType)) return;
-
+		
 		let lc = newRecord.getLineCount(sublistId);
-
+		
 		let mapOriLineNumExist = {};
 
 		for(let i = 0; i < lc; i++){

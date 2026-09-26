@@ -1,22 +1,19 @@
 /**
- * Nội dung: 
+ * Nội dung:
  * =======================================================================================
  *  Date                Author                  Description
- *  19 Aug 2026         Huy Pham                Init, create file. Sinh số PO theo Project, from ms.Ngọc(https://app.clickup.com/t/3773072/86d41zjat)
- *  21 Sep 2026         Huy Pham                Check Working Budget, excess cost RPO, PO, from ms.Ngọc (https://app.clickup.com/t/3773072/14yhnhmftzf)
+ *  24 Sep 2026         Huy Pham                Init, create file. Billing Progress trên INV lấy theo Billing Schedule milestone, from ms.Phương Anh(https://app.clickup.com/t/3773072/14yhnhmfqun)
  */
 /**
  * @NApiVersion 2.1
  * @NScriptType UserEventScript
  */
 define([
-        '../common/scv_common_po_docnum.js',
-        '../common/scv_common_checkbudget.js',
+        '../common/scv_common_billing_milestone.js',
     ],
 
     (
-        commPODocNum,
-        commonCheckBudget,
+        commonBillingMilestone,
     ) => {
         /**
          * Defines the function definition that is executed before record is loaded.
@@ -28,7 +25,7 @@ define([
          * @since 2015.2
          */
         const beforeLoad = (scriptContext) => {
-            commonCheckBudget.addBtnCheckBudget(scriptContext);
+            commonBillingMilestone.prefillInvoiceBilling(scriptContext);
         }
 
         /**
@@ -44,8 +41,14 @@ define([
             let newRec = scriptContext.newRecord;
             let oldRec = scriptContext.oldRecord;
 
-            if (["create", "edit", "copy"].includes(triggerType)) {
-                commPODocNum.genPurchaseOrderNumber(newRec);
+            //Create (gồm Invoice Sales Orders / Billing queue / CSV - không chạy beforeLoad): xác định milestone & tính lại line
+            if (triggerType == "create") {
+                commonBillingMilestone.updateInvoiceBilling(newRec);
+            }
+
+            //Edit: giữ nguyên giá trị cũ, không tính lại theo k (INV sau có thể đã tạo)
+            if (triggerType == "edit") {
+                commonBillingMilestone.validateEditInvoice(newRec, oldRec);
             }
         }
 

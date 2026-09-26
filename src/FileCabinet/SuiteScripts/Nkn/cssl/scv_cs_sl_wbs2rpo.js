@@ -3,6 +3,7 @@
  * =======================================================================================
  *  Date                Author                  Description
  *  15 Sep 2026         Huy Pham                Init, create file. Create RPO (Requisition) from Project_WBS, from ms.Ngọc(https://app.clickup.com/t/3773072/14yhnhmfjj0)
+ *  23 Sep 2026         Huy Pham                Bổ sung logic Tax Code, from ms.Ngọc(https://app.clickup.com/t/3773072/14yhnhmfjj0?comment=1300230000034947)
  */
 /**
  * @NApiVersion 2.1
@@ -82,6 +83,7 @@ define([
 
             if(fieldId === "custpage_subsidiary"){
                 reloadVendorField(curRec);
+                reloadTaxCodeField(curRec);
             }
 
             if(["custpage_col_rpo_qty", "custpage_col_rpo_rate", "custpage_col_rpo_tax"].includes(fieldId)){
@@ -122,6 +124,18 @@ define([
             });
         }
 
+        const reloadTaxCodeField = (curRec) =>{
+            let params = _scvForm.getParameter();
+            _scvForm.ajax.postAsync(_scvForm.serviceScript.url, {
+                ...params,
+                action: "getSalesTaxItem",
+            }, (_response) => {
+                constRecord.initLoadFieldClient(curRec.getField('custpage_def_taxcode'), {
+                    displayExpr: "name", valueExpr: "internalid", data: _response.data
+                }, true);
+            });
+        }
+
         const searchResult = async () => {
             let isValid = _scvForm.validateFieldMandatory([
                 "custpage_subsidiary", "custpage_project",
@@ -130,9 +144,9 @@ define([
 
             let params = _scvForm.getParameter();
             [
-                "custpage_subsidiary_display", "custpage_project",
-                "custpage_employee", "custpage_def_vendor",
-                "custpage_def_currency",
+                "custpage_subsidiary_display", "custpage_project_display",
+                "custpage_employee_display", "custpage_def_vendor_display",
+                "custpage_def_currency_display",
             ].forEach(_key => delete params[_key]);
 
             let urlScript = url.resolveScript({

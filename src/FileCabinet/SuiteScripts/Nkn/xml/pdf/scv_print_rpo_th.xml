@@ -1,7 +1,7 @@
 <?xml version = "1.0"?><!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
 <pdf>
 <head>
-    <meta name="title" value="Print RPO (TH)"/>
+    <meta name="title" value="Print RPO (ID)"/>
     <link name="ScvFont" type="font" subtype="opentype" src="${libPdf.font.arial?html}" src-bold="${libPdf.font.arial_bold?html}" src-italic="${libPdf.font.arial_italic?html}" src-bolditalic="${libPdf.font.arial_bolditalic?html}" bytes="2" />
     <style type="text/css">
         ${libPdf.css}

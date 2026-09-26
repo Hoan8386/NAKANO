@@ -3,6 +3,7 @@
  * =======================================================================================
  *  Date                Author                  Description
  *  15 Sep 2026         Huy Pham                Init, create file. Create RPO (Requisition) from Project_WBS, from ms.Ngọc(https://app.clickup.com/t/3773072/14yhnhmfjj0)
+ *  23 Sep 2026         Huy Pham                Bổ sung logic Tax Code, from ms.Ngọc(https://app.clickup.com/t/3773072/14yhnhmfjj0?comment=1300230000034947)
  */
 /**
  * @NApiVersion 2.1
@@ -144,6 +145,19 @@ define(['N/runtime', 'N/search',
                 container: defaultGrp.id
             }, false, {
                 defaultValue: _params?.custpage_def_scopeofwork
+            });
+
+            constForm.addField({
+                id: 'custpage_def_taxcode', label: "Tax code",
+                type: "select", 
+                container: defaultGrp.id
+            }, false, {
+                lookup: {
+                    data: commonWbs2Rpo.getSalesTaxItem(_params),
+                    valueExpr: "internalid",
+                    displayExpr: "name",
+                },
+                defaultValue: _params?.custpage_def_taxcode
             });
             //#endregion
 
