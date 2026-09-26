@@ -1,0 +1,336 @@
+<?xml version = "1.0"?><!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
+<pdf>
+<head>
+    <meta name="title" value="Working Budget"/>
+    <link name="ScvFont" type="font" subtype="opentype" src="${libPdf.font.arial?html}" src-bold="${libPdf.font.arial_bold?html}" src-italic="${libPdf.font.arial_italic?html}" src-bolditalic="${libPdf.font.arial_bolditalic?html}" bytes="2" />
+    <style type="text/css">
+        ${libPdf.css}
+
+        body {
+            font-size: 10pt;
+        }
+        table {
+            font-size: 10pt;
+        }
+        .border-none,
+        .border-none td,
+        .border-none th {
+            border: none;
+        }
+    </style>
+
+</head>
+<body padding="0.3in 0.5in 0.5in 0.5in"  size="A4-LANDSCAPE" >
+   <table >
+        <tr class="mb-5">
+            <td colspan="25">${result.tagImgLogo} </td>
+            <td colspan="35">
+                <p class="fs-12 align-center"> <b>WORKING BUDGET </b></p>
+            </td>
+            <td colspan="25"></td>
+        </tr>
+   </table>
+
+   <table >
+        <tr>
+            <td colspan="55">
+                <table width="100%">
+                    <tr>
+                        <td colspan="30"><p>PROJECT NO</p></td>
+                        <td colspan="5"><p>:</p></td>
+                        <td colspan="65" style="border-bottom: 1px dotted"><p><b>${result.projectNo}</b></p></td>
+                    </tr>
+                    <tr>
+                        <td colspan="30"><p>PROJECT NAME</p></td>
+                        <td colspan="5"><p>:</p></td>
+                        <td colspan="65" style="border-bottom: 1px dotted"><p><b>${result.projectName}</b></p></td>
+                    </tr>
+                    <tr>
+                        <td colspan="30"><p>SITE LOCATION</p></td>
+                        <td colspan="5"><p>:</p></td>
+                        <td colspan="65" style="border-bottom: 1px dotted"><p>${result.projectLocation}</p></td>
+                    </tr>
+                    <tr>
+                        <td colspan="30"><p>CLIENT</p></td>
+                        <td colspan="5"><p>:</p></td>
+                        <td colspan="65" style="border-bottom: 1px dotted"><p>${result.client}</p></td>
+                    </tr>
+                    <tr>
+                        <td colspan="30"><p>CONSULTANT</p></td>
+                        <td colspan="5">:</td>
+                        <td colspan="65" style="border-bottom: 1px dotted">
+                            <table width = "100%">
+                                <tr>
+                                    <td colspan="70"><p>${result.consultantArchitects}</p></td>
+                                    <td colspan="30"><p>(Architects)</p></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="70"><p>${result.consultantStructure}</p></td>
+                                    <td colspan="30"><p>(Structure)</p></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="70"><p>${result.consultantME}</p></td>
+                                    <td colspan="30"><p>(M&amp;E)</p></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="70"><p>${result.consultantLandscape}</p></td>
+                                    <td colspan="30"><p>(Landscape)</p></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="70"><p>${result.consultantID}</p></td>
+                                    <td colspan="30"><p>(ID)</p></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="70"><p>${result.consultantQS}</p></td>
+                                    <td colspan="30"><p>(QS)</p></td>
+                                </tr>
+                                ${libPdf.rowcol100}
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="30"><p>CONSTRUCTION PERIOD</p></td>
+                        <td colspan="5"><p>:</p></td>
+                        <td colspan="65" style="border-bottom: 1px dotted"><p>${result.constructionPeriodStart} ~ ${result.constructionPeriodEnd} (${result.constructionPeriodMonths})</p></td>
+                    </tr>
+                    <tr>
+                        <td colspan="30"><p>DEFECTS LIABILITY PERIOD</p></td>
+                        <td colspan="5"><p>:</p></td>
+                        <td colspan="65" style="border-bottom: 1px dotted"><p>${result.defectsLiabilityPeriod}</p></td>
+                    </tr>
+                    <tr>
+                        <td colspan="30"><p>TYPE OF CONTRACT</p></td>
+                        <td colspan="5"><p>:</p></td>
+                        <td colspan="65" style="border-bottom: 1px dotted"><p>${result.typeOfContract}</p></td>
+                    </tr>
+                    <tr>
+                        <td colspan="30"><p>MODE OF PAYMENT</p></td>
+                        <td colspan="5"><p>:</p></td>
+                        <td colspan="65" style="border-bottom: 1px dotted"><p>${result.modeOfPayment}</p></td>
+                    </tr>
+                    <tr>
+                        <td colspan="30"><p>RETENTION</p></td>
+                        <td colspan="5"><p>:</p></td>
+                        <td colspan="65" style="border-bottom: 1px dotted"><p>${result.retention} %</p></td>
+                    </tr>
+                    ${libPdf.rowcol100}
+                </table>
+            </td>
+
+            <td colspan="45">
+                <table  width="100%"  >
+                    <tr>
+                        <td colspan="45"><p><b>1 CONTRACT SUM</b></p></td>
+                        <td colspan="5"><p>:</p></td>
+                        <td colspan="13"><p>${result.primaryCurrency}</p></td>
+                        <td colspan="25" style="border-bottom: 1px dotted" align="right"><p>${result.contractSum}</p></td>
+                        <td colspan="12" style="border-bottom: 1px dotted"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="45"><p><b>2 CONSTRUCTION NET COST</b></p></td>
+                        <td colspan="5"><p>:</p></td>
+                        <td colspan="13"><p>${result.primaryCurrency}</p></td>
+                        <td colspan="25" style="border-bottom: 1px dotted" align="right"><p>${result.constructionNetCost}</p></td>
+                        <td colspan="12" style="border-bottom: 1px dotted"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="45"><p><b>3 TOTAL PROFIT</b></p></td>
+                        <td colspan="5"><p>:</p></td>
+                        <td colspan="13"><p>${result.primaryCurrency}</p></td>
+                        <td colspan="25" style="border-bottom: 1px dotted" align="right"><p><b>${result.totalProfit}</b></p></td>
+                        <td colspan="12" style="border-bottom: 1px dotted" align="right"><p><b>${result.totalProfitPer}%</b></p></td>
+                    </tr>
+                    <tr>
+                        <td colspan="45"><p class="pl-5">1) OVERHEAD</p></td>
+                        <td colspan="5"></td>
+                        <td colspan="13"><p>${result.primaryCurrency}</p></td>
+                        <td colspan="25" style="border-bottom: 1px dotted" align="right"><p>${result.overhead}</p></td>
+                        <td colspan="12" style="border-bottom: 1px dotted" align="right"><p>${result.overheadPer}%</p></td>
+                    </tr>
+                    <tr>
+                        <td colspan="45"><p class="pl-5">2) PROFIT AND ATTENDANCE</p></td>
+                        <td colspan="5"></td>
+                        <td colspan="13"><p>${result.primaryCurrency}</p></td>
+                        <td colspan="25" style="border-bottom: 1px dotted" align="right"><p>${result.profitAttendance}</p></td>
+                        <td colspan="12" style="border-bottom: 1px dotted" align="right"><p>${result.profitAttendancePer}%</p></td>
+                    </tr>
+                    <tr>
+                        <td colspan="45"><p><b>4 FOR REFERENCE</b></p></td>
+                        <td colspan="10"><p>:</p></td>
+                        <td colspan="10"></td>
+                        <td colspan="25" style="border-bottom: 1px dotted"></td>
+                        <td colspan="12" style="border-bottom: 1px dotted"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="45"><p class="pl-5">1) AWARD PROFIT</p></td>
+                        <td colspan="5"></td>
+                        <td colspan="13"><p>${result.primaryCurrency}</p></td>
+                        <td colspan="25" style="border-bottom: 1px dotted" align="right"><p>${result.awardProfit}</p></td>
+                        <td colspan="12" style="border-bottom: 1px dotted" align="right"><p>${result.awardProfitPer}%</p></td>
+                    </tr>
+                    <tr>
+                        <td colspan="45"><p class="pl-5">2) PC Sum &nbsp; Prov. Sum</p></td>
+                        <td colspan="5"></td>
+                        <td colspan="13"><p>${result.primaryCurrency}</p></td>
+                        <td colspan="25" style="border-bottom: 1px dotted" align="right"><p><b>${result.pcSumProvSum}</b></p></td>
+                        <td colspan="12" style="border-bottom: 1px dotted" align="right"><p>${result.pcSumProvSumPer}%</p></td>
+                    </tr>
+                    <tr>
+                        <td colspan="45"><p><b>5 UNIT RATE</b></p></td>
+                        <td colspan="10"><p>:</p></td>
+                        <td colspan="10"></td>
+                        <td colspan="25" style="border-bottom: 1px dotted"></td>
+                        <td colspan="12" style="border-bottom: 1px dotted"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="45"><p class="pl-5">1) CONTRACT SUM</p></td>
+                        <td colspan="10"></td>
+                        <td colspan="10"></td>
+                        <td colspan="25" style="border-bottom: 1px dotted"></td>
+                        <td colspan="12" style="border-bottom: 1px dotted"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="45"><p class="pl-10">a. BY GFA</p></td>
+                        <td colspan="5"></td>
+                        <td colspan="13"><p>${result.primaryCurrency}</p></td>
+                        <td colspan="25" style="border-bottom: 1px dotted" align="right"><p>${result.contractSumByGFA} $/m2</p></td>
+                        <td colspan="12" style="border-bottom: 1px dotted"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="45"><p class="pl-10">b. BY CFA</p></td>
+                        <td colspan="5"></td>
+                        <td colspan="13"><p>${result.primaryCurrency}</p></td>
+                        <td colspan="25" style="border-bottom: 1px dotted" align="right"><p>${result.contractSumByCFA}</p></td>
+                        <td colspan="12" style="border-bottom: 1px dotted"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="45"><p class="pl-5">2) NET COST</p></td>
+                        <td colspan="10"></td>
+                        <td colspan="10"></td>
+                        <td colspan="25" style="border-bottom: 1px dotted"></td>
+                        <td colspan="12" style="border-bottom: 1px dotted"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="45"><p class="pl-10">a. BY CFA</p></td>
+                        <td colspan="10"></td>
+                        <td colspan="10"></td>
+                        <td colspan="25" style="border-bottom: 1px dotted" align="right"><p>${result.netCostByCFA} /m2</p></td>
+                        <td colspan="12" style="border-bottom: 1px dotted"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="45"><p><b>6 SITE STAFF</b></p></td>
+                        <td colspan="10"><p>:</p></td>
+                        <td colspan="8"></td>
+                        <td colspan="25" style="border-bottom: 1px dotted"></td>
+                        <td colspan="12" style="border-bottom: 1px dotted"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="45"><p class="pl-5">1) PROJECT GEN. MANAGER</p></td>
+                        <td colspan="10"><p>:</p></td>
+                        <td colspan="8"></td>
+                        <td colspan="25" style="border-bottom: 1px dotted"><p>${result.projectGeneralManager}</p></td>
+                        <td colspan="12" style="border-bottom: 1px dotted"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="45"><p class="pl-5">2) PROJECT MANAGER</p></td>
+                        <td colspan="10"><p>:</p></td>
+                        <td colspan="8"></td>
+                        <td colspan="25" style="border-bottom: 1px dotted"><p>${result.projectManager}</p></td>
+                        <td colspan="12" style="border-bottom: 1px dotted"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="45"><p class="pl-5">3) ASSITPROJECT MANAGER</p></td>
+                        <td colspan="10"><p>:</p></td>
+                        <td colspan="8"></td>
+                        <td colspan="25" style="border-bottom: 1px dotted"><p>${result.assistProjectManager}</p></td>
+                        <td colspan="12" style="border-bottom: 1px dotted"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="45"><p><b>7 REMARKS</b></p></td>
+                        <td colspan="10"><p>:</p></td>
+                        <td colspan="10"></td>
+                        <td colspan="25" style="border-bottom: 1px dotted"></td>
+                        <td colspan="12" style="border-bottom: 1px dotted"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="45"><p class="pl-5">NS &nbsp; INDIRECT EXPENSES</p></td>
+                        <td colspan="5"></td>
+                        <td colspan="13"><p>${result.primaryCurrency}</p></td>
+                        <td colspan="25" style="border-bottom: 1px dotted" align="right"><p>${result.indirectExpenses}</p></td>
+                        <td colspan="12" style="border-bottom: 1px dotted" align="right"><p>${result.indirectExpensesPer}%</p></td>
+                    </tr>
+                    ${libPdf.rowcol100}
+                </table>
+            </td>
+        </tr>
+    </table>
+
+    <table border="1" width="50%" border-top="1" class="pb-5">
+        <tr>
+            <td colspan="100">
+                <p>DESCRIPTION OF WORKS</p>
+                <p style="margin-left: 10px;">PROPOSED CONDOMINIUM HOUSING DEVELOPMENT</p>
+                <p style="margin-left: 10px;">COMPRISING THE ERECTION OF 2 BLOCK OF 24-STOREY APARTMENTS (TOTAL : 345 UNITS)</p>
+                <p style="margin-left: 10px;">WITH LANDSCAPE DECK, COMMON BASEMENT CARPARKS AND COMMUNAL FACILITIES</p>
+                <p style="margin-left: 10px;">ON LOT 02160T MK 03 AT 71 SCIENCE PARK DRIVE (QUEENSTOWN PLANNING AREA)</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="45"><p>TYPE OF BUILDING</p></td>
+            <td colspan="5"><p>:</p></td>
+            <td colspan="50" style="border-bottom: 1px dotted"><p>${result.typeOfBuilding}</p></td>
+        </tr>
+        <tr>
+            <td colspan="45"><p>STRUCTURE</p></td>
+            <td colspan="5"><p>:</p></td>
+            <td colspan="50" style="border-bottom: 1px dotted"><p>${result.structure}</p></td>
+        </tr>
+        <tr>
+            <td colspan="45"><p>BASEMENT CARPARK AREA</p></td>
+            <td colspan="5"><p>:</p></td>
+            <td colspan="40" style="border-bottom: 1px dotted">${result.basementCarparkArea}</td>
+            <td colspan="10" style="border-bottom: 1px dotted"><p> m2</p></td>
+        </tr>
+        <tr>
+            <td colspan="45"><p>GFA</p></td>
+            <td colspan="5"><p>:</p></td>
+            <td colspan="40" align="right" style="border-bottom: 1px dotted"><p>${result.gfa}</p></td>
+            <td colspan="10"  style="border-bottom: 1px dotted"><p>m2</p></td>
+        </tr>
+        <tr>
+            <td colspan="45"><p>CFA</p></td>
+            <td colspan="5"><p>:</p></td>
+            <td colspan="40"  style="border-bottom: 1px dotted"> ${result.cfa}</td>
+            <td colspan="10" style="border-bottom: 1px dotted"><p>m2</p></td>
+        </tr>
+        <tr height="20">
+            <td colspan="100"></td>
+        </tr>
+        <tr>
+            <td colspan="20"><p>PILING</p></td>
+            <td colspan="22" align="right" style="border-bottom: 1px dotted"><p>${result.piling}</p></td>
+            <td colspan="8" style="border-bottom: 1px dotted"><p>(Nos)</p></td>
+            <td colspan="20"><p>WIRE MESH</p></td>
+            <td colspan="22" align="right" style="border-bottom: 1px dotted"><p>${result.wireMesh}</p></td>
+            <td colspan="8" style="border-bottom: 1px dotted"><p>(m2)</p></td>
+        </tr>
+        <tr>
+            <td colspan="20"><p>CONCRETE</p></td>
+            <td colspan="22" align="right" style="border-bottom: 1px dotted"><p>${result.concrete}</p></td>
+            <td colspan="8" style="border-bottom: 1px dotted"><p>(m3)</p></td>
+            <td colspan="20"><p>FORMWORKS</p></td>
+            <td colspan="22" align="right" style="border-bottom: 1px dotted"><p>${result.formworks}</p></td>
+            <td colspan="8" style="border-bottom: 1px dotted"><p>(m2)</p></td>
+        </tr>
+        <tr>
+            <td colspan="20"><p>RE-BAR</p></td>
+            <td colspan="22" align="right" style="border-bottom: 1px dotted"><p>${result.rebar}</p></td>
+            <td colspan="8" style="border-bottom: 1px dotted"><p>(kg)</p></td>
+            <td colspan="27"><p>STEEL STRUCTURE</p></td>
+            <td colspan="15" align="right" style="border-bottom: 1px dotted"><p>${result.steelStructure}</p></td>
+            <td colspan="8" style="border-bottom: 1px dotted"><p>(kg)</p></td>
+        </tr>
+        ${libPdf.rowcol100}
+    </table>
+</body>
+</pdf>
