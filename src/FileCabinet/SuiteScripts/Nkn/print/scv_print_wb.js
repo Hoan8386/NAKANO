@@ -11,6 +11,8 @@ define([
     '../common/scv_common_ext_performent.js',
 
     '../cons/scv_cons_format.js',
+    '../cons/scv_cons_consultant_type_list.js',
+    '../cons/scv_cons_job_resource_role.js',
 
 ], (
         record, url, runtime,search,
@@ -18,7 +20,8 @@ define([
         commonExtPerformance,
 
         constFormat,
-
+        constConsultantType,
+        constRole
     ) => {
 
 
@@ -78,39 +81,40 @@ define([
             let consultantID = "";
             let consultantQS = "";
 
-            let consultantTypeId = curRec.getSublistValue({
-                sublistId: "recmachcustrecord_scv_p_project_related",
-                fieldId: "custrecord_scv_p_consultant_type",
-                line: 0
+            const lineCount = curRec.getLineCount({
+                sublistId: "recmachcustrecord_scv_p_project_related"
             });
 
-            if (consultantTypeId) {
+            for (let i = 0; i < lineCount; i++) {
+                let consultantTypeId = curRec.getSublistValue({
+                    sublistId: "recmachcustrecord_scv_p_project_related",
+                    fieldId: "custrecord_scv_p_consultant_type",
+                    line: i
+                });
+
+                if (!consultantTypeId) continue;
+
                 let consultantRec = record.load({
                     type: "customrecord_scv_project_consultant",
                     id: consultantTypeId
                 });
 
-                let consultantType = consultantRec.getText("custrecord_scv_p_consultant_type") || '';
                 let consultant = consultantRec.getText("custrecord_scv_p_consultant") || "";
 
-                // log.error("hoan chek consultantType", consultantType);
-                // log.error("hoan chek consultant", consultant);
-
-                if (consultantType === "Architects") {
+                if (consultantTypeId == constConsultantType.Records.Architects.ID) {
                     consultantArchitects = consultant;
-                } else if (consultantType === "Structure") {
+                } else if (consultantTypeId == constConsultantType.Records.Structure.ID) {
                     consultantStructure = consultant;
-                } else if (consultantType === "M&E") {
+                } else if (consultantTypeId == constConsultantType.Records.ME.ID) {
                     consultantME = consultant;
-                } else if (consultantType === "Landscape") {
+                } else if (consultantTypeId == constConsultantType.Records.Landscape.ID) {
                     consultantLandscape = consultant;
-                } else if (consultantType === "ID") {
+                } else if (consultantTypeId == constConsultantType.Records.ID.ID) {
                     consultantID = consultant;
-                } else if (consultantType === "QS") {
+                }else if (consultantTypeId == constConsultantType.Records.QS.ID) {
                     consultantQS = consultant;
                 }
             }
-
             let constructionPeriodStart = curRec.getValue("startdate");
             let constructionPeriodEnd = curRec.getValue("enddate");
 
@@ -153,9 +157,46 @@ define([
             let profitAttendance = curRec.getValue("custentity_scv_profit_attendance") || 0;
             let awardProfit = curRec.getValue("custentity_scv_p_arward_profit") || 0;
             let pcSumProvSum = curRec.getValue("custentity_scv_p_pc_prov_sum") || 0;
-            let projectGeneralManager = curRec.getText("custentity_scv_p_project_gm") || '';
-            let projectManager = curRec.getText("projectmanager") || '';
-            let assistProjectManager = curRec.getText("custentity_scv_p_assistant_pm") || '';
+           
+            let projectGeneralManager = "";
+            let projectManager = "";
+            let assistProjectManager = "";
+
+            let lineCountJob = curRec.getLineCount({
+                sublistId: "jobresources"
+            });
+
+            for (let i = 0; i < lineCountJob; i++) {
+                let roleId = curRec.getSublistValue({
+                    sublistId: "jobresources",
+                    fieldId: "role",
+                    line: i
+                });
+
+                if (!roleId) continue;
+
+                let employeeId = curRec.getSublistValue({
+                    sublistId: "jobresources",
+                    fieldId: "jobresource",
+                    line: i
+                });
+
+                if (!employeeId) continue;
+
+                let employeeName = curRec.getSublistText({
+                    sublistId: "jobresources",
+                    fieldId: "jobresource",
+                    line: i
+                }) || "";
+
+                if (roleId == constRole.Records.ProjectGenManager.ID) {
+                    projectGeneralManager = employeeName;
+                } else if (roleId == constRole.Records.ProjectManager.ID) {
+                    projectManager = employeeName;
+                } else if (roleId == constRole.Records.AssistProjectManager.ID) {
+                    assistProjectManager = employeeName;
+                }
+            }
             let indirectExpenses = curRec.getValue("custentity_scv_project_idr_cost_reserve") || 0;
 
             let indirectExpensesPer = (indirectExpenses * 1) != 0 ? (indirectExpenses * 1) / (contractSum * 1) : 0;
@@ -234,8 +275,9 @@ define([
             objResult.netCostByCFA = formatNumberByKey(objResult.netCostByCFA);
             objResult.indirectExpenses = formatNumberByKey(objResult.indirectExpenses);
 
+            objResult.tagImgLogo  =  libPdf.createImageBySubsidiaryV2(subsidiaryRec, 100),
             libPdf.formatDataXMLWithObject(objResult);
-            objResult.tagImgLogo  =  libPdf.createImageBySubsidiaryV2(subsidiaryRec, 120),
+            log.error("hoan objResult.tagImgLogo " , libPdf.formatDataXML(objResult.tagImgLogo) )
             renderer.addCustomDataSource({
                 format: "OBJECT",
                 alias: 'result',

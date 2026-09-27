@@ -21,17 +21,18 @@
 
 </head>
 <body padding="0.3in 0.5in 0.5in 0.5in"  size="A4-LANDSCAPE" >
-   <table >
-        <tr class="mb-5">
-            <td colspan="25">${result.tagImgLogo} </td>
-            <td colspan="35">
-                <p class="fs-12 align-center"> <b>WORKING BUDGET </b></p>
+
+    <table width="100%">
+        <tr height="120">
+            <td colspan="25">${result.tagImgLogo}</td>
+            <td colspan="50">
+                <p class="fs-12 align-center"><b>WORKING BUDGET</b></p>
             </td>
             <td colspan="25"></td>
         </tr>
-   </table>
-
-   <table >
+         ${libPdf.rowcol100}
+    </table>
+    <table width="100%">
         <tr>
             <td colspan="55">
                 <table width="100%">
@@ -263,6 +264,7 @@
                 </table>
             </td>
         </tr>
+        ${libPdf.rowcol100}
     </table>
 
     <table border="1" width="50%" border-top="1" class="pb-5">
