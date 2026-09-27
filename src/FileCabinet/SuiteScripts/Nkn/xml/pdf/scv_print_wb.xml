@@ -58,31 +58,31 @@
                     <tr>
                         <td colspan="30"><p>CONSULTANT</p></td>
                         <td colspan="5">:</td>
-                        <td colspan="65" style="border-bottom: 1px dotted">
-                            <table width = "100%">
+                        <td colspan="65">
+                            <table width="100%">
                                 <tr>
-                                    <td colspan="70"><p>${result.consultantArchitects}</p></td>
-                                    <td colspan="30"><p>(Architects)</p></td>
+                                    <td colspan="70" style="border-bottom: 1px dotted"><p>${result.consultantArchitects}</p></td>
+                                    <td colspan="30" style="border-bottom: 1px dotted"><p>(Architects)</p></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="70"><p>${result.consultantStructure}</p></td>
-                                    <td colspan="30"><p>(Structure)</p></td>
+                                    <td colspan="70" style="border-bottom: 1px dotted"><p>${result.consultantStructure}</p></td>
+                                    <td colspan="30" style="border-bottom: 1px dotted"><p>(Structure)</p></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="70"><p>${result.consultantME}</p></td>
-                                    <td colspan="30"><p>(M&amp;E)</p></td>
+                                    <td colspan="70" style="border-bottom: 1px dotted"><p>${result.consultantME}</p></td>
+                                    <td colspan="30" style="border-bottom: 1px dotted"><p>(M&amp;E)</p></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="70"><p>${result.consultantLandscape}</p></td>
-                                    <td colspan="30"><p>(Landscape)</p></td>
+                                    <td colspan="70" style="border-bottom: 1px dotted"><p>${result.consultantLandscape}</p></td>
+                                    <td colspan="30" style="border-bottom: 1px dotted"><p>(Landscape)</p></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="70"><p>${result.consultantID}</p></td>
-                                    <td colspan="30"><p>(ID)</p></td>
+                                    <td colspan="70" style="border-bottom: 1px dotted"><p>${result.consultantID}</p></td>
+                                    <td colspan="30" style="border-bottom: 1px dotted"><p>(ID)</p></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="70"><p>${result.consultantQS}</p></td>
-                                    <td colspan="30"><p>(QS)</p></td>
+                                    <td colspan="70" style="border-bottom: 1px dotted"><p>${result.consultantQS}</p></td>
+                                    <td colspan="30" style="border-bottom: 1px dotted"><p>(QS)</p></td>
                                 </tr>
                                 ${libPdf.rowcol100}
                             </table>

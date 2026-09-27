@@ -13,8 +13,10 @@
  *  17 Sep 2026         Thanh Hoan              Add button RPO (TH), trên màn hình Requisition from mr.Quân(https://app.clickup.com/t/3773072/86d3w9a1h)
  *  21 Sep 2026         Thanh Hoan              Add button PO (TH), trên màn hình Purchase Order from mr.Quân(https://app.clickup.com/t/3773072/86d3w9emj)
  *  21 Sep 2026         Thanh Hoan              Add button ROP (TH), trên màn hình Vendorbill from mr.Quân(https://app.clickup.com/t/3773072/86d3w9cnt)
- *  21 Sep 2026         Thanh Hoan              Add button Working budget, trên màn hình project from mrs. P.Anh(https://app.clickup.com/t/3773072/14yhnhmfz2e)
+ *  26 Sep 2026         Thanh Hoan              Add button Working budget, trên màn hình project from mrs. P.Anh(https://app.clickup.com/t/3773072/14yhnhmfz2e)
+ *  27 Sep 2026         Thanh Hoan              Add button Acc Voucher, trên màn hình  vendorbill, vendorpayment, vendorcredit, check, expensereport from mrs. Ngoc(https://app.clickup.com/t/3773072/14yhnhmfzpt)
  */
+
 /**
  * @NApiVersion 2.1
  * @NScriptType UserEventScript
@@ -66,8 +68,19 @@ define([
                 addBtnPrint(scriptContext, 'scv_print_rop_vn');
                 addBtnPrint(scriptContext, 'scv_print_rop_id');
                 addBtnPrint(scriptContext, 'scv_print_rop_th');
+                addBtnPrint(scriptContext, 'scv_print_acc_voucher');
                 break;
             case 'job':
+                addBtnPrint(scriptContext, 'scv_print_wb');
+                break;
+            case 'vendorpayment':
+                addBtnPrint(scriptContext, 'scv_print_wb');
+            case 'vendorcredit':
+                addBtnPrint(scriptContext, 'scv_print_wb');
+            case 'check':
+                addBtnPrint(scriptContext, 'scv_print_wb');
+                break;
+            case 'expensereport':
                 addBtnPrint(scriptContext, 'scv_print_wb');
                 break;
         }
