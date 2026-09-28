@@ -64,36 +64,37 @@
 
         <table width="100%">
             <tr border-top="1" border-bottom="1">
-                <td colspan="15"><b>A/C</b></td>
+                <td colspan="10"><b>A/C</b></td>
                 <td colspan="40"><b>Description</b></td>
                 <td colspan="15"><b>Project No</b></td>
-                <td colspan="15" align="right"><b>Amount</b></td>
+                <td colspan="20" align="right"><b>Amount</b></td>
                 <td colspan="15" align="right"><b>Work Item</b></td>
             </tr>
 
             <#list page.debitLines as item>
                 <tr>
-                    <td colspan="15">${item.account}</td>
+                    <td colspan="10">${item.account}</td>
                     <td colspan="40">${item.description}</td>
                     <td colspan="15">${item.projectNo}</td>
-                    <td colspan="15" align="right">${item.amount}</td>
+                    <td colspan="20" align="right">${item.amount}</td>
                     <td colspan="15" align="right">${item.workItem}</td>
                 </tr>
             </#list>
 
             <tr border-top="1" border-bottom="1">
-                <td colspan="60">
+                <td colspan="50">
                     <b>DEBIT</b>
                 </td>
-                <td colspan="40">
+                <td colspan="50">
                     <table width="100%">
                         <tr>
                             <td colspan="30"  >
                                 <b class="align-left" >Total:</b>
                             </td>
-                            <td colspan="70"  >
+                            <td colspan="40" class="align-right">
                                 <b>${page.debitTotal}</b>
                             </td>
+                            <td colspan="30"></td>
                         </tr>
                         ${libPdf.rowcol100}
                     </table>
@@ -108,26 +109,28 @@
 
             <#list page.creditLines as item>
                 <tr>
-                    <td colspan="15">${item.account}</td>
+                    <td colspan="10">${item.account}</td>
                     <td colspan="40">${item.description}</td>
                     <td colspan="15">${item.projectNo}</td>
-                    <td colspan="15" align="right">${item.amount}</td>
+                    <td colspan="20" align="right">${item.amount}</td>
                     <td colspan="15" align="right">${item.workItem}</td>
                 </tr>
             </#list>
 
             <tr border-top="1" border-bottom="1">
-                <td colspan="60">
+                <td colspan="50">
                     <b>CREDIT</b>
                 </td>
-                <td colspan="40">
+                <td colspan="50">
                     <table width="100%">
                         <tr>
                             <td colspan="30"  >
                                 <b class="align-left">Total:</b>
                             </td>
-                            <td colspan="70">
+                            <td colspan="40" class="align-right">
                                 <b>${page.creditTotal}</b>
+                            </td>
+                            <td colspan="30">
                             </td>
                         </tr>
                         ${libPdf.rowcol100}

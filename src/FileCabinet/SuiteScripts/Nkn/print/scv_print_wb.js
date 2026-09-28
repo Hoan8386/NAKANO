@@ -3,7 +3,7 @@
  * Key:
  * =======================================================================================
  *  Date                Author                  Description
- *  15 Sep 2026         Thanh Hoan              Init, create file, PO (ID), from mr.Quân(https://app.clickup.com/t/3773072/86d3w9emj)
+ *  26 Sep 2026         Thanh Hoan              Add button Working budget, trên màn hình project from mrs. P.Anh(https://app.clickup.com/t/3773072/14yhnhmfz2e)
  */
 define([
     "N/record", "N/url", 'N/runtime', 'N/search',
@@ -70,7 +70,7 @@ define([
             let projectNo = curRec.getValue("entityid");
             let projectName = curRec.getValue("companyname");
             let currency = record.load({type: "currency", id: curRec.getValue("currency")});
-            let primaryCurrency = currency.getValue("formatsample");
+            let primaryCurrency = currency.getValue("symbol");
             let projectLocation = curRec.getValue("custentity_pc_location");
             let client = curRec.getText("parent");
 
@@ -86,19 +86,20 @@ define([
             });
 
             for (let i = 0; i < lineCount; i++) {
-                let consultantTypeId = curRec.getSublistValue({
+                let consultantId = curRec.getSublistValue({
                     sublistId: "recmachcustrecord_scv_p_project_related",
-                    fieldId: "custrecord_scv_p_consultant_type",
+                    fieldId: "id",
                     line: i
                 });
 
-                if (!consultantTypeId) continue;
+                if (!consultantId) continue;
 
                 let consultantRec = record.load({
                     type: "customrecord_scv_project_consultant",
-                    id: consultantTypeId
+                    id: consultantId
                 });
 
+                let consultantTypeId = consultantRec.getValue("custrecord_scv_p_consultant_type") || "";
                 let consultant = consultantRec.getText("custrecord_scv_p_consultant") || "";
 
                 if (consultantTypeId == constConsultantType.Records.Architects.ID) {
@@ -111,7 +112,7 @@ define([
                     consultantLandscape = consultant;
                 } else if (consultantTypeId == constConsultantType.Records.ID.ID) {
                     consultantID = consultant;
-                }else if (consultantTypeId == constConsultantType.Records.QS.ID) {
+                } else if (consultantTypeId == constConsultantType.Records.QS.ID) {
                     consultantQS = consultant;
                 }
             }
@@ -201,11 +202,15 @@ define([
 
             let indirectExpensesPer = (indirectExpenses * 1) != 0 ? (indirectExpenses * 1) / (contractSum * 1) : 0;
 
-            let totalProfitPer = (totalProfit * 1) / (contractSum * 1);
-            let overheadPer = (overhead * 1) / (contractSum * 1);
-            let profitAttendancePer = (profitAttendance * 1) / (contractSum * 1);
-            let awardProfitPer = (awardProfit * 1) / (contractSum * 1);
-            let pcSumProvSumPer = (pcSumProvSum * 1) / (contractSum * 1);
+            let totalProfitPer = ((totalProfit * 1) / (contractSum * 1) * 100).toFixed(2);
+            
+            let overheadPer = ((overhead * 1) / (contractSum * 1) * 100).toFixed(2);
+
+            let profitAttendancePer = ((profitAttendance * 1) / (contractSum * 1) * 100).toFixed(2);
+
+            let awardProfitPer = ((awardProfit * 1) / (contractSum * 1) * 100).toFixed(2);
+
+            let pcSumProvSumPer = ((pcSumProvSum * 1) / (contractSum * 1) * 100).toFixed(2);
 
             let contractSumByGFA = (contractSum * 1) / (gfa * 1) ;
             let contractSumByCFA =  (contractSum * 1) / (cfa * 1) ;
@@ -275,9 +280,8 @@ define([
             objResult.netCostByCFA = formatNumberByKey(objResult.netCostByCFA);
             objResult.indirectExpenses = formatNumberByKey(objResult.indirectExpenses);
 
-            objResult.tagImgLogo  =  libPdf.createImageBySubsidiaryV2(subsidiaryRec, 100),
             libPdf.formatDataXMLWithObject(objResult);
-            log.error("hoan objResult.tagImgLogo " , libPdf.formatDataXML(objResult.tagImgLogo) )
+            objResult.tagImgLogo  =  libPdf.createImageBySubsidiaryV2(subsidiaryRec, 50),
             renderer.addCustomDataSource({
                 format: "OBJECT",
                 alias: 'result',

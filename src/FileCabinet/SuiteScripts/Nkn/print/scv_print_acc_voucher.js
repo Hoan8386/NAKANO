@@ -85,7 +85,8 @@ define([
             let arrLine01 = constSearchAccVoucher.getDataSource({ 
                 internalid: curRec.id 
             }); 
-        
+            
+            log.error("hoan check" ,arrLine01)
             let objResult = {}; 
             let objLineFirst = arrLine01[0] ?? {}; 
             let objGroup = {}; 
@@ -107,7 +108,7 @@ define([
         
                 if ((item.debit_amt || 0) * 1 > 0) {
                     objGroup[entityCode].debitLines.push({
-                        account: libPdf.formatDataXML(item.account_display || ''),
+                        account: libPdf.formatDataXML(item.account || ''),
                         description: libPdf.formatDataXML(item.description || ''),
                         projectNo: libPdf.formatDataXML(item.project_no || ''),
                         amount: formatNumberByKey(item.debit_amt),
@@ -119,7 +120,7 @@ define([
 
                 if ((item.credit_amt || 0) * 1 > 0) {
                     objGroup[entityCode].creditLines.push({
-                        account: libPdf.formatDataXML(item.account_display || ''),
+                        account: libPdf.formatDataXML(item.account || ''),
                         description: libPdf.formatDataXML(item.description || ''),
                         projectNo: libPdf.formatDataXML(item.project_no || ''),
                         amount: formatNumberByKey(item.credit_amt),
