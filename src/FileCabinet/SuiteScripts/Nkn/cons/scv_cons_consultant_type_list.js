@@ -26,7 +26,7 @@ define([],
             },
             QS: {
                 ID: 6,
-                NAME: "QS"
+                NAME: "M&E"
             },
             Structure: {
                 ID: 2,

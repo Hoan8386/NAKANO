@@ -7,16 +7,18 @@
  *  TH1 - Big Job / Original      - mọi sub  -> AA_XXYYYY00 (YYYY 0001-0499; NKN TH 0007-0499)
  *  TH2 - Big Job / Additional    - mọi sub  -> <mã cha bỏ 2 ký tự cuối> + ZZ (01-69)
  *  TH3 - Big Job / PC Sum        - mọi sub  -> <mã cha bỏ 2 ký tự cuối> + ZZ (70-99)
- *  TH4.1/2/7 - Minor / All       - MY,VN,ID,SG -> AA_XXYYYYZZ (YYYY: Customer Code 0500-9999, SG 0503-9999; ZZ 01-99, ID 01-98)
+ *  TH4.1/2/7 - Minor / All       - MY,VN,ID,SG -> AA_XXYYYYZZ (YYYY: Customer Code 0500-9999, SG 0503-9999; ZZ 01-99, ID 11-98)
  *  TH4.3 - Minor / Reserve Indirect Cost - ID -> AA_XXYYYY99 (ZZ cố định 99, tối đa 01 mã/Customer/năm)
  *  TH4.4 - Minor / All           - TH       -> AA_XXYYYY00 (YYYY 0500-9999 đếm theo TỪNG JOB của sub)
  *  TH4.5 - Minor / Indirect Cost No - SG    -> AA_XX0501ZZ (ZZ 01-10, dùng chung toàn sub)
  *  TH4.6 - Minor / Store job no  - SG       -> AA_XX0502ZZ (ZZ 01-05, dùng chung toàn sub)
+ *  TH4.8 - Minor / Indirect Cost No - ID    -> AA_XXYYYYZZ (YYYY: Customer Code dùng chung TH4.2/4.3; ZZ 01-10 theo Customer)
  * =======================================================================================
  *  Date                Author                  Description
  *  24 Aug 2026         Huy Pham                Init, create file. Sinh mã Project Code, from ms.Phương Anh(https://app.clickup.com/t/3773072/86d444yau)
  *  22 Sep 2026         Huy Pham                Điều chỉnh sinh mã Project Code độc lập, from ms.Phương Anh(https://app.clickup.com/t/3773072/86d444yau?comment=1300230000032342)
  *  23 Sep 2026         Huy Pham                Fix Make copy Project không sinh mã mới, from ms.Phương Anh(https://app.clickup.com/t/3773072/86d444yau)
+ *  28 Sep 2026         Huy Pham                Bổ sung NKN MY cho TH4 Minor / All; fix Customer Code SG cấp ngoài dải 0503; TH4 Case 2 ZZ 11-98, thêm TH4 Case 8, from ms.Phương Anh(https://app.clickup.com/t/3773072/86d444yau)
  */
 define(['N/search', 'N/error', 'N/format', 'N/ui/serverWidget',
     '../cons/scv_cons_seqnumber.js',
@@ -45,6 +47,7 @@ define(['N/search', 'N/error', 'N/format', 'N/ui/serverWidget',
         MINOR: "PROJECT_MINOR",
         MINOR_JOBSEQ: "PROJECT_MINOR_JOBSEQ",
         MINOR_IDC: "PROJECT_MINOR_IDC",
+        MINOR_IDC_CUST: "PROJECT_MINOR_IDC_CUST",
         MINOR_STORE: "PROJECT_MINOR_STORE",
     };
 
@@ -58,6 +61,7 @@ define(['N/search', 'N/error', 'N/format', 'N/ui/serverWidget',
         MINOR_JOBSEQ: "TH4_4",      //Minor / All - TH (đếm theo từng Job của sub)
         MINOR_IDC: "TH4_5",         //Minor / Indirect Cost No - SG
         MINOR_STORE: "TH4_6",       //Minor / Store job no - SG
+        MINOR_IDC_CUST: "TH4_8",    //Minor / Indirect Cost No - ID (Customer Code + số Job theo Customer)
     };
 
     //init: giá trị khởi tạo Current Number (số đầu dải = init + 1); max: số cuối dải. bySubsidiary: dải riêng của công ty con
@@ -66,11 +70,15 @@ define(['N/search', 'N/error', 'N/format', 'N/ui/serverWidget',
         [SeqType.ADDITIONAL]:      {init: 0,   max: 69},
         [SeqType.PCSUM]:           {init: 69,  max: 99},
         [SeqType.MINOR_CUSTCODE]:  {init: 499, max: 9999, bySubsidiary: {[Subsidiary.NknSg.ID]: {init: 502, max: 9999}}},
-        [SeqType.MINOR]:           {init: 0,   max: 99,   bySubsidiary: {[Subsidiary.NknId.ID]: {init: 0,   max: 98}}},
+        [SeqType.MINOR]:           {init: 0,   max: 99,   bySubsidiary: {[Subsidiary.NknId.ID]: {init: 10,  max: 98}}},
         [SeqType.MINOR_JOBSEQ]:    {init: 499, max: 9999},
         [SeqType.MINOR_IDC]:       {init: 0,   max: 10},
         [SeqType.MINOR_STORE]:     {init: 0,   max: 5},
+        [SeqType.MINOR_IDC_CUST]:  {init: 0,   max: 10},
     };
+
+    //Công ty con áp dụng TH4 Case 1/2/7 (Minor / All đếm theo Customer Code + số Job của Customer)
+    const MinorSubsidiaries = [Subsidiary.NknMy.ID, Subsidiary.NknVn.ID, Subsidiary.NknId.ID, Subsidiary.NknSg.ID];
 
     //YYYY cố định của TH4 Case 5 / 6
     const FixedCustomerCode = {
@@ -256,7 +264,8 @@ define(['N/search', 'N/error', 'N/format', 'N/ui/serverWidget',
             try{
                 //load - set - save: NetSuite throw RCRD_HAS_BEEN_CHANGED nếu user khác vừa cấp số trên cùng bộ đếm
                 constSeqNumber.updateWithLock(seqRecordId, (_curNumber) => {
-                    nextNumber = _curNumber + 1;
+                    //Bộ đếm tạo trước khi có dải riêng của công ty con (VD SG từ 0503) có thể đang thấp hơn đầu dải
+                    nextNumber = Math.max(_curNumber + 1, range.init + 1);
 
                     if(nextNumber > range.max) throwError(_options.errOutOfRange);
 
@@ -329,9 +338,11 @@ define(['N/search', 'N/error', 'N/format', 'N/ui/serverWidget',
         }
 
         if(_typeOfJobId == TypeOfJob.MinorJob.ID){
-            //Minor / All: NKN TH đếm theo TỪNG JOB của công ty con, các sub còn lại đếm theo từng Customer
+            //Minor / All: NKN TH đếm theo TỪNG JOB của công ty con, MY / VN / ID / SG đếm theo từng Customer
             if(_classificationId == Classification.All.ID){
-                return _subsidiaryId == Subsidiary.NknTh.ID ? ProjectCase.MINOR_JOBSEQ : ProjectCase.MINOR;
+                if(_subsidiaryId == Subsidiary.NknTh.ID) return ProjectCase.MINOR_JOBSEQ;
+
+                return MinorSubsidiaries.includes(_subsidiaryId) ? ProjectCase.MINOR : "";
             }
 
             //Reserve Indirect Cost chỉ có ở NKN ID
@@ -339,9 +350,11 @@ define(['N/search', 'N/error', 'N/format', 'N/ui/serverWidget',
                 return _subsidiaryId == Subsidiary.NknId.ID ? ProjectCase.RESERVE : "";
             }
 
-            //Indirect Cost No / Store job no chỉ có ở NKN SG
+            //Indirect Cost No: NKN SG dùng YYYY cố định 0501, NKN ID đếm theo Customer Code. Store job no chỉ có ở NKN SG
             if(_classificationId == Classification.IndirectCostNo.ID){
-                return _subsidiaryId == Subsidiary.NknSg.ID ? ProjectCase.MINOR_IDC : "";
+                if(_subsidiaryId == Subsidiary.NknSg.ID) return ProjectCase.MINOR_IDC;
+
+                return _subsidiaryId == Subsidiary.NknId.ID ? ProjectCase.MINOR_IDC_CUST : "";
             }
             if(_classificationId == Classification.StoreJobNo.ID){
                 return _subsidiaryId == Subsidiary.NknSg.ID ? ProjectCase.MINOR_STORE : "";
@@ -498,6 +511,9 @@ define(['N/search', 'N/error', 'N/format', 'N/ui/serverWidget',
 
             case ProjectCase.MINOR_STORE:
                 return {yyyy: {fixed: FixedCustomerCode[ProjectCase.MINOR_STORE]}, zz: toSegmentRange(SeqType.MINOR_STORE, _ctx.subsidiaryId)};
+
+            case ProjectCase.MINOR_IDC_CUST:
+                return {yyyy: toSegmentRange(SeqType.MINOR_CUSTCODE, _ctx.subsidiaryId), zz: toSegmentRange(SeqType.MINOR_IDC_CUST, _ctx.subsidiaryId)};
         }
 
         return null;
@@ -575,8 +591,11 @@ define(['N/search', 'N/error', 'N/format', 'N/ui/serverWidget',
     const getCustomerCode = (_ctx, _initJobNumber) => {
         let minorSeq = findSeqRecord(SeqType.MINOR, _ctx.subsidiaryId, _ctx.minorPrefix);
 
-        //Customer đã có Customer Code trong năm tài chính -> dùng lại
-        if(!!minorSeq) return {customerCode: minorSeq.custrecord_scv_rcn_customertnumber, minorSeq};
+        //Customer đã có Customer Code HỢP LỆ trong năm tài chính -> dùng lại.
+        //Code ngoài dải của công ty con (cấp từ trước khi có dải riêng, VD SG 0502 trùng Store job no) -> cấp lại Code mới
+        if(!!minorSeq && isSegmentValid(toSegmentRange(SeqType.MINOR_CUSTCODE, _ctx.subsidiaryId), minorSeq.custrecord_scv_rcn_customertnumber)){
+            return {customerCode: minorSeq.custrecord_scv_rcn_customertnumber, minorSeq};
+        }
 
         let {number} = allocNextNumber({
             seqType: SeqType.MINOR_CUSTCODE,
@@ -588,6 +607,15 @@ define(['N/search', 'N/error', 'N/format', 'N/ui/serverWidget',
         });
 
         let customerCode = padNumber(number, 4);
+
+        //Ghi đè Customer Code cũ & reset số Job về đầu dải trên chính record PROJECT_MINOR của Customer
+        if(!!minorSeq){
+            constSeqNumber.updateWithLock(minorSeq.internalid, () => {
+                return {custrecord_scv_rcn_customertnumber: customerCode, custrecord_scv_rcn_currentnumber: _initJobNumber};
+            });
+
+            return {customerCode, minorSeq: null};
+        }
 
         createSeqRecord({
             seqType: SeqType.MINOR,
@@ -638,6 +666,25 @@ define(['N/search', 'N/error', 'N/format', 'N/ui/serverWidget',
         return `${_ctx.subPrefix}${_ctx.xx}${customerCode}99`;
     }
 
+    //ST4 - TH4 Case 8: Minor / Indirect Cost No của NKN ID -> AA_XXYYYYZZ (YYYY dùng chung Customer Code với Case 2/3, ZZ 01-10 bộ đếm riêng theo Customer)
+    const genCodeMinorIdcCust = (_ctx) => {
+        let range = getSeqRange(SeqType.MINOR_IDC_CUST, _ctx.subsidiaryId);
+
+        //Customer mới: record PROJECT_MINOR chưa có Job Minor / All nào -> Current Number = init của dải Case 2
+        let {customerCode} = getCustomerCode(_ctx, getSeqRange(SeqType.MINOR, _ctx.subsidiaryId).init);
+
+        let {number} = allocNextNumber({
+            seqType: SeqType.MINOR_IDC_CUST,
+            subsidiaryId: _ctx.subsidiaryId,
+            subsidiaryName: _ctx.subsidiaryName,
+            prefix: _ctx.minorPrefix,
+            yearPrefix: _ctx.xx,
+            errOutOfRange: `Đã hết dải Indirect Cost No (tối đa ${padNumber(range.max, 2)}) của Customer trong năm ${_ctx.xx} tại ${_ctx.subsidiaryName}`,
+        });
+
+        return `${_ctx.subPrefix}${_ctx.xx}${customerCode}${padNumber(number, 2)}`;
+    }
+
     //ST4 - TH4 Case 4: Minor / All của NKN TH -> AA_XXYYYY00 (YYYY đếm theo TỪNG JOB của công ty con)
     const genCodeMinorJobSeq = (_ctx) => {
         let {number} = allocNextNumber({
@@ -685,6 +732,7 @@ define(['N/search', 'N/error', 'N/format', 'N/ui/serverWidget',
             case ProjectCase.MINOR_JOBSEQ:  return genCodeMinorJobSeq(_ctx);
             case ProjectCase.MINOR_IDC:
             case ProjectCase.MINOR_STORE:   return genCodeMinorFixed(_ctx);
+            case ProjectCase.MINOR_IDC_CUST: return genCodeMinorIdcCust(_ctx);
         }
 
         return "";
@@ -746,6 +794,23 @@ define(['N/search', 'N/error', 'N/format', 'N/ui/serverWidget',
                         ? getSeqRange(SeqType.MINOR, _ctx.subsidiaryId).init
                         : _objManual.zz * 1,
                     customerNumber: _objManual.yyyy
+                }));
+            break;
+
+            //TH4 Case 8: Customer Number + PROJECT_MINOR_CUSTCODE theo YYYY, PROJECT_MINOR_IDC_CUST theo ZZ
+            case ProjectCase.MINOR_IDC_CUST:
+                pushSeqNumber(Object.assign({}, objBase, {
+                    seqType: SeqType.MINOR_CUSTCODE, prefix: _ctx.xx, targetNumber: _objManual.yyyy * 1
+                }));
+
+                pushSeqNumber(Object.assign({}, objBase, {
+                    seqType: SeqType.MINOR, prefix: _ctx.minorPrefix,
+                    targetNumber: getSeqRange(SeqType.MINOR, _ctx.subsidiaryId).init,
+                    customerNumber: _objManual.yyyy
+                }));
+
+                pushSeqNumber(Object.assign({}, objBase, {
+                    seqType: SeqType.MINOR_IDC_CUST, prefix: _ctx.minorPrefix, targetNumber: _objManual.zz * 1
                 }));
             break;
         }

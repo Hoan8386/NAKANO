@@ -210,7 +210,7 @@ define(['N/record', 'N/query', 'N/error',
                 let objRes = {
                     key: objResRawLine.custpage_col_key,
                     parentkey: objResRawLine.custpage_col_parentkey,
-                    name: objResRawLine.custpage_col_name,
+                    name: objResRawLine.custpage_col_name?.replaceAll("\n",""),
                     projecttask: objResRawLine.custpage_col_projecttask,
                     custrecord_scv_wbs_class: objResRawLine.custpage_col_class,
                     cseg_paactivitycode: objResRawLine.custpage_col_workitemcode,

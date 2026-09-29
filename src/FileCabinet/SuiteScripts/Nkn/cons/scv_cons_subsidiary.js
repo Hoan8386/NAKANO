@@ -25,6 +25,10 @@ define(['N/record', 'N/search', 'N/query', 'N/runtime',
                 ID: 4,
                 NAME: "NKN VN"
             },
+            NknMy: {
+                ID: 7,
+                NAME: "NKN MY"
+            },
             NknId: {
                 ID: 8,
                 NAME: "NKN ID"

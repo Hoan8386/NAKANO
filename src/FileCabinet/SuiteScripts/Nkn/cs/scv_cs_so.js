@@ -58,10 +58,35 @@ define([
         }
     }
 
+    /**
+     * Function to be executed after line is selected.
+     *
+     * @param {Object} scriptContext
+     * @param {Record} scriptContext.currentRecord - Current form record
+     * @param {string} scriptContext.sublistId - Sublist name
+     *
+     * @since 2015.2
+     */
+    const lineInit = (scriptContext) => {
+        let sublistId = scriptContext.sublistId;
+        let curRec = scriptContext.currentRecord;
+
+        if(sublistId === "item"){
+            enableQuantityOfItem(curRec, sublistId);
+        }
+    }
+
+    const enableQuantityOfItem = (curRec, sublistId) =>{
+        let isLineFromJob = curRec.getCurrentSublistValue(sublistId, "fromjob");
+        if(!isLineFromJob) return;
+
+        nlapiDisableLineItemField(sublistId, "quantity", false);
+    }
 
     return {
         pageInit,
         fieldChanged,
+        lineInit
     };
 
 });

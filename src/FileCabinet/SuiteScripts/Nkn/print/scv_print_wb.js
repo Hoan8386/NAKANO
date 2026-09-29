@@ -6,7 +6,7 @@
  *  26 Sep 2026         Thanh Hoan              Add button Working budget, trên màn hình project from mrs. P.Anh(https://app.clickup.com/t/3773072/14yhnhmfz2e)
  */
 define([
-    "N/record", "N/url", 'N/runtime', 'N/search',
+    "N/record", "N/url", 'N/runtime', 'N/search', 'N/file',
     "../lib/scv_lib_pdf.js",
     '../common/scv_common_ext_performent.js',
 
@@ -15,7 +15,7 @@ define([
     '../cons/scv_cons_job_resource_role.js',
 
 ], (
-        record, url, runtime,search,
+        record, url, runtime,search, file,
         libPdf,
         commonExtPerformance,
 
@@ -46,10 +46,21 @@ define([
                 functionName: "window.open('" + urlScript + "');"
             });
 
+            let urlScriptXls = url.resolveScript({
+                scriptId: 'customscript_scv_sl_print',
+                deploymentId: 'customdeploy_scv_sl_print',
+                params: {
+                    recordId: curRec.id,
+                    recordType: curRec.type,
+                    printFile: "scv_print_wb",
+                    printFileScript: "scv_print_script_wb_xls",
+                }
+            });
+
             form.addButton({
                 id: "custpage_scv_btn_print_wb_excel",
                 label: "Working budget (excel) ",
-                functionName: "window.open('" + urlScript + "');"
+                functionName: "window.open('" + urlScriptXls + "');"
             });
         };
 
@@ -303,5 +314,18 @@ define([
                 decimalSeparator: '.',
             });
         } 
-        return { addBtnPrint, generateFilePDF };
+
+        const getDataSource = () =>{
+            return {
+                urlTmpl: file.load("../xlsx/scv_tmpl_wbs_import.xlsx").url,
+                header: {
+                    subsidiary: "ok"
+                },
+                lines: [{
+                    a: 1, b: 1, c: 1
+                }],
+            }
+        }
+
+        return { addBtnPrint, generateFilePDF, getDataSource};
     });
