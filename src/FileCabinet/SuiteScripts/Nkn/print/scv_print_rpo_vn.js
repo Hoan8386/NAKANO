@@ -103,7 +103,7 @@ define([
             });
             
             let objLineFirst = arrLine01[0] ?? {};
-            // log.error("Hoan",arrLine01)
+            log.error("Hoan check",arrLine01)
             let projectId = curRec.getValue('cseg_scv_sg_proj');
             let objLookup = {};
             if(projectId) {
@@ -147,9 +147,9 @@ define([
                 schedule:      objLineFirst._18_schedule + "",
                 other:         objLineFirst._19_other + "",
                 specification: objLineFirst._20_specification + "",
-                retention:objLineFirst._21_retention_display || 'N/A',
+                retention:objLineFirst._21_retention || 'N/A',
                 bankGuarantee: objLineFirst._22_bank_guarantee||'N/A',
-                remark: objLineFirst._29_remark,
+                remark: objLineFirst._29_remark || objLineFirst._29_remark_display ,
                 reasonOfExcessFromWB: objLineFirst._30_reason_of_excess_from_w_b,
                 compensationProposal: objLineFirst._31_compensation_proposal,
             };
@@ -232,13 +232,13 @@ define([
                     objResult.totalBalance += balanceVal;
 
                     let objResDetail = {
-                        wbNo:             objLine01.wbNo,
+                        wbNo:             libPdf.formatDataXML(objLine01.wbNo),
                         currency:         currency,
                         workingBudget:    buildCurrencyAmount(currency, workingBudgetVal),
                         thisAmount:       buildCurrencyAmount(currency, thisAmountVal),
                         accumulateAmount: buildCurrencyAmount(currency, accumulateAmtVal),
                         balance:          buildCurrencyAmount(currency, balanceVal),
-                        remarks:          objLine01._28_remark_memo_line,
+                        remarks:          libPdf.formatDataXML(objLine01.remarks),
                     };
 
                     objResult.lines.push(objResDetail);
@@ -291,7 +291,7 @@ define([
             }
 
             libPdf.formatDataXMLWithObject(objResHeaders);
-            objResHeaders.tagImgLogo = libPdf.createImageBySubsidiaryV2(subsidiaryRec, 120);
+            objResHeaders.tagImgLogo = libPdf.createImageBySubsidiaryV2(subsidiaryRec, 60);
 
             renderer.addCustomDataSource({
                 format: "OBJECT",

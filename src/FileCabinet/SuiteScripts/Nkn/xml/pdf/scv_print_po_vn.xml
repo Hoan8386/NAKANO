@@ -24,11 +24,11 @@
 <body padding="0.3in 0.5in 0.5in 0.5in" size="A4" >
    <table border-bottom="1">
         <tr>
-            <td colspan="20">${result.tagImgLogo} </td>
-            <td colspan="35">
+            <td colspan="15">${result.tagImgLogo} </td>
+            <td colspan="45">
                 <p style="margin:3px 0"  class="fs-12"> <b>${subsidiary.legalname} </b></p>
-                <p style="margin:3px 0" >${subsidiary.mainaddress_text}</p>
-                 <table class="border-none  " style="padding:0px; margin:0px">
+                <p style="margin:3px 0" class="fs-9" >${subsidiary.mainaddress_text}</p>
+                 <table class="border-none fs-9" style="padding:0px; margin:0px">
                     <tr>
                         <td style="padding:0px; margin:0px"> 
                             <p> Tel: ${subsidiary.custrecord_scv_sub_tel_phone} </p> 
@@ -113,7 +113,7 @@
 
    </table>
 
-   <p> The provision and conditions attached are part of this order which is placed and accepted upon such provisions and conditions.
+   <p class="fs-9"> The provision and conditions attached are part of this order which is placed and accepted upon such provisions and conditions.
     It is also condition of this order that sub-contractor shall follow strictly all attached instructions and specification. </p>
 
     <table class="border-table"  border-top="1" width="100%">
@@ -172,15 +172,6 @@
                         </td>
                     </tr>
 
-
-                    <tr style="height:40px">
-                        <td colspan="35">
-                        </td>
-                        <td colspan="1"></td>
-                        <td colspan="64" style="border-right: none;">
-                        </td>
-                    </tr>
-
                     <tr>
                         <td colspan="35">
                             <p class="align-right"><b>TYPE OF CONTRACT: </b></p>
@@ -207,7 +198,7 @@
                         </td>
                         <td colspan="1"></td>
                         <td colspan="64" style="border-right: none;">
-                            <p>${result.workItemCode}</p>
+                            <p>${result.completionDate}</p>
                         </td>
                     </tr>
 

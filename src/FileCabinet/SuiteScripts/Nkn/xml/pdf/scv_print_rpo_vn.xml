@@ -218,93 +218,99 @@
 
     <table width="100%" class="mt-5">
         <tr>
-            <td colspan="70">
-                Payment term: ${results.headers.paymentTerm}
+            <td colspan="50">
+                <table width="100%">
+                    <tr>
+                        <td colspan="100">
+                            Payment term:
+                        </td>
+                    </tr>
+                     <tr>
+                        <td colspan="100" >
+                            <p class="pl-5"> ${results.headers.paymentTerm} </p>
+                        </td>
+                    </tr>
+                </table>
             </td>
-            <td colspan="5"></td>
-            <td colspan="25">
-                <span style="text-decoration:underline">Attach with:</span>
-            </td>
-        </tr>
 
-        <tr>
-            <td colspan="70">
-                - 30% in advance (Exclude VAT) after get bank guarantee
-            </td>
-            <td colspan="5" align="center">
-                <input type="checkbox"
-                    readonly="true"
-                    name="subcon_quotation"
-                    value="${results.headers.subCon}"
-                    <#if results.headers.subCon == "true">checked="true"</#if>
-                />
-            </td>
-            <td colspan="25">
-                Sub-con Quotation
-            </td>
-        </tr>
+            <td colspan="50">
+                <table width="100%">
+                    <tr>
+                        <td colspan="100">
+                            <span style="text-decoration:underline">Attach with:</span>
+                        </td>
+                    </tr>
 
-        <tr>
-            <td colspan="70">
-                - 30% after all materials come to site
-            </td>
-            <td colspan="5" align="center">
-                <input type="checkbox"
-                    readonly="true"
-                    name="drawing"
-                    value="${results.headers.drawings}"
-                    <#if results.headers.drawings == "true">checked="true"</#if>
-                />
-            </td>
-            <td colspan="25">
-                Drawing (if any)
-            </td>
-        </tr>
+                    <tr>
+                        <td colspan="20" align="center">
+                            <input type="checkbox"
+                                readonly="true"
+                                name="subcon_quotation"
+                                value="${results.headers.subCon}"
+                                <#if results.headers.subCon == "true">checked="true"</#if>
+                            />
+                        </td>
+                        <td colspan="80">
+                            Sub-con Quotation
+                        </td>
+                    </tr>
 
-        <tr>
-            <td colspan="70">
-                - 40% after completion &amp; handover
-            </td>
-            <td colspan="5" align="center">
-                <input type="checkbox"
-                    readonly="true"
-                    name="schedule"
-                    value="${results.headers.schedule}"
-                    <#if results.headers.schedule == "true">checked="true"</#if>
-                />
-            </td>
-            <td colspan="25">
-                Schedule (if any)
-            </td>
-        </tr>
+                    <tr>
+                        <td colspan="20" align="center">
+                            <input type="checkbox"
+                                readonly="true"
+                                name="drawing"
+                                value="${results.headers.drawings}"
+                                <#if results.headers.drawings == "true">checked="true"</#if>
+                            />
+                        </td>
+                        <td colspan="80">
+                            Drawing (if any)
+                        </td>
+                    </tr>
 
-        <tr>
-            <td colspan="70"></td>
-            <td colspan="5" align="center">
-                <input type="checkbox"
-                    readonly="true"
-                    name="others"
-                    value="${results.headers.other}"
-                    <#if results.headers.other == "true">checked="true"</#if>
-                />
-            </td>
-            <td colspan="25">
-                Others...
-            </td>
-        </tr>
+                    <tr>
+                        <td colspan="20" align="center">
+                            <input type="checkbox"
+                                readonly="true"
+                                name="schedule"
+                                value="${results.headers.schedule}"
+                                <#if results.headers.schedule == "true">checked="true"</#if>
+                            />
+                        </td>
+                        <td colspan="80">
+                            Schedule (if any)
+                        </td>
+                    </tr>
 
-        <tr>
-            <td colspan="70"></td>
-            <td colspan="5" align="center">
-                <input type="checkbox"
-                    readonly="true"
-                    name="spec"
-                    value="${results.headers.specification}"
-                    <#if results.headers.specification == "true">checked="true"</#if>
-                />
-            </td>
-            <td colspan="25">
-                Spec
+                    <tr>
+                        <td colspan="20" align="center">
+                            <input type="checkbox"
+                                readonly="true"
+                                name="others"
+                                value="${results.headers.other}"
+                                <#if results.headers.other == "true">checked="true"</#if>
+                            />
+                        </td>
+                        <td colspan="80">
+                            Others...
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="20" align="center">
+                            <input type="checkbox"
+                                readonly="true"
+                                name="spec"
+                                value="${results.headers.specification}"
+                                <#if results.headers.specification == "true">checked="true"</#if>
+                            />
+                        </td>
+                        <td colspan="80">
+                            Spec
+                        </td>
+                    </tr>
+                </table>
             </td>
         </tr>
     </table>
@@ -331,19 +337,19 @@
         <tbody>
             <#list result.lines as line>
             <tr height="27px">
-                <td colspan="10" align="center">
+                <td colspan="10" align="center" style="font-size: 8pt;">
                     ${line.wbNo}
                 </td>
 
                 <td colspan="20">
-                    <table width="100%" class="border-none">
+                    <table width="100%" class="border-none" style="font-size: 8pt;">
                         <tr>
-                            <td width="30%" align="left">
+                            <td width="30%" align="left" style="font-size: 8pt;">
                                 <#if line.workingBudget.amount?has_content>
                                     ${line.workingBudget.currency}
                                 </#if>
                             </td>
-                            <td width="70%" align="right" style="border-right: none;">
+                            <td width="70%" align="right" style="border-right: none; font-size: 8pt;">
                                 ${line.workingBudget.amount}
                             </td>
                         </tr>
@@ -351,14 +357,14 @@
                 </td>
 
                 <td colspan="20">
-                    <table width="100%" class="border-none">
+                    <table width="100%" class="border-none" style="font-size: 8pt;">
                         <tr>
-                            <td width="30%" align="left">
+                            <td width="30%" align="left" style="font-size: 8pt;">
                                 <#if line.thisAmount.amount?has_content>
                                     ${line.thisAmount.currency}
                                 </#if>
                             </td>
-                            <td width="70%" align="right" style="border-right: none;">
+                            <td width="70%" align="right" style="border-right: none; font-size: 8pt;">
                                 ${line.thisAmount.amount}
                             </td>
                         </tr>
@@ -366,14 +372,14 @@
                 </td>
 
                 <td colspan="20">
-                    <table width="100%" class="border-none">
+                    <table width="100%" class="border-none" style="font-size: 8pt;">
                         <tr>
-                            <td width="30%" align="left">
+                            <td width="30%" align="left" style="font-size: 8pt;">
                                 <#if line.accumulateAmount.amount?has_content>
                                     ${line.accumulateAmount.currency}
                                 </#if>
                             </td>
-                            <td width="70%" align="right" style="border-right: none;">
+                            <td width="70%" align="right" style="border-right: none; font-size: 8pt;">
                                 ${line.accumulateAmount.amount}
                             </td>
                         </tr>
@@ -381,40 +387,40 @@
                 </td>
 
                 <td colspan="20">
-                    <table width="100%" class="border-none">
+                    <table width="100%" class="border-none" style="font-size: 8pt;">
                         <tr>
-                            <td width="30%" align="left">
+                            <td width="30%" align="left" style="font-size: 8pt;">
                                 <#if line.balance.amount?has_content>
                                     ${line.balance.currency}
                                 </#if>
                             </td>
-                            <td width="70%" align="right" style="border-right: none;">
+                            <td width="70%" align="right" style="border-right: none; font-size: 8pt;">
                                 ${line.balance.amount}
                             </td>
                         </tr>
                     </table>
                 </td>
 
-                <td colspan="10">
+                <td colspan="10" style="font-size: 8pt;">
                     ${line.remarks}
                 </td>
             </tr>
-        </#list>
+            </#list>
 
             <tr>
-                <td colspan="10" align="center">
+                <td colspan="10" align="center" style="font-size: 8pt;">
                     Total
                 </td>
 
                 <td colspan="20">
-                    <table width="100%" class="border-none">
+                    <table width="100%" class="border-none" style="font-size: 8pt;">
                         <tr>
-                            <td width="30%" align="left">
+                            <td width="30%" align="left" style="font-size: 8pt;">
                                 <#if result.totalWorkingBudgetDisplay.amount?has_content>
                                     ${result.totalWorkingBudgetDisplay.currency}
                                 </#if>
                             </td>
-                            <td width="70%" align="right" style="border-right: none;">
+                            <td width="70%" align="right" style="border-right: none; font-size: 8pt;">
                                 ${result.totalWorkingBudgetDisplay.amount}
                             </td>
                         </tr>
@@ -422,14 +428,14 @@
                 </td>
 
                 <td colspan="20">
-                    <table width="100%" class="border-none">
+                    <table width="100%" class="border-none" style="font-size: 8pt;">
                         <tr>
-                            <td width="30%" align="left">
+                            <td width="30%" align="left" style="font-size: 8pt;">
                                 <#if result.totalThisAmountDisplay.amount?has_content>
                                     ${result.totalThisAmountDisplay.currency}
                                 </#if>
                             </td>
-                            <td width="70%" align="right" style="border-right: none;">
+                            <td width="70%" align="right" style="border-right: none; font-size: 8pt;">
                                 ${result.totalThisAmountDisplay.amount}
                             </td>
                         </tr>
@@ -437,14 +443,14 @@
                 </td>
 
                 <td colspan="20">
-                    <table width="100%" class="border-none">
+                    <table width="100%" class="border-none" style="font-size: 8pt;">
                         <tr>
-                            <td width="30%" align="left">
+                            <td width="30%" align="left" style="font-size: 8pt;">
                                 <#if result.totalAccumulateAmountDisplay.amount?has_content>
                                     ${result.totalAccumulateAmountDisplay.currency}
                                 </#if>
                             </td>
-                            <td width="70%" align="right" style="border-right: none;">
+                            <td width="70%" align="right" style="border-right: none; font-size: 8pt;">
                                 ${result.totalAccumulateAmountDisplay.amount}
                             </td>
                         </tr>
@@ -452,21 +458,21 @@
                 </td>
 
                 <td colspan="20">
-                    <table width="100%" class="border-none">
+                    <table width="100%" class="border-none" style="font-size: 8pt;">
                         <tr>
-                            <td width="30%" align="left">
+                            <td width="30%" align="left" style="font-size: 8pt;">
                                 <#if result.totalBalanceDisplay.amount?has_content>
                                     ${result.totalBalanceDisplay.currency}
                                 </#if>
                             </td>
-                            <td width="70%" align="right" style="border-right: none;">
+                            <td width="70%" align="right" style="border-right: none; font-size: 8pt;">
                                 ${result.totalBalanceDisplay.amount}
                             </td>
                         </tr>
                     </table>
                 </td>
 
-                <td colspan="10"></td>
+                <td colspan="10" style="font-size: 8pt;"></td>
             </tr>
         </tbody>
     </table>

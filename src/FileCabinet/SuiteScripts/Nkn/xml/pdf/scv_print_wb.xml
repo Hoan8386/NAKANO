@@ -263,14 +263,14 @@
                         <td colspan="45"><p class="pl-10">a. BY GFA</p></td>
                         <td colspan="5"></td>
                         <td colspan="13"><p>${result.primaryCurrency}</p></td>
-                        <td colspan="25" style="border-bottom: 1px dotted" align="right"><p>${result.contractSumByGFA} $/m2</p></td>
+                        <td colspan="25" style="border-bottom: 1px dotted" align="right"><p>${result.contractSumByGFA} /m2</p></td>
                         <td colspan="12" style="border-bottom: 1px dotted"></td>
                     </tr>
                     <tr>
                         <td colspan="45"><p class="pl-10">b. BY CFA</p></td>
                         <td colspan="5"></td>
                         <td colspan="13"><p>${result.primaryCurrency}</p></td>
-                        <td colspan="25" style="border-bottom: 1px dotted" align="right"><p>${result.contractSumByCFA}</p></td>
+                        <td colspan="25" style="border-bottom: 1px dotted" align="right"><p>${result.contractSumByCFA} /m2</p></td>
                         <td colspan="12" style="border-bottom: 1px dotted"></td>
                     </tr>
                     <tr>

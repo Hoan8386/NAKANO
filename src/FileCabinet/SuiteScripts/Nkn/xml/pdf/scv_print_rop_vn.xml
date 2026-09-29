@@ -126,126 +126,167 @@
         {libPdf.rowcol100}
     </table>
 
-    <table width="100%" class="border-table mt-5">
-        <thead>
-            <tr>
-                <th colspan="11" class="align-center">
-                    W/B No.
-                </th>
-                <th colspan="14" class="align-center">
-                    Contract Amount
-                </th>
-                <th colspan="14" class="align-center">
-                    Prev. Approved<br/>amount
-                </th>
-                <th colspan="14" class="align-center">
-                    This Approved<br/>amount
-                </th>
-                <th colspan="14" class="align-center">
-                    Accumulate<br/>amount
-                </th>
-                <th colspan="5" class="align-center">
-                    %
-                </th>
-                <th colspan="14" class="align-center">
-                    Balance
-                </th>
-                <th colspan="14" class="align-center">
-                    <span> Retention</span>
-                    <br/>
-                        <input type="checkbox"
-                        name="retentionCashHeader"
-                        value="true"
-                        readonly="true"/>
-                        <span> cash or A/C</span>
+    <table width="100%" class="border-table mt-5 " border-top="1">
+        <tr>
+            <th colspan="9" class="align-center">
+                W/B No.
+            </th>
+            <th colspan="14" class="align-center">
+                Contract Amount
+            </th>
+            <th colspan="14" class="align-center">
+                Prev. Approved<br/>amount
+            </th>
+            <th colspan="14" class="align-center">
+                This Approved<br/>amount
+            </th>
+            <th colspan="14" class="align-center">
+                Accumulate<br/>amount
+            </th>
+            <th colspan="6" class="align-center">
+                %
+            </th>
+            <th colspan="14" class="align-center">
+                Balance
+            </th>
+            <th colspan="15" class="align-center pb-3">
+                <span>Retention</span>
+                <br/>
+                <input type="checkbox"
+                    name="retentionCashHeader"
+                    value="true"
+                    readonly="true"/>
+                <span> cash or A/C</span>
+                <br/>
+                <input type="checkbox"
+                    name="retentionBGHeader"
+                    value="true"
+                    readonly="true"/>
+                <span> B/G</span>
+            </th>
+        </tr>
 
-                    <br/>
-                        <input type="checkbox"
-                        name="retentionBGHeader"
-                        value="true"
-                        readonly="true"/>
-                        <span> B/G</span>
-                </th>
+        ${libPdf.rowcol100}
+
+        <#list results.arrLine as line>
+            <tr class="fs-8">
+                <td colspan="9" class="align-center">
+                    ${line.wbNo}
+                </td>
+
+                <td colspan="14" class="align-right">
+                    ${line.contractAmount.currency}
+                    ${line.contractAmount.amount}
+                </td>
+
+                <td colspan="14" class="align-right">
+                    ${line.prevApprovedAmount.currency}
+                    ${line.prevApprovedAmount.amount}
+                </td>
+
+                <td colspan="14" class="align-right">
+                    ${line.thisApprovedAmount.currency}
+                    ${line.thisApprovedAmount.amount}
+                </td>
+
+                <td colspan="14" class="align-right">
+                    ${line.accumulateAmount.currency}
+                    ${line.accumulateAmount.amount}
+                </td>
+
+                <td colspan="6" class="align-center">
+                    ${line.percent}
+                </td>
+
+                <td colspan="14" class="align-right">
+                    ${line.balance.currency}
+                    ${line.balance.amount}
+                </td>
+
+                <td colspan="15" class="align-right">
+                    ${line.retention.amount}
+                </td>
             </tr>
-            ${libPdf.rowcol100}
-        </thead>
+        </#list>
 
-        <tbody>
+        <tr class="fs-8">
+            <td colspan="9">Total exc VAT</td>
 
-            <#list results.arrLine as line>
-                <tr>
-                    <td colspan="11" class="align-center">
-                        ${line.wbNo}
-                    </td>
+            <td colspan="14" class="align-right">
+                ${results.totalContractAmount.currency}
+                ${results.totalContractAmount.amount}
+            </td>
 
-                    <td colspan="14" class="align-right">
-                        ${line.contractAmount.currency}
-                        ${line.contractAmount.amount}
-                    </td>
+            <td colspan="14" class="align-right">
+                ${results.totalPrevApprovedAmount.currency}
+                ${results.totalPrevApprovedAmount.amount}
+            </td>
 
-                    <td colspan="14" class="align-right">
-                        ${line.prevApprovedAmount.currency}
-                        ${line.prevApprovedAmount.amount}
-                    </td>
+            <td colspan="14" class="align-right">
+                ${results.totalThisApprovedAmount.currency}
+                ${results.totalThisApprovedAmount.amount}
+            </td>
 
-                    <td colspan="14" class="align-right">
-                        ${line.thisApprovedAmount.currency}
-                        ${line.thisApprovedAmount.amount}
-                    </td>
+            <td colspan="14" class="align-right">
+                ${results.totalAccumulateAmount.currency}
+                ${results.totalAccumulateAmount.amount}
+            </td>
 
-                    <td colspan="14" class="align-right">
-                        ${line.accumulateAmount.currency}
-                        ${line.accumulateAmount.amount}
-                    </td>
+            <td colspan="6" class="align-center">
+                <#if results.totalPercent?has_content>
+                    ${results.totalPercent?string["0.##"]}%
+                </#if>
+            </td>
 
-                    <td colspan="5" class="align-center">
-                        ${line.percent}
-                    </td>
+            <td colspan="14" class="align-right">
+                ${results.totalBalance.currency}
+                ${results.totalBalance.amount}
+            </td>
 
-                    <td colspan="14" class="align-right">
-                        ${line.balance.currency}
-                        ${line.balance.amount}
-                    </td>
+            <td colspan="15" class="align-right">
+                ${results.totalRetention.currency}
+                ${results.totalRetention.amount}
+            </td>
+        </tr>
 
-                    <td colspan="14" class="align-center">
-                        ${line.retention.amount}
-                        <input type="checkbox"
-                            name="retentionCash"
-                            value="true"
-                            checked="${line.retentionCash}"
-                            readonly="true"/>
-                        <input type="checkbox"
-                            name="retentionBG"
-                            value="true"
-                            checked="${line.retentionBG}"
-                            readonly="true"/>
-                    </td>
-                </tr>
-            </#list>
+        <tr class="fs-8">
+            <td colspan="9">Total incl VAT</td>
 
-            <tr>
-                <td colspan="11">Total exc VAT</td>
-                <td colspan="14" class="align-right">${results.totalContractAmount.currency} ${results.totalContractAmount.amount}</td>
-                <td colspan="14" class="align-right">${results.totalPrevApprovedAmount.currency} ${results.totalPrevApprovedAmount.amount}</td>
-                <td colspan="14" class="align-right">${results.totalThisApprovedAmount.currency} ${results.totalThisApprovedAmount.amount}</td>
-                <td colspan="14" class="align-right">${results.totalAccumulateAmount.currency} ${results.totalAccumulateAmount.amount}</td>
-                <td colspan="5" class="align-center"><#if results.totalPercent?has_content>${results.totalPercent?string["0.##"]}%</#if></td>
-                <td colspan="14" class="align-right">${results.totalBalance.currency} ${results.totalBalance.amount}</td>
-                <td colspan="14" class="align-right">${results.totalRetention.currency} ${results.totalRetention.amount}</td>
-            </tr>
-            <tr>
-                <td colspan="11">Total incl VAT</td>
-                <td colspan="14" class="align-right">${results.totalInclVatContractAmount.currency} ${results.totalInclVatContractAmount.amount}</td>
-                <td colspan="14" class="align-right">${results.totalInclVatPrevApprovedAmount.currency} ${results.totalInclVatPrevApprovedAmount.amount}</td>
-                <td colspan="14" class="align-right">${results.totalInclVatThisApprovedAmount.currency} ${results.totalInclVatThisApprovedAmount.amount}</td>
-                <td colspan="14" class="align-right">${results.totalInclVatAccumulateAmount.currency} ${results.totalInclVatAccumulateAmount.amount}</td>
-                <td colspan="5" class="align-center"><#if results.totalInclVatPercent?has_content>${results.totalInclVatPercent?string["0.##"]}%</#if></td>
-                <td colspan="14" class="align-right">${results.totalInclVatBalance.currency} ${results.totalInclVatBalance.amount}</td>
-                <td colspan="14">&nbsp;</td>
-            </tr>
+            <td colspan="14" class="align-right">
+                ${results.totalInclVatContractAmount.currency}
+                ${results.totalInclVatContractAmount.amount}
+            </td>
 
-        </tbody>
+            <td colspan="14" class="align-right">
+                ${results.totalInclVatPrevApprovedAmount.currency}
+                ${results.totalInclVatPrevApprovedAmount.amount}
+            </td>
+
+            <td colspan="14" class="align-right">
+                ${results.totalInclVatThisApprovedAmount.currency}
+                ${results.totalInclVatThisApprovedAmount.amount}
+            </td>
+
+            <td colspan="14" class="align-right">
+                ${results.totalInclVatAccumulateAmount.currency}
+                ${results.totalInclVatAccumulateAmount.amount}
+            </td>
+
+            <td colspan="6" class="align-center">
+                <#if results.totalInclVatPercent?has_content>
+                    ${results.totalInclVatPercent?string["0.##"]}
+                </#if>
+            </td>
+
+            <td colspan="14" class="align-right">
+                ${results.totalInclVatBalance.currency}
+                ${results.totalInclVatBalance.amount}
+            </td>
+
+            <td colspan="15">&nbsp;</td>
+        </tr>
     </table>
+
     <table width="100%" class="border-table mt-5" >
         <thead class="pt-3">
              <tr >
@@ -456,7 +497,7 @@
 
     <table width="100%">
         <tr>
-            <td colspan="100" height="25"></td>
+            <td colspan="100" height="15"></td>
         </tr>
         <tr>
             <td colspan="100" class="align-center">

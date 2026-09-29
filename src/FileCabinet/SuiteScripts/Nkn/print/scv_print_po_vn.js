@@ -9,7 +9,7 @@ define([
     "N/record", "N/url", 'N/runtime',
     "../lib/scv_lib_pdf.js",
     '../common/scv_common_ext_performent.js',
-
+    '../olib/alasql/alasql.min@4.6.6.js', 
     '../cons/scv_cons_format.js',
     '../cons/scv_cons_record.js',
     '../cons/scv_cons_role.js',
@@ -19,7 +19,7 @@ define([
         record, url, runtime,
         libPdf,
         commonExtPerformance,
-
+        alasql,
         constFormat,
         constRecord,
         constRole,
@@ -104,16 +104,23 @@ define([
             let grandTotalPrice = 0;
 
             arrLine01.forEach(item => {
-                if (item._10_work_item_code) {
-                    workItemCode.push(item._10_work_item_code);
-                }
-
+               
                 contractPrice += Number(item._12_contract_price) || 0;
                 vat += Number(item._13_vat) || 0;
                 grandTotalPrice += Number(item._14_grand_total_price) || 0;
             });
+            const result = alasql(`
+                SELECT _10_work_item_code
+                FROM ?
+                WHERE _10_work_item_code IS NOT NULL
+                AND _10_work_item_code != ''
+                GROUP BY _10_work_item_code
+            `, [arrLine01]);
 
-            workItemCode = workItemCode.join(", ");
+             workItemCode = result
+                .map(item => item._10_work_item_code)
+                .join(', ');
+
             objResult = {
                 project: objLineFirst._1_projects || "",
                 subCon: objLineFirst._2_sub_contractor_s_name || "",
@@ -152,7 +159,7 @@ define([
 
             libPdf.formatDataXMLWithObject(objResult);
 
-             objResult.tagImgLogo =  libPdf.createImageBySubsidiaryV2(subsidiaryRec, 120);
+            objResult.tagImgLogo =  libPdf.createImageBySubsidiaryV2(subsidiaryRec, 60);
 
             renderer.addCustomDataSource({
                 format: "OBJECT",

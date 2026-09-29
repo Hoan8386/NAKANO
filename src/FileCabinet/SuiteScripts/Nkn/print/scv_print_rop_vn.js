@@ -206,12 +206,19 @@ define([
                 totalPercent,
                 totalBalance: hasBalance ? buildCurrencyAmount(totalCurrency, totalBalance) : { currency: '', amount: '' },
                 totalRetention: hasRetention ? buildCurrencyAmount(totalCurrency, totalRetention) : { currency: '', amount: '' },
-                totalInclVatContractAmount: hasContractAmount || hasTaxAmount ? buildCurrencyAmount(totalCurrency, totalInclVatContractAmount) : { currency: '', amount: '' },
+                // totalInclVatContractAmount: hasContractAmount || hasTaxAmount ? buildCurrencyAmount(totalCurrency, totalInclVatContractAmount) : { currency: '', amount: '' },
+                // totalInclVatPrevApprovedAmount: { currency: '', amount: '' },
+                // totalInclVatThisApprovedAmount: hasThisApprovedAmount || hasTaxAmount ? buildCurrencyAmount(totalCurrency, totalInclVatThisApprovedAmount) : { currency: '', amount: '' },
+                // totalInclVatAccumulateAmount: hasAccumulateAmount || hasTaxAmount ? buildCurrencyAmount(totalCurrency, totalInclVatAccumulateAmount) : { currency: '', amount: '' },
+                // totalInclVatPercent,
+                // totalInclVatBalance: hasBalance || hasTaxAmount ? buildCurrencyAmount(totalCurrency, totalInclVatBalance) : { currency: '', amount: '' },
+                totalInclVatContractAmount: { currency: '', amount: '' },
                 totalInclVatPrevApprovedAmount: { currency: '', amount: '' },
                 totalInclVatThisApprovedAmount: hasThisApprovedAmount || hasTaxAmount ? buildCurrencyAmount(totalCurrency, totalInclVatThisApprovedAmount) : { currency: '', amount: '' },
-                totalInclVatAccumulateAmount: hasAccumulateAmount || hasTaxAmount ? buildCurrencyAmount(totalCurrency, totalInclVatAccumulateAmount) : { currency: '', amount: '' },
-                totalInclVatPercent,
-                totalInclVatBalance: hasBalance || hasTaxAmount ? buildCurrencyAmount(totalCurrency, totalInclVatBalance) : { currency: '', amount: '' },
+                totalInclVatAccumulateAmount:{ currency: '', amount: '' },
+                totalInclVatPercent:'',
+                totalInclVatBalance: { currency: '', amount: '' },
+
                 totalTaxAmount: hasTaxAmount ? buildCurrencyAmount(totalCurrency, totalTaxAmount) : { currency: '', amount: '' },
                 other: objLineFirst._12_other || false,
                 remark: objLineFirst._13_remark || '',
@@ -227,7 +234,7 @@ define([
                 reasonOfExcessFromPO: objLineFirst._26_reason_of_excess_from_po_if_any || ''
             };
             libPdf.formatDataXMLWithObject(objResult);
-            objResult.tagImgLogo = libPdf.createImageBySubsidiaryV2(subsidiaryRec, 120);
+            objResult.tagImgLogo = libPdf.createImageBySubsidiaryV2(subsidiaryRec, 60);
 
             renderer.addCustomDataSource({
                 format: "OBJECT",

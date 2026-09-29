@@ -53,7 +53,7 @@ define([
             });
 
             form.addButton({
-                id: "custpage_scv_btn_acc_voucher",
+                id: "custpage_scv_btn_acc_voucher_pdf",
                 label: "Acc Voucher",
                 functionName: "window.open('" + urlScript + "');"
             });

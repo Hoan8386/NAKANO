@@ -42,7 +42,13 @@ define([
 
             form.addButton({
                 id: "custpage_scv_btn_print_wb_pdf",
-                label: "Working budget",
+                label: "Working budget (PDF) ",
+                functionName: "window.open('" + urlScript + "');"
+            });
+
+            form.addButton({
+                id: "custpage_scv_btn_print_wb_excel",
+                label: "Working budget (excel) ",
                 functionName: "window.open('" + urlScript + "');"
             });
         };
