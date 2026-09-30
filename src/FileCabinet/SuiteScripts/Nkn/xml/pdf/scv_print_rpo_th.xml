@@ -1,7 +1,7 @@
 <?xml version = "1.0"?><!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
 <pdf>
 <head>
-    <meta name="title" value="Print RPO (ID)"/>
+    <meta name="title" value="Print RPO (TH)"/>
     <link name="ScvFont" type="font" subtype="opentype" src="${libPdf.font.arial?html}" src-bold="${libPdf.font.arial_bold?html}" src-italic="${libPdf.font.arial_italic?html}" src-bolditalic="${libPdf.font.arial_bolditalic?html}" bytes="2" />
     <style type="text/css">
         ${libPdf.css}
@@ -27,18 +27,18 @@
 <body padding="0.3in 0.3in 1in 0.3in" size="A4" >
     <#list results.datas as data>
         <table width="100%" >
-            <tr>
-                <td colspan="30" valign="middle">
+            <tr class="m-0 p-0">
+                <td colspan="7" valign="middle">
                     ${results.header.tagImgLogo}
                 </td>
-                <td colspan="70" valign="middle">
+                <td colspan="93" valign="middle">
                     ${subsidiary.legalname}
                 </td>
             </tr>
-            <tr class="mt-5">
+            <tr class="mt-10  m-0 p-0">
                 <td colspan="100" class="align-center">
-                    <p class="fs-13 "> <b>REQUEST FOR PURCHASE ORDER</b></p>
-                    <p  class="fs-11"> <b>(Request by Site)</b></p>
+                    <p class="fs-13 m-0 p-0"> <b>REQUEST FOR PURCHASE ORDER</b></p>
+                    <p  class="fs-11 m-0 p-0"> <b>(Request by Site)</b></p>
                 </td>
             </tr>
             ${libPdf.rowcol100}
@@ -58,7 +58,7 @@
                             <td colspan="24"><b>P/O No.</b></td>
                             <td colspan="5"><b>:</b></td>
                             <td colspan="71" border-bottom="1">
-                                <p>${results.header.poNumber}</p>
+                                <p>${data.poNumber}</p>
                             </td>
                         </tr>
 
@@ -80,33 +80,39 @@
 
                         <tr>
                             <td colspan="24" valign="top"><b>Scope of Work</b></td>
-                            <td colspan="5" valign="top"><b>:</b></td>
-                            <td colspan="71" border-bottom="1">
+                            <td colspan="5" valign="top" class="valign-bottom"><b>:</b></td>
+                            <td colspan="71" border-bottom="1" class="valign-bottom">
                                 <p>${results.header.scopeOfWork}</p>
                             </td>
                         </tr>
 
                         <tr>
                             <td colspan="24"><b>Type of Payment</b></td>
-                            <td colspan="5"><b>:</b></td>
-                            <td colspan="71">
+                            <td colspan="5" class="valign-bottom"><b>:</b></td>
+                            <td colspan="71" class="valign-bottom">
                                 <p>${results.header.typeOfContract}</p>
                             </td>
                         </tr>
 
                         <tr>
                             <td colspan="24"><b>Contract Amount</b></td>
-                            <td colspan="5"><b>:</b></td>
-                            <td colspan="71">
-                                <p>${data.contactAmount} Baht (VAT excluded)</p>
+                            <td colspan="5" class="valign-bottom"><b>:</b></td>
+                            <td colspan="71" class="valign-bottom">
+                                <p>
+                                    <#if data.contactAmount?? && data.contactAmount != "">
+                                        ${data.contactAmount} Baht (VAT excluded)
+                                    </#if>
+                                </p>
                             </td>
                         </tr>
 
                         <tr>
                             <td colspan="24"><b>Payment Amount</b></td>
-                            <td colspan="5"><b>:</b></td>
-                            <td colspan="71">
-                                <p>${results.header.termsOfPayment} Days after being Certified by P.M.</p>
+                            <td colspan="5" class="valign-bottom"><b>:</b></td>
+                            <td colspan="71" class="valign-bottom">
+                                <p>${results.header.termsOfPayment} 
+                                <!-- Days after being Certified by P.M. -->
+                                </p>
                             </td>
                         </tr>
 
@@ -168,8 +174,8 @@
 
                         <tr>
                             <td colspan="43"><b>Date of Commencement</b></td>
-                            <td colspan="5"><b>:</b></td>
-                            <td colspan="52" border-bottom="1">
+                            <td colspan="5" class="valign-bottom" ><b>:</b></td>
+                            <td colspan="52" border-bottom="1" class="valign-bottom"> 
                                 <p>
                                     ${results.header.commenceDate}
                                 </p>
@@ -178,8 +184,8 @@
 
                         <tr>
                             <td colspan="43"><b>Date of Completion</b></td>
-                            <td colspan="5"><b>:</b></td>
-                            <td colspan="52" border-bottom="1">
+                            <td colspan="5" class="valign-bottom"><b>:</b></td>
+                            <td colspan="52" border-bottom="1" class="valign-bottom">
                                 <p>
                                     ${results.header.completionDate}
                                 </p>
@@ -188,10 +194,11 @@
 
                         <tr>
                             <td colspan="43" valign="top"><b>L.D. Penalty for Delay</b></td>
-                            <td colspan="5" valign="top"><b>:</b></td>
-                            <td colspan="52">
+                            <td colspan="5" valign="top" class="valign-bottom"><b>:</b></td>
+                            <td colspan="52" class="valign-bottom">
                                 <p>
-                                    ${results.header.ldPenaltyForDelay} (% of contract amount)
+                                    ${results.header.ldPenaltyForDelay} 
+                                    <!-- (% of contract amount) -->
                                 </p>
                             </td>
                         </tr>
@@ -216,12 +223,12 @@
                             </td>
                         </tr>
 
-                        <tr>
+                        <!-- <tr>
                             <td colspan="48"></td>
                             <td colspan="52">
                                 <i>(From Handing Over to the Owner)</i>
                             </td>
-                        </tr>
+                        </tr> -->
 
                         <tr>
                             <td colspan="43"><b>Performance Bond</b></td>
@@ -248,17 +255,18 @@
                             <td colspan="5"><b>:</b></td>
                             <td colspan="52">
                                 <p>
-                                    ${results.header.warranty} Month (s) from Handing
+                                    ${results.header.warranty}
+                                     <!-- Month (s) from Handing -->
                                 </p>
                             </td>
                         </tr>
 
-                        <tr>
+                        <!-- <tr>
                             <td colspan="48"></td>
                             <td colspan="52">
                                 Over to the Owner
                             </td>
-                        </tr>
+                        </tr> -->
 
                         <tr>
                             <td colspan="43"><b>Vendor Q'ty Ref. No.</b></td>
@@ -286,8 +294,8 @@
             ${libPdf.rowcol100}
         </table>
 
-        <table width="100%" class="border-table mt-5">
-            <thead>
+        <table width="100%" class="border-table mt-5 fs-9">
+            <thead> 
                 <tr class="valign-middle">
                     <td colspan="12" align="center"></td>
                     <td colspan="13" align="center">1</td>
@@ -300,8 +308,8 @@
                 </tr>
             </thead>
 
-            <tbody>
-                <tr>
+            <tbody >
+                <tr >
                     <td colspan="12">
                         <p align="center">
                             <b>WORK ITEM NO.</b>
@@ -402,7 +410,8 @@
 
                 <tr>
                     <td colspan="100" align="left">
-                        <b>Remarks:</b> ${results.header.remark!""}
+                        <p style="margin: 0; padding: 0;"><b>Remarks:</b></p>
+                        <p style="margin: 0; padding-left: 20px;">${results.header.remark!""}</p>
                     </td>
                 </tr>
             </tbody>
@@ -458,7 +467,7 @@
             </tr>
         </table>
         
-        <table width="100%" class="mt-5" style="page-break-inside: avoid;" >
+        <table width="100%" class="mt-5 fs-8" style="page-break-inside: avoid;" >
             <tr>
                 <td colspan="26" align="center" class="align-center valign-middle" border="1" >
                     <p>APPROVAL</p>

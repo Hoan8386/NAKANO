@@ -98,7 +98,7 @@ define([
 
             let arrLine01 = constSearchPrintRPOTH01.getDataSource({ internalid: curRec.id });
             let objLineFirst = arrLine01[0] ?? {};
-            // log.error("hoan arrLine01", arrLine01);
+             log.error("hoan arrLine01", arrLine01);
 
             const showBooleanDisplay = (checked) => checked ? "Yes" : "No";
             let projectId = curRec.getValue('cseg_scv_sg_proj');
@@ -122,9 +122,9 @@ define([
             const objResHeaders = {
                 // pjName: objLookup['custrecord_scv_project_source.companyname'] || '',
                 pjName: (objLookup['custrecord_scv_project_source.companyname'] || '').split(':').slice(1).join(':').trim(),
-                poNumber: objLineFirst._1_po_no || '',
-                scopeOfWork: objLineFirst._3_scope_of_work || '',
-                typeOfContract: objLineFirst._10_type_of_contract || '',
+                
+                scopeOfWork: objLineFirst._2_scope_of_work || '',
+                typeOfContract: objLineFirst._3_type_of_contract_display || objLineFirst._3_type_of_contract || '',
                 termsOfPayment: objLineFirst._5_terms || '',
                 downPayment: objLineFirst._24_for_down_payment || '',
                 monthlyProgress: objLineFirst._25_for_monthly_progress || '',
@@ -133,13 +133,13 @@ define([
                 retention: objLineFirst._6_retention || '',
 
                 requestDate: objLineFirst._7_date_of_request || '',
-                commenceDate: objLineFirst._6_commence_date || '',
-                completionDate: objLineFirst._7_completion_date || '',
+                commenceDate: objLineFirst._8_date_of_commencement || '',
+                completionDate: objLineFirst._9_date_of_completion || '',
                 ldPenaltyForDelay: objLineFirst._10_l_d_penalty_for_delay || '',
                 maintenancePeriodDays: formatNumberByKey(objLineFirst._28_maintenance_period_days) || '',
                 maintenancePeriodMonths: objLineFirst._29_maintenance_period_months || '',
                 performanceBond: objLineFirst._11_performance_bond || '',
-                insurance: objLineFirst._8_insurance || '',
+                insurance: objLineFirst._12_insurance || '',
                 warranty: objLineFirst._13_warranty || '',
                 vendorQtyRefNo: objLineFirst._14_vendor_q_ty_ref_no || '',
                 remark: objLineFirst._18_remark || '',
@@ -160,6 +160,7 @@ define([
                 let vendorName = constSearch.getDataLookupFieldsStore(lkStores.vendors, 'vendor', objLineVendor.povendor, ['companyname']).companyname;
                 let vendorId = constSearch.getDataLookupFieldsStore(lkStores.vendors, 'vendor', objLineVendor.povendor, ['entityid']).entityid;
                 let objResult = {
+                    poNumber: '',
                     vendor: vendorName,
                     vendorNo: vendorId,
                     contactAmount: 0,
@@ -181,6 +182,12 @@ define([
                 }
 
                 let arrLine01_detail = arrLine01.filter(e => lineUniqueKeys.includes(e._0_po_line));
+                const hasContractAmount = arrLine01_detail.some(e =>
+                    e._4_contract_amount !== null &&
+                    e._4_contract_amount !== undefined &&
+                    e._4_contract_amount !== ''
+                );
+                
                 const arrGroup = alasql(`
                     SELECT
                         _15_work_item_no AS workItemNo,
@@ -193,7 +200,10 @@ define([
                     GROUP BY
                         _15_work_item_no
                 `, [arrLine01_detail]);
-
+                
+                objResult.poNumber = arrLine01_detail[0]?._1_po_no || '';
+                
+                // log.error("hoan arrGroup" , arrGroup);
                 for(let i = 0; i < arrGroup.length; i++){
                     let objLine01 = arrGroup[i];
 
@@ -228,9 +238,13 @@ define([
                     };
 
                     objResult.lines.push(objResDetail);
+                } 
+                
+                if (hasContractAmount) {
+                    objResult.contactAmount = formatNumberByKey(objResult.contactAmount);
+                } else {
+                    objResult.contactAmount = '';
                 }
-
-                objResult.contactAmount = formatNumberByKey(objResult.contactAmount);
                 objResult.totalWorkingBudget = formatNumberByKey(objResult.totalWorkingBudget);
                 objResult.totalAccumulateAmount = formatNumberByKey(objResult.totalAccumulateAmount);
                 objResult.totalAccumulateSiteExpense = formatNumberByKey(objResult.totalAccumulateSiteExpense);
@@ -242,7 +256,7 @@ define([
                 arrResDatas.push(objResult);
             }
             libPdf.formatDataXMLWithObject(objResHeaders);
-            objResHeaders.tagImgLogo = libPdf.createImageBySubsidiaryV2(subsidiaryRec, 140);
+            objResHeaders.tagImgLogo = libPdf.createImageBySubsidiaryV2(subsidiaryRec, 30);
 
             renderer.addCustomDataSource({
                 format: "OBJECT",
