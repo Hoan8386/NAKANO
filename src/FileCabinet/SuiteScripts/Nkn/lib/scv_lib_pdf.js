@@ -146,22 +146,58 @@ define(['N/render', 'N/file', 'N/query', 'N/encode'],
             return contents;
         }
 
-        const createImageBySubsidiaryV2 = (subsidiaryRec, expectedWidth) => {
+        const getSubsidiaryLogoInfo = (subsidiaryRec, expectedWidth) => {
             let logoId = subsidiaryRec.getValue('logo') || subsidiaryRec.getValue('pagelogo');
-            if (!logoId) return '';
+            if (!logoId) return null;
+
             let imgFile = file.load({id: logoId});
             let type = String(imgFile.fileType || '').toUpperCase();
             let imageWH = null;
-            if (type.includes('JPG') || type.includes('JPEG')) imageWH = getWHJPG(imgFile);
-            else if (type.includes('PNG')) imageWH = getPngWH(imgFile);
-            if (!imageWH) return '';
-            let {width, height} = imageWH || {width: 100, height: 100};;
+            let extension = '';
+
+            if (type.includes('JPG') || type.includes('JPEG')) {
+                imageWH = getWHJPG(imgFile);
+                extension = 'jpeg';
+            } else if (type.includes('PNG')) {
+                imageWH = getPngWH(imgFile);
+                extension = 'png';
+            }
+
+            if (!imageWH) return null;
+
+            let {width, height} = imageWH || {width: 100, height: 100};
+
             if (expectedWidth) {
                 height = Math.round(expectedWidth * height / width);
                 width = expectedWidth;
             }
-            return `<img src="${unReTextXML(imgFile.url)}" alt="view" width="${width}" height="${height}" />`;
+
+        return {
+            imgFile,
+            extension,
+            width,
+            height
         };
+    };
+
+    const createImageBySubsidiaryV2 = (subsidiaryRec, expectedWidth) => {
+        let logo = getSubsidiaryLogoInfo(subsidiaryRec, expectedWidth);
+        if (!logo) return '';
+
+        return `<img src="${unReTextXML(logo.imgFile.url)}" alt="view" width="${logo.width}" height="${logo.height}" />`;
+    };
+
+    const createImageForExcel = (subsidiaryRec, expectedWidth) => {
+        let logo = getSubsidiaryLogoInfo(subsidiaryRec, expectedWidth);
+        if (!logo) return null;
+
+        return {
+            base64: `data:image/${logo.extension};base64,${logo.imgFile.getContents()}`,
+            extension: logo.extension,
+            width: logo.width,
+            height: logo.height
+        };
+    };
 
         const u32BE = (b, o) => (((((b[o] * 256) + b[o + 1]) * 256) + b[o + 2]) * 256) + b[o + 3];
 
@@ -211,7 +247,6 @@ define(['N/render', 'N/file', 'N/query', 'N/encode'],
             return null;
         };
 
-       
         return {
             formatNumber,
             formatNumberWithObject,
@@ -221,6 +256,7 @@ define(['N/render', 'N/file', 'N/query', 'N/encode'],
             formatDataXMLWithObject,
             formatDataXML,
             removeVietnameseTones,
+            createImageForExcel
         };
 
     });

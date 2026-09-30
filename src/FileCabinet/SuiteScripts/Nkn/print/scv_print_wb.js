@@ -84,6 +84,20 @@ define([
             const renderer = libPdf.renderTemplateWithXml("scv_print_wb");
             let subsidiaryId = curRec.getValue("subsidiary");
             let subsidiaryRec = record.load({type: "subsidiary", id: subsidiaryId});
+            let objResult = getWorkingBudgetData(curRec);
+
+            libPdf.formatDataXMLWithObject(objResult);
+            objResult.tagImgLogo = libPdf.createImageBySubsidiaryV2(subsidiaryRec, 50);
+            renderer.addCustomDataSource({
+                format: "OBJECT",
+                alias: 'result',
+                data: objResult
+            });
+
+            return renderer;
+        };
+
+        const getWorkingBudgetData = (curRec) => {
             let projectNo = curRec.getValue("entityid");
             let projectName = curRec.getValue("companyname");
             let currency = record.load({type: "currency", id: curRec.getValue("currency")});
@@ -297,15 +311,7 @@ define([
             objResult.netCostByCFA = formatNumberByKey(objResult.netCostByCFA);
             objResult.indirectExpenses = formatNumberByKey(objResult.indirectExpenses);
 
-            libPdf.formatDataXMLWithObject(objResult);
-            objResult.tagImgLogo  =  libPdf.createImageBySubsidiaryV2(subsidiaryRec, 50),
-            renderer.addCustomDataSource({
-                format: "OBJECT",
-                alias: 'result',
-                data: objResult
-            });
-
-            return renderer;
+            return objResult;
         };     
 
         const formatNumberByKey = (_number) =>{
@@ -315,15 +321,21 @@ define([
             });
         } 
 
-        const getDataSource = () =>{
+        const getDataSource = (_params) =>{
+             let curRec = record.load({
+                type: _params.recordType,
+                id: _params.recordId
+            });
+            let data = getWorkingBudgetData(curRec);
+            let subsidiaryRec = record.load({
+                type: "subsidiary",
+                id: curRec.getValue("subsidiary")
+            });
+            data.image = libPdf.createImageForExcel(subsidiaryRec, 100);
+
             return {
-                urlTmpl: file.load("../xlsx/scv_tmpl_wbs_import.xlsx").url,
-                header: {
-                    subsidiary: "ok"
-                },
-                lines: [{
-                    a: 1, b: 1, c: 1
-                }],
+                urlTmpl: file.load("../xlsx/scv_xlsx_wb.xlsx").url,
+                data: data,
             }
         }
 
