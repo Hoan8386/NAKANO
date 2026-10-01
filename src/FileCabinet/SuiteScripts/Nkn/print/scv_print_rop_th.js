@@ -125,7 +125,7 @@ define([
                 let contractAmount = item._8_contract_amount * 1 || 0;
                 let newApproval = item._9_new_approval * 1 || 0;
                 let prevApproval = objSS2._2_prev_approval * 1 || 0;
-                let retention = item._10_retetion * 1 || 0;
+                let retention = parseFloat(item._10_retetion) / 100 || 0;
                 let presentRetention = newApproval * retention;
                 let approvedAccumulation = prevApproval + newApproval;
                 let vat = item._11_vat * 1 || 0;

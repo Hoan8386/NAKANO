@@ -166,7 +166,7 @@ define([
                 let vendorId = constSearch.getDataLookupFieldsStore(lkStores.vendors, 'vendor', objLineVendor.povendor, ['entityid']).entityid;
                 let vendorScopeOfWork = constSearch.getDataLookupFieldsStore(lkStores.vendors, 'vendor', objLineVendor.povendor, ['custentity_ven_scope_of_work']).custentity_ven_scope_of_work;
                 let scopeOfWorkValue = vendorScopeOfWork?.[0]?.value;
-                log.error("hoan scopeOfWorkValue" , scopeOfWorkValue);
+                // log.error("hoan scopeOfWorkValue" , scopeOfWorkValue);
                 let isMaterial = isShow(scopeOfWorkValue, constSOW.Records.Material.ID);
                 let isLabour = isShow(scopeOfWorkValue, constSOW.Records.Labour.ID);
                 let isBoth = isShow(scopeOfWorkValue, constSOW.Records.Both.ID);
