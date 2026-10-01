@@ -18,6 +18,7 @@ define([
     '../cons/scv_cons_role.js',
     '../cons/scv_cons_subsidiary.js',
     '../cons/scv_cons_search_print_rpo_th_01.js',
+    '../cons/scv_cons_ven_scope_of_work.js',
 ], (
         record, url, search, query, file, runtime,
         alasql,
@@ -31,6 +32,7 @@ define([
         constRole,
         constSubsidiary,
         constSearchPrintRPOTH01,
+        constSOW
     ) => {
 
         const validatePrint = (curRec) =>{
@@ -88,6 +90,9 @@ define([
             return filePDF;
         };
 
+        const isShow = (scopeOfWorkValue, scopeOfWorkId) => {
+            return String(scopeOfWorkValue) === String(scopeOfWorkId) ? "Y" : "";
+        };
         const rennderPDF = (curRec) =>{
             const renderer = libPdf.renderTemplateWithXml("scv_print_rpo_th");
             let subsidiaryId = curRec.getValue("subsidiary");
@@ -98,7 +103,7 @@ define([
 
             let arrLine01 = constSearchPrintRPOTH01.getDataSource({ internalid: curRec.id });
             let objLineFirst = arrLine01[0] ?? {};
-             log.error("hoan arrLine01", arrLine01);
+            //  log.error("hoan arrLine01", arrLine01);
 
             const showBooleanDisplay = (checked) => checked ? "Yes" : "No";
             let projectId = curRec.getValue('cseg_scv_sg_proj');
@@ -159,10 +164,23 @@ define([
 
                 let vendorName = constSearch.getDataLookupFieldsStore(lkStores.vendors, 'vendor', objLineVendor.povendor, ['companyname']).companyname;
                 let vendorId = constSearch.getDataLookupFieldsStore(lkStores.vendors, 'vendor', objLineVendor.povendor, ['entityid']).entityid;
+                let vendorScopeOfWork = constSearch.getDataLookupFieldsStore(lkStores.vendors, 'vendor', objLineVendor.povendor, ['custentity_ven_scope_of_work']).custentity_ven_scope_of_work;
+                let scopeOfWorkValue = vendorScopeOfWork?.[0]?.value;
+                log.error("hoan scopeOfWorkValue" , scopeOfWorkValue);
+                let isMaterial = isShow(scopeOfWorkValue, constSOW.Records.Material.ID);
+                let isLabour = isShow(scopeOfWorkValue, constSOW.Records.Labour.ID);
+                let isBoth = isShow(scopeOfWorkValue, constSOW.Records.Both.ID);
+                let isService = isShow(scopeOfWorkValue, constSOW.Records.Service.ID);
+                let isRental = isShow(scopeOfWorkValue, constSOW.Records.Rental.ID);
                 let objResult = {
                     poNumber: '',
                     vendor: vendorName,
                     vendorNo: vendorId,
+                    isMaterial: isMaterial,
+                    isLabour: isLabour,
+                    isBoth: isBoth,
+                    isService: isService,
+                    isRental: isRental,
                     contactAmount: 0,
                     totalWorkingBudget: 0,
                     totalAccumulateAmount: 0,

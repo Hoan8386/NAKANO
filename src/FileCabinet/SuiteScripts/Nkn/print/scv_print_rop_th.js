@@ -95,7 +95,7 @@ define([
                 internalid: curRec.id
             });
             const arrPrevApproval = constSearchRopTh02.getDataSource();
-            //  log.error("hoan arrVendbill " ,arrVendbill)
+              log.error("hoan arrVendbill " ,arrVendbill)
             //  log.error("hoan arrPrevApproval " ,arrPrevApproval)
 
             let projectId = curRec.getValue('cseg_scv_sg_proj');
@@ -166,7 +166,8 @@ define([
                 totalPresentRetention: formatNumberByKey(totalPresentRetention),
                 totalVat: formatNumberByKey(totalVat),
                 totalNewApprovalVatIncluded: formatNumberByKey(totalNewApproval + totalVat),
-                remark: objLineFirst._12_memo || ''
+                remark: objLineFirst._12_memo || '',
+                remark2: objLineFirst._13_remark || ''
             };
 
             // log.error("hoan arr",objResult.arrItem);

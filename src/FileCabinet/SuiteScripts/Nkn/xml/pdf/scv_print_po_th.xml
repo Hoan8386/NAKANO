@@ -7,10 +7,10 @@
         ${libPdf.css}
 
         body {
-            font-size: 10pt;
+            font-size: 9pt;
         }
         table {
-            font-size: 10pt;
+            font-size: 9pt;
         }
         .border-none,
         .border-none td,
@@ -53,13 +53,12 @@
                 <p style="margin:3px 0">${subsidiary.mainaddress_text}</p>
                 <table class="border-none" style="padding:0px; margin:0px">
                     <tr>
-                        <td colspan="30" style="padding:0px; margin:0px">
+                        <td colspan="50" style="padding:0px; margin:0px">
                             <p>Tel: ${subsidiary.custrecord_scv_sub_tel_phone}</p>
                         </td>
-                        <td colspan="30" style="border-right: none; padding:0px; margin:0px">
+                        <td colspan="50" style="border-right: none; padding:0px; margin:0px">
                             <p>Fax: ${subsidiary.fax}</p>
                         </td>
-                        <td colspan="40"></td>
                     </tr>
                 </table>
             </td>
@@ -71,64 +70,61 @@
         </tr>
         
         <tr class="mt-3">
-            <td colspan="13"><b>Claimant No:</b></td>
-            <td colspan="47" style="margin: 0; padding: 0;">
+            <td colspan="12"><b>Claimant No:</b></td>
+            <td colspan="38" style="margin: 0; padding: 0;">
                 <p style="width: 100%; margin: 0; padding: 0; border-bottom: 1px dotted #000;">${result.claimantNo!""}&nbsp;</p>
             </td>
-            <td colspan="9"><b>PO.No.</b></td>
-            <td colspan="21" style="margin: 0; padding: 0;">
+            <td colspan="7"><b>PO.No.</b></td>
+            <td colspan="42" style="margin: 0; padding: 0;">
                 <p style="width: 100%; margin: 0; padding: 0; border-bottom: 1px dotted #000;">${result.poNumber!""}&nbsp;</p>
             </td>
         </tr>
 
         <tr class="mt-3">
-            <td colspan="5"><b>To:</b></td>
-            <td colspan="55" style="margin: 0; padding: 0;">
+            <td colspan="4"><b>To:</b></td>
+            <td colspan="46" style="margin: 0; padding: 0;">
                 <p style="width: 100%; margin: 0; padding: 0; border-bottom: 1px dotted #000;">${result.claimantName!""}&nbsp;</p>
             </td>
-            <td colspan="17"><b>Project Name:</b></td>
-            <td colspan="23" style="margin: 0; padding: 0;">
+            <td colspan="13"><b>Project Name:</b></td>
+            <td colspan="37" style="margin: 0; padding: 0;">
                 <p style="width: 100%; margin: 0; padding: 0; border-bottom: 1px dotted #000;">${result.pjName!""}&nbsp;</p>
             </td>
         </tr>
 
         <tr class="mt-3">
-            <td colspan="10"><b>Address:</b></td>
-            <td colspan="50" style="margin: 0; padding: 0;">
+            <td colspan="9"><b>Address:</b></td>
+            <td colspan="41" style="margin: 0; padding: 0;">
                 <p style="width: 100%; margin: 0; padding: 0; border-bottom: 1px dotted #000;">${result.claimantAddress!""}&nbsp;</p>
             </td>
-            <td colspan="8"><b>Date:</b></td>
-            <td colspan="32" style="margin: 0; padding: 0;">
+            <td colspan="6"><b>Date:</b></td>
+            <td colspan="44" style="margin: 0; padding: 0;">
                 <p style="width: 100%; margin: 0; padding: 0; border-bottom: 1px dotted #000;">${result.date!""}&nbsp;</p>
             </td>
         </tr>
 
         <tr class="mt-3">
-            <td colspan="26"><b>Refer to your Quotation No:</b></td>
-            <td colspan="14" style="margin: 0; padding: 0;">
-                <p style="width: 100%; margin: 0; padding: 0; border-bottom: 1px dotted #000;">${result.quotationNo!""}&nbsp;</p>
+            <td colspan="24"><b>Refer to your Quotation No:</b></td>
+            <td colspan="10" style="margin: 0; padding: 0;">
+                <p style="width: 100%; margin: 0; padding: 0; border-bottom: 1px dotted #000;">${result.quotationNo!""}</p>
             </td>
             <td colspan="7"><b>Dated:</b></td>
-            <td colspan="13" style="margin: 0; padding: 0;">
-                <p style="width: 100%; margin: 0; padding: 0; border-bottom: 1px dotted #000;">${result.quotationDate!""}&nbsp;</p>
+            <td colspan="9" style="margin: 0; padding: 0;">
+                <p style="width: 100%; margin: 0; padding: 0; border-bottom: 1px dotted #000;">${result.quotationDate!""}</p>
             </td>
-            <td colspan="9"><b>Tel No.:</b></td>
-            <td colspan="31" style="margin: 0; padding: 0;">
-                <p style="width: 100%; margin: 0; padding: 0; border-bottom: 1px dotted #000;">${result.claimantPhone!""}&nbsp;</p>
+            <td colspan="8"><b>Tel No.:</b></td>
+            <td colspan="42" style="margin: 0; padding: 0;">
+                <p style="width: 100%; margin: 0; padding: 0; border-bottom: 1px dotted #000;">${result.claimantPhone!""}</p>
             </td>
         </tr>
+
         <tr class="mt-3">
-            <td colspan="26"></td>
-            <td colspan="14" style="margin: 0; padding: 0;">
-            </td>
-            <td colspan="7"></td>
-            <td colspan="13" style="margin: 0; padding: 0;">
-            </td>
-            <td colspan="9"><b>Fax No.:</b></td>
-            <td colspan="31" style="margin: 0; padding: 0;">
+            <td colspan="50"></td>
+            <td colspan="8"><b>Fax No.:</b></td>
+            <td colspan="42" style="margin: 0; padding: 0;">
                 <p style="width: 100%; margin: 0; padding: 0; border-bottom: 1px dotted #000;">${result.claimantFax!""}&nbsp;</p>
             </td>
         </tr>
+
 
         ${libPdf.rowcol100}
     </table>
@@ -201,8 +197,8 @@
             <td colspan="20"></td>
         </tr>
         <tr  class="mt-3">
-            <td colspan="17"><b>Date of Delivery</b></td>
-            <td colspan="28" style="margin: 0; padding: 0;">
+            <td colspan="18"><b>Date of Delivery</b></td>
+            <td colspan="27" style="margin: 0; padding: 0;">
                 <p style="width: 100%; margin: 0; padding: 0; border-bottom: 1px dotted #000;">${result.dateOfDelivery!""}&nbsp;</p>
             </td>
             <td colspan="10"></td>

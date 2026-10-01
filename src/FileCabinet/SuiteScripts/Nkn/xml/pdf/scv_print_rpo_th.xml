@@ -7,10 +7,10 @@
         ${libPdf.css}
 
         body {
-            font-size: 10pt;
+            font-size: 8pt;
         }
         table { 
-            font-size: 10pt;
+            font-size: 8pt;
         }
         table.info-rows td { padding-bottom: 4px; }
 
@@ -81,8 +81,21 @@
                         <tr>
                             <td colspan="24" valign="top"><b>Scope of Work</b></td>
                             <td colspan="5" valign="top" class="valign-bottom"><b>:</b></td>
-                            <td colspan="71" border-bottom="1" class="valign-bottom">
-                                <p>${results.header.scopeOfWork}</p>
+                            <td colspan="71" border-bottom="1" >
+                                <table width="100%">
+                                    <tr>
+                                        <td colspan="20" style="white-space: nowrap;">(${data.isMaterial}) Material</td>
+                                        <td colspan="20" style="white-space: nowrap;">(${data.isLabour}) Labour</td>
+                                        <td colspan="20" style="white-space: nowrap;">(${data.isBoth}) Both</td>
+                                        <td colspan="20" style="white-space: nowrap;">(${data.isService}) Service</td>
+                                        <td colspan="20" style="white-space: nowrap;">(${data.isRental}) Rental</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="100">
+                                            <p>${results.header.scopeOfWork}</p>
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
                         </tr>
 
@@ -116,34 +129,34 @@
                             </td>
                         </tr>
 
-                        <tr>
-                            <td colspan="29"></td>
+                        <tr class="mb-2">
+                            <td colspan="29" style="border: 1px solid black" class="align-right"> ${results.header.downPayment}</td>
                             <td colspan="71">
-                                <p>${results.header.downPayment} % for Down Payment</p>
+                                <p> % for Down Payment</p>
                             </td>
                         </tr>
 
-                        <tr>
-                            <td colspan="29"></td>
+                        <tr class="mb-2">
+                            <td colspan="29" style="border: 1px solid black" class="align-right">${results.header.monthlyProgress}</td>
                             <td colspan="71">
-                                <p>${results.header.monthlyProgress} % for Monthly Progress</p>
+                                <p> % for Monthly Progress</p>
                             </td>
                         </tr>
 
-                        <tr>
-                            <td colspan="29"></td>
+                        <tr class="mb-2">
+                            <td colspan="29" style="border: 1px solid black" class="align-right">${results.header.installmentPayment}</td>
                             <td colspan="71">
                                 <p>
-                                    ${results.header.installmentPayment} Installment payment as per condition of quotation
+                                     Installment payment as per condition of quotation
                                 </p>
                             </td>
                         </tr>
 
-                        <tr>
-                            <td colspan="29"></td>
+                        <tr class="mb-2">
+                            <td colspan="29" style="border: 1px solid black" class="align-right">${results.header.forDelivery}</td>
                             <td colspan="71">
                                 <p>
-                                    ${results.header.forDelivery} For Delivery
+                                     For Delivery
                                 </p>
                             </td>
                         </tr>
@@ -294,7 +307,7 @@
             ${libPdf.rowcol100}
         </table>
 
-        <table width="100%" class="border-table mt-5 fs-9">
+        <table width="100%" class="border-table mt-5 fs-6">
             <thead> 
                 <tr class="valign-middle">
                     <td colspan="12" align="center"></td>
@@ -467,7 +480,7 @@
             </tr>
         </table>
         
-        <table width="100%" class="mt-5 fs-8" style="page-break-inside: avoid;" >
+        <table width="100%" class="mt-5 fs-7" style="page-break-inside: avoid;" >
             <tr>
                 <td colspan="26" align="center" class="align-center valign-middle" border="1" >
                     <p>APPROVAL</p>

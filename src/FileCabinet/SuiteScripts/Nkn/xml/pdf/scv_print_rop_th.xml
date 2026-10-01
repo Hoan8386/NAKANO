@@ -7,10 +7,10 @@
     <style type="text/css">
         ${libPdf.css}
         body {
-            font-size: 10pt;
+            font-size: 7pt;
         }
         table {
-            font-size: 10pt;
+            font-size: 7pt;
         }
         .under-line {
             border-bottom: 1px solid #000000;
@@ -25,10 +25,10 @@
     </style>
 
     <macrolist>
-        <macro id="footerPage">
-            <table width="100%">
+        <macro id="footerPage" >
+            <table width="100%" style="padding-top: 80px;">
                 <tr>
-                    <td class="align-center">Page <span class="font-weight-bold"><pagenumber/></span> of <span class="font-weight-bold"><totalpages/></span></td>
+                    <td class="align-center" >Page <span class="font-weight-bold"><pagenumber/></span> of <span class="font-weight-bold"><totalpages/></span></td>
                 </tr>
             </table>
         </macro>
@@ -41,10 +41,10 @@
         </macro>
     </macrolist>
 </head>
-    <body padding="0.3in 0.3in 1in 0.3in" size="A4" footer="footerPage" footer-height="0.3in">
+    <body padding="0.3in 0.3in 1in 0.3in" size="A4" footer="footerPage"  footer-height="0.2in">
         <table width="100%">    
             <tr>
-                <td colspan="40">
+                <td colspan="50">
                    <table width="100%" class="border-table" border-top="1">
                         <tr>
                             <td colspan="40" class="align-center"><b>Project Code</b></td>
@@ -65,13 +65,13 @@
                     </table>
                 </td>
                 <td colspan="10"></td>
-                <td colspan="50">
+                <td colspan="40">
                     <table>
                         <tr>
-                            <td colspan="15" class="valign-middle" >
+                            <td colspan="20" class="valign-middle" >
                                 ${result.tagImgLogo}
                             </td>
-                            <td colspan="85" class="valign-middle" border-left="1" padding-top="7">
+                            <td colspan="80" class="valign-middle" border-left="1" padding-top="7">
                                 <b style="padding-left:5px; "><span>RECOMMENDATION OF PAYMENT</span></b>
                             </td>
                         </tr>
@@ -100,46 +100,46 @@
         </table>
 
         <p class="mt-5">Invoice's Information</p>
-        <table width="100%" class="border-table">
+        <table width="100%" class="border-table fs-7">
             <thead>
                 <tr>
                     <td colspan="4" class="align-center"><b>No.</b></td>
-                    <td colspan="10" class="align-center"><b>Invoice number</b></td>
+                    <td colspan="9" class="align-center"><b>Invoice number</b></td>
                     <td colspan="10" class="align-center"><b>PO number</b></td>
-                    <td colspan="10" class="align-center"><b>Work Item No.</b></td>
+                    <td colspan="8" class="align-center"><b>Work Item No.</b></td>
                     <td colspan="10" class="align-right"><b>Contract amount</b></td>
                     <td colspan="10" class="align-right"><b>Accu. Approval</b></td>
                     <td colspan="10" class="align-right"><b>Prev. approval</b></td>
                     <td colspan="10" class="align-right"><b>New approval</b></td>
                     <td colspan="9" class="align-right"><b>Present Retention (%)</b></td>
-                    <td colspan="10" class="align-right"><b>VAT</b></td>
+                    <td colspan="13" class="align-right"><b>VAT</b></td>
                     <td colspan="7" class="align-right"><b>Status</b></td>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="fs-7">
                 <#list result.arrItem as item>
                     <tr>
                         <td colspan="4" class="align-center">${item.no}</td>
-                        <td colspan="10" class="align-center">${item.invRefNo}</td>
+                        <td colspan="9" class="align-center">${item.invRefNo}</td>
                         <td colspan="10" class="align-center">${item.poNo}</td>
-                        <td colspan="10" class="align-center">${item.workItemDisplay}</td>
+                        <td colspan="8" class="align-center">${item.workItemDisplay}</td>
                         <td colspan="10" class="align-right">${item.contract}</td>
                         <td colspan="10" class="align-right">${item.approvedAccumulation}</td>
                         <td colspan="10" class="align-right">${item.prevApproved}</td>
                         <td colspan="10" class="align-right">${item.newApproval}</td>
                         <td colspan="9" class="align-right">${item.presentRetention}</td>
-                        <td colspan="10" class="align-right">${item.vat}</td>
+                        <td colspan="13" class="align-right">${item.vat}</td>
                         <td colspan="7" class="align-right">${item.status}</td>
                     </tr>
                 </#list>
                 <tr>
-                    <td colspan="34" class="align-right"><b>TOTAL</b></td>
+                    <td colspan="31" class="align-right"><b>TOTAL</b></td>
                     <td colspan="10" class="align-right">${result.totalContract}</td>
                     <td colspan="10" class="align-right">${result.totalApprovedAccumulation}</td>
                     <td colspan="10" class="align-right">${result.totalPrevApproved}</td>
                     <td colspan="10" class="align-right">${result.totalNewApproval}</td>
                     <td colspan="9" class="align-right">${result.totalPresentRetention}</td>
-                    <td colspan="10" class="align-right">${result.totalVat}</td>
+                    <td colspan="13" class="align-right">${result.totalVat}</td>
                     <td colspan="7" class="align-right"></td>
                 </tr>
             </tbody>
@@ -245,29 +245,16 @@
         </table>
 
         <p class="mt-5 "><b>Remark </b></p>
-        <table width="100%" class="align-center border-table" border-top="1">
+        <table width="100%" class="border-table" border-top="1">
             <tbody>
                
                 <tr>
-                    <td>
+                    <td class="pl-5">
+                        ${result.remark2}
                         <br/>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <br/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <br/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <br/>
-                    </td>
-                </tr>
+                
             </tbody>
         </table>
     </body>

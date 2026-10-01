@@ -93,7 +93,7 @@ define([
                 internalid: curRec.id
             });
 
-            log.error("arrLine01", arrLine01);
+            // log.error("arrLine01", arrLine01);
 
             let objLineFirst = arrLine01[0] ?? {};
 
@@ -102,11 +102,20 @@ define([
                 type: 'customrecord_cseg_scv_sg_proj',
                 id: projectId,
                 columns: [
-                    'custrecord_scv_project_source.projectmanager',
+                    'custrecord_scv_project_source',
                     'custrecord_scv_project_source.companyname'
                 ]
             });
-
+            let pjSourceID = objLookup.custrecord_scv_project_source?.[0]?.value || '';
+            let projectManager = '';
+            if (pjSourceID) {
+                let objProject = search.lookupFields({
+                    type: 'job',
+                    id: pjSourceID,
+                    columns: ['projectmanager']
+                });
+                projectManager = objProject.projectmanager?.[0]?.text || '';
+            }
             let totalAmount = 0;
             let totalTaxAmount = 0;
             let vatPercent = objLineFirst._16_vat || "0";
@@ -119,9 +128,9 @@ define([
                 return {
                     no: index + 1,
                     item: row._10_item_display || row._10_item || "",  // 14. Item
-                    quantity: row._11_quantity || "0",                  // 15. Quantity
+                    quantity: formatNumberByKey(row._11_quantity || "0") ,                  // 15. Quantity
                     description: row._12_description || "",            // 16. Description
-                    rate: formatNumberByKey(rate),                     // 17. Unit Price
+                    rate: formatNumberUnitPrice(rate),                     // 17. Unit Price
                     amount: formatNumberByKey(amount)                  // 18. Amount
                 };
             });
@@ -136,7 +145,7 @@ define([
                 quotationDate: objLineFirst._5_quotation_date || "",
                 poNumber: objLineFirst._6_p_o_no || "",
                 pjName: objLookup['custrecord_scv_project_source.companyname'] || '',
-                pjManager: objLookup['custrecord_scv_project_source.projectmanager'] || '',
+                pjManager: projectManager || '',
                 date: objLineFirst._7_date || "",
                 claimantPhone: objLineFirst._8_claimant_s_phone || "",
                 claimantFax: objLineFirst._9_claimant_s_fax || "",
@@ -171,6 +180,20 @@ define([
                 decimalSeparator: '.',
             });
         }
+
+        const formatNumberUnitPrice = (_num, _fixed = 2, _options = {
+            groupSeparator: ',',
+            decimalSeparator: '.',
+        }) => {
+            if (typeof _num === 'number' && _fixed) {
+                _num = _num.toFixed(_fixed);
+            }
+
+            var parts = _num.toString().split(".");
+            parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, _options.groupSeparator);
+
+            return parts.join(_options.decimalSeparator);
+        };
 
         return { addBtnPrint, generateFilePDF };
     });
