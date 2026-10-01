@@ -64,14 +64,14 @@
                         </tr>
                     </table>
                 </td>
-                <td colspan="3"></td>
-                <td colspan="57">
+                <td colspan="10"></td>
+                <td colspan="50">
                     <table>
                         <tr>
-                            <td colspan="43" class="valign-middle" >
+                            <td colspan="15" class="valign-middle" >
                                 ${result.tagImgLogo}
                             </td>
-                            <td colspan="57" class="valign-middle" border-left="1" padding-top="7">
+                            <td colspan="85" class="valign-middle" border-left="1" padding-top="7">
                                 <b style="padding-left:5px; "><span>RECOMMENDATION OF PAYMENT</span></b>
                             </td>
                         </tr>

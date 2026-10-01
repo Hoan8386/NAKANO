@@ -150,7 +150,7 @@ define([
                 };
             });
             objResult = {
-                tagImgLogo: libPdf.createImageBySubsidiaryV2(subsidiaryRec, 120),
+                tagImgLogo: libPdf.createImageBySubsidiaryV2(subsidiaryRec, 30),
                 // pjName: objLookup['custrecord_scv_project_source.companyname'] || '',
                 pjName: (objLookup['custrecord_scv_project_source.companyname'] || '').split(':').slice(1).join(':').trim(),
                 pjCode: objLookup['custrecord_scv_project_source.entityid'] || '',

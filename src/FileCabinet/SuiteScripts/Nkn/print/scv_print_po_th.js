@@ -119,7 +119,7 @@ define([
                 return {
                     no: index + 1,
                     item: row._10_item_display || row._10_item || "",  // 14. Item
-                    quantity: row._12_quantity || "0",                  // 15. Quantity
+                    quantity: row._11_quantity || "0",                  // 15. Quantity
                     description: row._12_description || "",            // 16. Description
                     rate: formatNumberByKey(rate),                     // 17. Unit Price
                     amount: formatNumberByKey(amount)                  // 18. Amount
@@ -154,7 +154,7 @@ define([
 
             libPdf.formatDataXMLWithObject(objResult);
 
-            objResult.tagImgLogo = libPdf.createImageBySubsidiaryV2(subsidiaryRec, 120);
+            objResult.tagImgLogo = libPdf.createImageBySubsidiaryV2(subsidiaryRec, 60);
 
             renderer.addCustomDataSource({
                 format: "OBJECT",

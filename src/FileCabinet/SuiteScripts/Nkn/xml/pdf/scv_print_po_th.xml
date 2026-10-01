@@ -18,70 +18,92 @@
             border: none;
            
         }
+        .signature {
+            position: fixed;
+            bottom: 20px;
+            width: 100%;
+        }
     </style>
 
+    <macrolist>
+        <macro id="footerSignature">
+            <table width="100%">
+                <tr>
+                    <td colspan="45" class="align-center" style="border-top: 1px dotted #000;">
+                        <br/>
+                        <b>Authorized</b>
+                    </td>
+                    <td colspan="10"></td>
+                    <td colspan="45" class="align-center" style="border-top: 1px dotted #000;">
+                        <br/>
+                        <b>Ordered by</b>
+                    </td>
+                </tr>
+            </table>
+        </macro>
+    </macrolist>
+    
 </head>
-<body padding="0.3in 0.5in 0.5in 0.5in" size="A4" >
+<body padding="0.3in 0.5in 0.5in 0.5in" size="A4" footer="footerSignature" footer-height="0.5in">
     <table width="100%">
         <tr>
-            <td colspan="25">${result.tagImgLogo}</td>
-            <td colspan="75">
+            <td colspan="15">${result.tagImgLogo}</td>
+            <td colspan="85">
                 <p style="margin:3px 0" class="fs-12"><b>${subsidiary.legalname}</b></p>
                 <p style="margin:3px 0">${subsidiary.mainaddress_text}</p>
                 <table class="border-none" style="padding:0px; margin:0px">
                     <tr>
-                        <td colspan="40" style="padding:0px; margin:0px">
+                        <td colspan="30" style="padding:0px; margin:0px">
                             <p>Tel: ${subsidiary.custrecord_scv_sub_tel_phone}</p>
                         </td>
-                        <td colspan="40" style="border-right: none; padding:0px; margin:0px">
+                        <td colspan="30" style="border-right: none; padding:0px; margin:0px">
                             <p>Fax: ${subsidiary.fax}</p>
                         </td>
-                        <td colspan="20"></td>
+                        <td colspan="40"></td>
                     </tr>
                 </table>
             </td>
         </tr>
         <tr>
-            <td colspan="30"></td>
-            <td colspan="40">
+            <td colspan="100">
                 <p class="fs-13 align-center"><b>Purchase Order</b></p>
+            </td>
+        </tr>
+        
+        <tr class="mt-3">
+            <td colspan="13"><b>Claimant No:</b></td>
+            <td colspan="47" style="margin: 0; padding: 0;">
+                <p style="width: 100%; margin: 0; padding: 0; border-bottom: 1px dotted #000;">${result.claimantNo!""}&nbsp;</p>
             </td>
             <td colspan="9"><b>PO.No.</b></td>
             <td colspan="21" style="margin: 0; padding: 0;">
                 <p style="width: 100%; margin: 0; padding: 0; border-bottom: 1px dotted #000;">${result.poNumber!""}&nbsp;</p>
             </td>
         </tr>
-        <tr  class="mt-3">
-            <td colspan="13"><b>Claimant No:</b></td>
-            <td colspan="47" style="margin: 0; padding: 0;">
-                <p style="width: 100%; margin: 0; padding: 0; border-bottom: 1px dotted #000;">${result.claimantNo!""}&nbsp;</p>
+
+        <tr class="mt-3">
+            <td colspan="5"><b>To:</b></td>
+            <td colspan="55" style="margin: 0; padding: 0;">
+                <p style="width: 100%; margin: 0; padding: 0; border-bottom: 1px dotted #000;">${result.claimantName!""}&nbsp;</p>
             </td>
             <td colspan="17"><b>Project Name:</b></td>
             <td colspan="23" style="margin: 0; padding: 0;">
                 <p style="width: 100%; margin: 0; padding: 0; border-bottom: 1px dotted #000;">${result.pjName!""}&nbsp;</p>
             </td>
         </tr>
-        <tr  class="mt-3">
-            <td colspan="5"><b>To:</b></td>
-            <td colspan="55" style="margin: 0; padding: 0;">
-                <p style="width: 100%; margin: 0; padding: 0; border-bottom: 1px dotted #000;">${result.claimantName!""}&nbsp;</p>
-            </td>
-            <td colspan="6"><b>Date:</b></td>
-            <td colspan="34" style="margin: 0; padding: 0;">
-                <p style="width: 100%; margin: 0; padding: 0; border-bottom: 1px dotted #000;">${result.date!""}&nbsp;</p>
-            </td>
-        </tr>
-        <tr  class="mt-3">
+
+        <tr class="mt-3">
             <td colspan="10"><b>Address:</b></td>
             <td colspan="50" style="margin: 0; padding: 0;">
                 <p style="width: 100%; margin: 0; padding: 0; border-bottom: 1px dotted #000;">${result.claimantAddress!""}&nbsp;</p>
             </td>
-            <td colspan="8"><b>Tel No.:</b></td>
+            <td colspan="8"><b>Date:</b></td>
             <td colspan="32" style="margin: 0; padding: 0;">
-                <p style="width: 100%; margin: 0; padding: 0; border-bottom: 1px dotted #000;">${result.claimantPhone!""}&nbsp;</p>
+                <p style="width: 100%; margin: 0; padding: 0; border-bottom: 1px dotted #000;">${result.date!""}&nbsp;</p>
             </td>
         </tr>
-        <tr  class="mt-3">
+
+        <tr class="mt-3">
             <td colspan="26"><b>Refer to your Quotation No:</b></td>
             <td colspan="14" style="margin: 0; padding: 0;">
                 <p style="width: 100%; margin: 0; padding: 0; border-bottom: 1px dotted #000;">${result.quotationNo!""}&nbsp;</p>
@@ -90,14 +112,27 @@
             <td colspan="13" style="margin: 0; padding: 0;">
                 <p style="width: 100%; margin: 0; padding: 0; border-bottom: 1px dotted #000;">${result.quotationDate!""}&nbsp;</p>
             </td>
+            <td colspan="9"><b>Tel No.:</b></td>
+            <td colspan="31" style="margin: 0; padding: 0;">
+                <p style="width: 100%; margin: 0; padding: 0; border-bottom: 1px dotted #000;">${result.claimantPhone!""}&nbsp;</p>
+            </td>
+        </tr>
+        <tr class="mt-3">
+            <td colspan="26"></td>
+            <td colspan="14" style="margin: 0; padding: 0;">
+            </td>
+            <td colspan="7"></td>
+            <td colspan="13" style="margin: 0; padding: 0;">
+            </td>
             <td colspan="9"><b>Fax No.:</b></td>
             <td colspan="31" style="margin: 0; padding: 0;">
                 <p style="width: 100%; margin: 0; padding: 0; border-bottom: 1px dotted #000;">${result.claimantFax!""}&nbsp;</p>
             </td>
         </tr>
+
         ${libPdf.rowcol100}
     </table>
-    <p class="align-center">Please supply and despatch the following goods to <b> THAI NAKANO CO., LTD. </b> </p>
+    <p class="align-center">Please supply and despatch the following goods to <b> FOR THAI NAKANO CO., LTD. </b> </p>
 
     <table width="100%" class="border-table">
         <thead>
@@ -172,7 +207,7 @@
             </td>
             <td colspan="10"></td>
             <td colspan="45">
-                <b>For and on behalf of THAI NAKANO CO., LTD.</b>
+                <b> FOR THAI NAKANO CO., LTD.</b>
             </td>
         </tr>
         <tr>
@@ -184,18 +219,9 @@
             <td colspan="10"></td>
             <td colspan="45"></td>
         </tr>
-         <tr>
-            <td colspan="45" class="align-center" style="border-top: 1px dotted #000;">
-                <br/>
-                <b>Authorized</b>
-            </td>
-            <td colspan="10"></td>
-            <td colspan="45" class="align-center" style="border-top: 1px dotted #000;">
-                <br/>
-                <b>Ordered by</b>
-            </td>
-        </tr>
+        
         ${libPdf.rowcol100}
     </table>
+
 </body>
 </pdf>
