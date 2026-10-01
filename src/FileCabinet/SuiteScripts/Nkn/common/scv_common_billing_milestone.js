@@ -251,6 +251,7 @@ define(['N/search', 'N/record', 'N/error',
      * @param {Record} _oldRec
      */
     const validateEditInvoice = (_newRec, _oldRec) => {
+        return;//HuyPQ-20261001: TO-DO: Tạm khóa lại để demo
         if(!_oldRec) return;
 
         let sizeOld = _oldRec.getLineCount("item");
