@@ -176,7 +176,7 @@ define([
                     }
 
                     let objResDetail = {
-                        workItemNo: objLine01._31_work_item_code,
+                        workItemNo: libPdf.formatDataXML(objLine01._31_work_item_code),
                         workingBudget: objLine01._26_working_budget * 1,
                         contractPrice: objLine01._27_contract_price * 1,
                         balance: objLine01._28_balance * 1,
@@ -205,7 +205,7 @@ define([
 
                 arrResDatas.push(objResult);
             }
-
+            libPdf.formatDataXMLWithObject(objResHeaders);
             renderer.addCustomDataSource({
                 format: "OBJECT",
                 alias: 'results',

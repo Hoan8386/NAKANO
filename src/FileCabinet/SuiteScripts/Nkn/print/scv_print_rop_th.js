@@ -137,9 +137,9 @@ define([
                 totalVat += vat;
                 return {
                     no: index + 1,
-                    invRefNo: item._5_inv_ref_no || '',
+                    invRefNo: libPdf.formatDataXML(item._5_inv_ref_no) || '',
                     poNo: item._6_po_no || '',
-                    workItemDisplay: item._7_work_item_no_display || item._7_work_item_no || '',
+                    workItemDisplay: libPdf.formatDataXML(item._7_work_item_no_display) || item._7_work_item_no || '',
                     contract: formatNumberByKey(contractAmount),
                     approvedAccumulation: formatNumberByKey(approvedAccumulation),
                     prevApproved: formatNumberByKey(prevApproval),
@@ -150,7 +150,6 @@ define([
                 };
             });
             objResult = {
-                tagImgLogo: libPdf.createImageBySubsidiaryV2(subsidiaryRec, 30),
                 // pjName: objLookup['custrecord_scv_project_source.companyname'] || '',
                 pjName: (objLookup['custrecord_scv_project_source.companyname'] || '').split(':').slice(1).join(':').trim(),
                 pjCode: objLookup['custrecord_scv_project_source.entityid'] || '',
@@ -169,7 +168,8 @@ define([
                 remark: objLineFirst._12_memo || '',
                 remark2: objLineFirst._13_remark || ''
             };
-
+            libPdf.formatDataXMLWithObject(objResult);
+            objResult.tagImgLogo = libPdf.createImageBySubsidiaryV2(subsidiaryRec, 30);
             // log.error("hoan arr",objResult.arrItem);
             renderer.addCustomDataSource({
                 format: "OBJECT",

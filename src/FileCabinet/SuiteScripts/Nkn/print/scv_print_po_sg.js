@@ -93,13 +93,13 @@ define([
             let arrLine01 = constSearchPrintPOSG01.getDataSource({
                 internalid: curRec.id
             });
-            
+            // log.error("hoan arrLine01" , arrLine01);
             let objLineFirst = arrLine01[0] ?? {};
 
             const showNullDisplay = (_value) => _value?.toString() ? _value : "Not Applicable";
 
             let objResult = {
-                tagImgLogo: libPdf.createImageBySubsidiaryV2(subsidiaryRec, 120),
+                
                 vendorAddress: objLineFirst._1_vendor_address,
                 poNo: objLineFirst._2_p_o_no,
                 date: objLineFirst._3_date,
@@ -122,7 +122,7 @@ define([
                 limitOfRetention: objLineFirst._17_limit_of_retention,
                 maintenancePeriod: showNullDisplay(objLineFirst._18_maintenance_period),
                 performanceBond: showNullDisplay(objLineFirst._19_performance_bond),
-                insurance: showNullDisplay(objLineFirst._20_insurance_s_display ?? objLineFirst._20_insurance_s),
+                insurance: showNullDisplay( objLineFirst._20_insurance_s),
                 warrantiesRequired: showNullDisplay(objLineFirst._21_warranties_required_display ?? objLineFirst._21_warranties_required),
                 limitOnSuspensionPeriod: showNullDisplay(objLineFirst._22_limit_on_suspension_period),
                 acceptance: objLineFirst._26_acceptance,
@@ -143,6 +143,9 @@ define([
             objResult.subContractSum = showNullDisplay(objResult.subContractSum);
             objResult.liquidatedDamages = showNullDisplay(objResult.liquidatedDamages);
             objResult.limitOfRetention = showNullDisplay(objResult.limitOfRetention);
+            libPdf.formatDataXMLWithObject(objResult);
+
+            objResult.tagImgLogo =  libPdf.createImageBySubsidiaryV2(subsidiaryRec, 60),
 
             renderer.addCustomDataSource({
                 format: "OBJECT",

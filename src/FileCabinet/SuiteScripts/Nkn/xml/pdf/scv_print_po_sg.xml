@@ -237,14 +237,7 @@
             <td colspan="3">:</td>
             <td colspan="62">${result.performanceBond}</td>
         </tr>
-        <tr>
-            <td colspan="5"></td>
-            <td colspan="30">Insurance(s)</td>
-            <td colspan="3">:</td>
-            <td colspan="62" class="align-justify">
-                ${result.insurance}
-            </td>
-        </tr>
+       
         <tr>
             <td colspan="5"></td>
             <td colspan="30">Warranties Required</td>
@@ -262,8 +255,7 @@
             <td colspan="30">Insurance(s)</td>
             <td colspan="3">:</td>
             <td colspan="62" class="align-justify">
-                Vendor shall provide Plant and Equipment Insurance and Work Injury
-                Compensation Insurance which shall exclude Non-Contribution Clause
+               ${result.insurance}
             </td>
         </tr>
         <tr>
@@ -342,7 +334,7 @@
         ${libPdf.rowcol100}
     </table>
 
-    <pbr footer="footerBlank" footer-height="0.3in"/>
+    <!-- <pbr footer="footerBlank" footer-height="0.3in"/> -->
     <!-- ================================================== PAGE 4 (APPENDIX Q0501A) ================================================== -->
     <table width="100%">
         <tr>

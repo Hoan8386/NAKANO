@@ -99,6 +99,8 @@ define([
             const arrVendbill = constSearchBillPrintFormSG.getDataSource({
                 internalid: curRec.id
             });
+            
+
             let objLineFirst = arrVendbill[0] ?? {};
             let po_internal_id = objLineFirst.po_internal_id;
 
@@ -130,6 +132,7 @@ define([
                 objTotal: objP2PReqPayment.objTotal,
             };
 
+            libPdf.formatDataXMLWithObject(objResult);
             renderer.addCustomDataSource({
                 format: "OBJECT",
                 alias: 'result',
@@ -152,7 +155,9 @@ define([
                 arrApvRetention = constSearchPrevApvRetentionSG.getDataSource({
                     internalid: po_internal_id
                 });
+                
             }
+            log.error("hoan arrApvRetention" , arrApvRetention);
 
             // TODO: first table
             const arrResult = [];
@@ -166,13 +171,13 @@ define([
 
                 let objRes = {
                     is_default: "F",
-                    inv_ref_no: objVendbill._4_inv_ref_no,
-                    p_o_no: objVendbill._5_p_o_no,
+                    inv_ref_no: libPdf.formatDataXML(objVendbill._4_inv_ref_no),
+                    p_o_no: libPdf.formatDataXML(objVendbill._5_p_o_no),
                     work_item: objVendbill._6_work_item,
                     work_item_display: objVendbill._6_work_item_display,
                     contract: objVendbill._7_contract * 1,
                     accu_approval: objVendbill._8_accu_approval * 1,
-                    prev_approval: objFindApvReten._2_prev_approval_incl_retention * 1,
+                    prev_approval: objFindApvReten?._2_prev_approval_incl_retention * 1 || 0,
                     now_apprvd: objVendbill._9_now_apprvd * 1,
                     present_retention: objVendbill._10_present_retention * 1,
                     gst_9: objVendbill._11_gst_9 * 1,

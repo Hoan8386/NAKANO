@@ -127,9 +127,9 @@ define([
                 totalTaxAmount += tax;
                 return {
                     no: index + 1,
-                    item: row._10_item_display || row._10_item || "",  // 14. Item
+                    item: libPdf.formatDataXML(row._10_item_display) || row._10_item || "",  // 14. Item
                     quantity: formatNumberByKey(row._11_quantity || "0") ,                  // 15. Quantity
-                    description: row._12_description || "",            // 16. Description
+                    description: libPdf.formatDataXML(row._12_description) || "",            // 16. Description
                     rate: formatNumberUnitPrice(rate),                     // 17. Unit Price
                     amount: formatNumberByKey(amount)                  // 18. Amount
                 };

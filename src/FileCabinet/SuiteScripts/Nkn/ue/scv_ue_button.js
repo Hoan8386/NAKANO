@@ -85,6 +85,9 @@ define([
             case 'expensereport':
                 addBtnPrint(scriptContext, 'scv_print_acc_voucher');
                 break;
+            case 'customerpayment':
+                addBtnPrint(scriptContext, 'scv_print_acc_voucher');
+                break;
         }
 
         commonUI.addIconToButton(form);
