@@ -15,7 +15,9 @@
  *  21 Sep 2026         Thanh Hoan              Add button ROP (TH), trên màn hình Vendorbill from mr.Quân(https://app.clickup.com/t/3773072/86d3w9cnt)
  *  26 Sep 2026         Thanh Hoan              Add button Working budget, trên màn hình project from mrs. P.Anh(https://app.clickup.com/t/3773072/14yhnhmfz2e)
  *  27 Sep 2026         Thanh Hoan              Add button Acc Voucher, trên màn hình vendor bill, vendorpayment, vendorcredit, check, expensereport from mrs. Ngoc(https://app.clickup.com/t/3773072/14yhnhmfzpt)
- */
+ *  06 Otc 2026         Thanh Hoan              Add button RPO (MY), trên màn hình Requisition from mr.Quân(https://app.clickup.com/t/3773072/86d3w9a1h)
+ 
+*/
 
 /**
  * @NApiVersion 2.1
@@ -62,6 +64,7 @@ define([
                 addBtnPrint(scriptContext, 'scv_print_rpo_vn');
                 addBtnPrint(scriptContext, 'scv_print_rpo_id');
                 addBtnPrint(scriptContext, 'scv_print_rpo_th');
+                addBtnPrint(scriptContext, 'scv_print_rpo_my');
                 break;
             case 'vendorbill':
                 addBtnPrint(scriptContext, 'scv_print_rop_sg');

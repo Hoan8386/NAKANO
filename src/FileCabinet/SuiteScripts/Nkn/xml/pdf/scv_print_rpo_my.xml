@@ -1,0 +1,492 @@
+<?xml version = "1.0"?><!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
+<pdf>
+<head>
+    <meta name="title" value="Print RPO (MY)"/>
+    <link name="ScvFont" type="font" subtype="opentype" src="${libPdf.font.arial?html}" src-bold="${libPdf.font.arial_bold?html}" src-italic="${libPdf.font.arial_italic?html}" src-bolditalic="${libPdf.font.arial_bolditalic?html}" bytes="2" />
+    <style type="text/css">
+        ${libPdf.css}
+
+        body {
+            font-size: 8pt;
+        }
+        table { 
+            font-size: 8pt;
+        }
+        table.info-rows td { padding-bottom: 4px; }
+        .mt-tr tr {
+            margin-bottom : 3px;
+        }
+    </style>
+    <macrolist>
+        <macro id="footerPage" >
+            <table width="100%" style="padding-top: 80px;">
+                <tr>
+                    <td class="align-right" >
+                         This is a computer printed out copy treated as
+                        <b>CONTROLLED COPY</b>
+                    </td>
+                </tr>
+            </table>
+        </macro>
+      
+    </macrolist>
+</head>
+<body padding="0.3in 0.3in 1in 0.3in" size="A4" footer="footerPage"  footer-height="0.2in" >
+    <#list results.datas as data>
+        <table width="100%" class="border-table mb-10" border-top="1">
+            <tr>
+                <td rowspan="2" align="center" valign="middle" colspan="15">
+                    ${results.header.tagImgLogo}
+                </td>
+
+                <td rowspan="2" valign="middle" colspan="35" class="fs-9">
+                    <b>${subsidiary.legalname}</b>
+                </td>
+
+                <td valign="middle" colspan="35">
+                    Doc No. : NCSB-IMS-SP09-FO-01
+                </td>
+
+                <td valign="middle" colspan="15">
+                    Date : 20-May-2018
+                </td>
+            </tr>
+
+            <tr>
+                <td valign="middle" colspan="35">
+                    Process Owner : Cost &amp; Planning Department
+                </td>
+
+                <td valign="middle" colspan="15">
+                    Rev : 00
+                </td>
+            </tr>
+
+            <tr>
+                <td class="fs-11" colspan="100" align="center" valign="middle">
+                    <b>Request for Purchase Order</b>
+                </td>
+            </tr>
+        </table>
+
+        <table width="100%" border="0">
+            <tr>
+                <td colspan="50" valign="top">
+                    <table width="100%" border="0" class="mt-tr">
+                        <tr>
+                            <td colspan="17" style="white-space: nowrap;">VENDOR</td>
+                            <td colspan="5">:</td>
+                            <td colspan="28" style="border-bottom: 1px solid #000;">
+                                ${data.vendor}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="17" style="white-space: nowrap;">ATTN</td>
+                            <td colspan="5">:</td>
+                            <td colspan="28" style="border-bottom: 1px solid #000;">
+                                ${results.header.attention}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="17" style="white-space: nowrap;">PROJECT</td>
+                            <td colspan="5">:</td>
+                            <td colspan="28" style="border-bottom: 1px solid #000;">
+                                ${results.header.pjName}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="17" style="white-space: nowrap;">PJ CODE</td>
+                            <td colspan="5">:</td>
+                            <td colspan="28" style="border-bottom: 1px solid #000;">
+                                ${results.header.pjId}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="17" style="white-space: nowrap;">CLAIMANT NO</td>
+                            <td colspan="5">:</td>
+                            <td colspan="28" style="border-bottom: 1px solid #000;">
+                                ${data.claimantNo}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="17" valign="top" style="white-space: nowrap;">SCOPE OF WORK</td>
+                            <td colspan="5" valign="top">:</td>
+                            <td colspan="28" style="border-bottom: 1px solid #000;">
+                                ${results.header.scopeOfWork}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="17" style="white-space: nowrap;">CONTRACT PRICE</td>
+                            <td colspan="5">:</td>
+                            <td colspan="28" style="border-bottom: 1px solid #000;">
+                                <b>${data.totalContractPriceDisplay.currency}</b>&nbsp;&nbsp;${data.totalContractPriceDisplay.amount}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="17" valign="top" style="white-space: nowrap;">TYPE OF CONTRACT</td>
+                            <td colspan="5" valign="top">:</td>
+                            <td colspan="28" style="border-bottom: 1px solid #000;">
+                                ${results.header.typeOfContract}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="17" style="white-space: nowrap;">PAYMENT TERMS</td>
+                            <td colspan="5">:</td>
+                            <td colspan="28" style="border-bottom: 1px solid #000;">
+                                ${results.header.terms}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="17" style="white-space: nowrap;">RETENTION</td>
+                            <td colspan="5">:</td>
+                            <td colspan="28" style="border-bottom: 1px solid #000;">
+                                ${results.header.retention}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="17" style="white-space: nowrap;">CIDB REGISTRATION</td>
+                            <td colspan="5">:</td>
+                            <td colspan="28" style="border-bottom: 1px solid #000;">
+                                ${results.header.cidbRegistration}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="17" style="white-space: nowrap;"></td>
+                            <td colspan="5"></td>
+                            <td colspan="28" style="border-bottom: 1px solid #000;">
+                                GRADE : ${results.header.grade}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="17" valign="top" style="white-space: nowrap;">VENDOR QUOT. REF</td>
+                            <td colspan="5" valign="top">:</td>
+                            <td colspan="28" style="border-bottom: 1px solid #000;">
+                                ${results.header.vendorQuotRef}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="25">&nbsp;</td>
+                            <td colspan="25">&nbsp;</td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td colspan="50" valign="top">
+                    <table width="100%" border="0" class="mt-tr">
+                        <tr>
+                            <td colspan="25" style="white-space: nowrap;">P.O NO</td>
+                            <td colspan="5">:</td>
+                            <td colspan="20" style="border-bottom: 1px solid #000;">
+                                ${results.header.poNo}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="25" style="white-space: nowrap;">DATE OF REQUEST</td>
+                            <td colspan="5">:</td>
+                            <td colspan="20" style="border-bottom: 1px solid #000;">
+                                ${results.header.dateOfRequest}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="25" style="white-space: nowrap;">DATE OF COMMENCEMENT</td>
+                            <td colspan="5">:</td>
+                            <td colspan="20" style="border-bottom: 1px solid #000;">
+                                ${results.header.dateOfCommencement}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="25" style="white-space: nowrap;">DATE OF COMPLETION / DELIVERY</td>
+                            <td colspan="5">:</td>
+                            <td colspan="20" style="border-bottom: 1px solid #000;">
+                                ${results.header.dateOfCompletion}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="25" style="white-space: nowrap;">PERFORMANCE BOND</td>
+                            <td colspan="5">:</td>
+                            <td colspan="20" style="border-bottom: 1px solid #000;">
+                                ${results.header.performanceBond} %
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="25" style="white-space: nowrap;">INSURANCE BY</td>
+                            <td colspan="5">:</td>
+                            <td colspan="20" style="border-bottom: 1px solid #000;">
+                                ${results.header.insurance}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="25" valign="top" style="white-space: nowrap;">L.D./ PENALTY FOR DELAY</td>
+                            <td colspan="5" valign="top">:</td>
+                            <td colspan="20" style="border-bottom: 1px solid #000;">
+                                ${results.header.ldPenaltyForDelayFlag}
+                                &nbsp;&nbsp;(RM ${results.header.ldPenaltyForDelay} per day)
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="25" style="white-space: nowrap;">DEFECT LIABILITY PERIOD</td>
+                            <td colspan="5">:</td>
+                            <td colspan="20" style="border-bottom: 1px solid #000;">
+                                ${results.header.defectLiabilityPeriod}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="25" style="white-space: nowrap;">WARRANTY</td>
+                            <td colspan="5">:</td>
+                            <td colspan="20" style="border-bottom: 1px solid #000;">
+                                ${results.header.warranty}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="25">&nbsp;</td>
+                            <td colspan="5">&nbsp;</td>
+                            <td colspan="20" style="border-bottom: 1px solid #000;">
+                                &nbsp;
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="25">&nbsp;</td>
+                            <td colspan="5">&nbsp;</td>
+                            <td colspan="20" style="border-bottom: 1px solid #000;">
+                                &nbsp;
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="25" style="white-space: nowrap;">CONDITIONS OF CONSULTANT</td>
+                            <td colspan="5">:</td>
+                            <td colspan="20">
+                                ${results.header.conditionsOfConsultant}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="25" style="white-space: nowrap;">CONDITIONS OF SUB-CONTRACT</td>
+                            <td colspan="5">:</td>
+                            <td colspan="20">
+                                ${results.header.conditionsOfSubContract}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="25" style="white-space: nowrap;">CONDITIONS OF PURCHASE</td>
+                            <td colspan="5">:</td>
+                            <td colspan="20">
+                                ${results.header.conditionsOfConsultant}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="25" style="white-space: nowrap;">CONTRACT SPECIFICATION</td>
+                            <td colspan="5">:</td>
+                            <td colspan="20">
+                                ${results.header.specification}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="25" style="white-space: nowrap;">B.Q / SCHEDULE RATES</td>
+                            <td colspan="5">:</td>
+                            <td colspan="20">
+                                ${results.header.bqScheduleOfRates}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="25" style="white-space: nowrap;">DRAWINGS PROVIDED TO NKN</td>
+                            <td colspan="5">:</td>
+                            <td colspan="20">
+                                ${results.header.drawingsProvidedToNkn}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+        <table width="100%" class="border-table mt-5" border-top="1">
+            <tr>
+                <td colspan="15" align="center" valign="middle">
+                    <p style="text-align: center;">
+                        <b>WORK ITEM NO.</b>
+                    </p>
+                </td>
+
+                <td colspan="20" align="center" valign="middle">
+                    <p style="text-align: center;">
+                        <b>ESTIMATE /<br/>WORKING BUDGET<br/>(RM)</b>
+                    </p>
+                </td>
+
+                <td colspan="25" align="center" valign="middle">
+                    <p style="text-align: center;">
+                        <b>CONTRACT PRICE<br/>(RM)</b>
+                    </p>
+                </td>
+
+                <td colspan="20" align="center" valign="middle">
+                    <p style="text-align: center;">
+                        <b>BALANCE<br/>(RM)</b>
+                    </p>
+                </td>
+
+                <td colspan="20" align="center" valign="middle">
+                    <p style="text-align: center;">
+                        <b>REMARKS</b>
+                    </p>
+                </td>
+            </tr>
+            <#list data.lines as line>
+                <tr>
+                    <td colspan="15" valign="middle" align="center">
+                        ${line.workItemNo}
+                    </td>
+
+                    <td colspan="20" align="right" valign="middle">
+                        ${line.estimate}
+                    </td>
+
+                    <td colspan="25" align="right" valign="middle">
+                        ${line.contractPrice}
+                    </td>
+
+                    <td colspan="20" align="right" valign="middle">
+                        ${line.balance}
+                    </td>
+
+                    <td colspan="20" valign="middle" >
+                        ${line.remarks}
+                    </td>
+                </tr>
+            </#list>
+
+            <tr>
+                <td colspan="15" align="center" valign="middle">
+                    <b>TOTAL SUM</b>
+                </td>
+
+                <td colspan="20" align="right" valign="middle">
+                    <b>${data.totalEstimate}</b>
+                </td>
+
+                <td colspan="25" align="right" valign="middle">
+                    <b>${data.totalContractPrice}</b>
+                </td>
+
+                <td colspan="20" align="right" valign="middle">
+                    <b>${data.totalBalance}</b>
+                </td>
+
+                <td colspan="20">&nbsp;</td>
+            </tr>
+        </table>
+
+        <table width="100%" border="0" class="mt-5">
+            <tr>
+                <td colspan="10" valign="top">
+                    Remarks :
+                </td>
+
+                <td colspan="90" valign="top">
+                    Eastern Pretech have revise their price two times from
+                    RM13,099,520.95 (during tender stage) to RM12,063,000.00
+                    (negotiation on 25 June 2021)
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="10"></td>
+                <td colspan="90">
+                    1) 5% downpayment upon PO and MITI approval for commencement.
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="10"></td>
+                <td colspan="90">
+                    2) 5% retention sum to RM12,063,000.00. 2.5% retention to be
+                    release upon Main Contractor CPC, 2.5% upon expiry of DLP.
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="10"></td>
+                <td colspan="90">
+                    3) CCC date - 30th April 2022
+                </td>
+            </tr>
+        </table>
+
+        <table width="100%" class="border-table mt-5" border-top="1">
+            <tr>
+                <td colspan="12" align="center" valign="middle">
+                    <b>MD</b>
+                </td>
+                <td colspan="11" align="center" valign="middle">
+                    <b>DMD</b>
+                </td>
+                <td colspan="11" align="center" valign="middle">
+                    <b>GM (CONST.)</b>
+                </td>
+                <td colspan="11" align="center" valign="middle">
+                    <b>GM (PROC.)</b>
+                </td>
+                <td colspan="11" align="center" valign="middle">
+                    <b>GM / BM</b>
+                </td>
+                <td colspan="11" align="center" valign="middle">
+                    <b>C&amp;P MGR</b>
+                </td>
+                <td colspan="11" align="center" valign="middle">
+                    <b>PGM</b>
+                </td>
+                <td colspan="11" align="center" valign="middle">
+                    <b>PM</b>
+                </td>
+                <td colspan="11" align="center" valign="middle">
+                    <b>QS / PROC.</b>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="12" height="80">&nbsp;</td>
+                <td colspan="11" height="80">&nbsp;</td>
+                <td colspan="11" height="80">&nbsp;</td>
+                <td colspan="11" height="80">&nbsp;</td>
+                <td colspan="11" height="80">&nbsp;</td>
+                <td colspan="11" height="80">&nbsp;</td>
+                <td colspan="11" height="80">&nbsp;</td>
+                <td colspan="11" height="80">&nbsp;</td>
+                <td colspan="11" height="80">&nbsp;</td>
+            </tr>
+        </table>
+
+        <#if data_has_next>
+            <pbr/>
+        </#if>
+    </#list>
+</body>
+</pdf>
