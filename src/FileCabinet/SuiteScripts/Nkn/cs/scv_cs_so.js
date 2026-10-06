@@ -81,6 +81,8 @@ define([
         if(!isLineFromJob) return;
 
         nlapiDisableLineItemField(sublistId, "quantity", false);
+        nlapiDisableLineItemField(sublistId, "rate", false);
+        nlapiDisableLineItemField(sublistId, "amount", false);
     }
 
     return {
