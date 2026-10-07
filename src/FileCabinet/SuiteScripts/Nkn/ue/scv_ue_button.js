@@ -16,6 +16,7 @@
  *  26 Sep 2026         Thanh Hoan              Add button Working budget, trên màn hình project from mrs. P.Anh(https://app.clickup.com/t/3773072/14yhnhmfz2e)
  *  27 Sep 2026         Thanh Hoan              Add button Acc Voucher, trên màn hình vendor bill, vendorpayment, vendorcredit, check, expensereport from mrs. Ngoc(https://app.clickup.com/t/3773072/14yhnhmfzpt)
  *  06 Otc 2026         Thanh Hoan              Add button RPO (MY), trên màn hình Requisition from mr.Quân(https://app.clickup.com/t/3773072/86d3w9a1h)
+ *  06 Otc 2026         Thanh Hoan              Add button RO (MY), trên màn hình Purchase Order from mr.Quân(https://app.clickup.com/t/3773072/86d3w9a1h)
  
 */
 
@@ -58,6 +59,7 @@ define([
                 addBtnPrint(scriptContext, 'scv_print_po_vn');
                 addBtnPrint(scriptContext, 'scv_print_po_id');
                 addBtnPrint(scriptContext, 'scv_print_po_th');
+                addBtnPrint(scriptContext, 'scv_print_po_my');
                 break;
             case 'purchaserequisition':
                 addBtnPrint(scriptContext, 'scv_print_rpo_sg');

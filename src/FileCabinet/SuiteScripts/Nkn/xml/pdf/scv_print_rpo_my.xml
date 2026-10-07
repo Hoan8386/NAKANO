@@ -67,6 +67,7 @@
                     <b>Request for Purchase Order</b>
                 </td>
             </tr>
+             ${libPdf.rowcol100}
         </table>
 
         <table width="100%" border="0">
@@ -181,6 +182,7 @@
                             <td colspan="25">&nbsp;</td>
                             <td colspan="25">&nbsp;</td>
                         </tr>
+                         ${libPdf.rowcol100}
                     </table>
                 </td>
 
@@ -260,22 +262,6 @@
                         </tr>
 
                         <tr>
-                            <td colspan="25">&nbsp;</td>
-                            <td colspan="5">&nbsp;</td>
-                            <td colspan="20" style="border-bottom: 1px solid #000;">
-                                &nbsp;
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td colspan="25">&nbsp;</td>
-                            <td colspan="5">&nbsp;</td>
-                            <td colspan="20" style="border-bottom: 1px solid #000;">
-                                &nbsp;
-                            </td>
-                        </tr>
-
-                        <tr>
                             <td colspan="25" style="white-space: nowrap;">CONDITIONS OF CONSULTANT</td>
                             <td colspan="5">:</td>
                             <td colspan="20">
@@ -322,9 +308,11 @@
                                 ${results.header.drawingsProvidedToNkn}
                             </td>
                         </tr>
+                         ${libPdf.rowcol100}
                     </table>
                 </td>
             </tr>
+             ${libPdf.rowcol100}
         </table>
 
         <table width="100%" class="border-table mt-5" border-top="1">
@@ -402,6 +390,7 @@
 
                 <td colspan="20">&nbsp;</td>
             </tr>
+             ${libPdf.rowcol100}
         </table>
 
         <table width="100%" border="0" class="mt-5">
@@ -438,6 +427,7 @@
                     3) CCC date - 30th April 2022
                 </td>
             </tr>
+             ${libPdf.rowcol100}
         </table>
 
         <table width="100%" class="border-table mt-5" border-top="1">
@@ -482,6 +472,7 @@
                 <td colspan="11" height="80">&nbsp;</td>
                 <td colspan="11" height="80">&nbsp;</td>
             </tr>
+             ${libPdf.rowcol100}
         </table>
 
         <#if data_has_next>
