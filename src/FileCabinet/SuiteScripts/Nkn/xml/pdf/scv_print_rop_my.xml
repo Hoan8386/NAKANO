@@ -1,0 +1,396 @@
+<?xml version="1.0"?>
+<!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
+<pdf>
+<head>
+    <meta name="title" value="Print ROP (MY)"/>
+    <link name="ScvFont" type="font" subtype="opentype" src="${libPdf.font.arial?html}" src-bold="${libPdf.font.arial_bold?html}" src-italic="${libPdf.font.arial_italic?html}" src-bolditalic="${libPdf.font.arial_bolditalic?html}" bytes="2" />
+    <style type="text/css">
+        ${libPdf.css}
+        body {
+            font-size: 9pt;
+        }
+        table {
+            font-size: 9pt;
+        }
+        .under-line {
+            border-bottom: 1px solid #000000;
+        }
+        input {
+            display: inline;
+        }
+
+        .dotted-border {
+            border-top: 1px dotted #000000;
+        }
+        .mb-tr tr {
+            margin-bottom : 3px;
+        }
+    </style>
+</head>
+    <body padding="0.3in 0.3in 1in 0.3in" size="A4">
+        <table width="100%" class="border-table" border-top="1">
+            <tr>
+                <td colspan="15" >
+                    ${result.tagImgLogo} 
+                </td>
+                <td colspan="45" class="align-center fs-12">
+                    <b>${subsidiary.legalname}  </b> 
+                </td>
+                <td colspan="40" class="align-center fs-12">
+                    <b>Recommendation of Payment </b> 
+                </td>
+            </tr>
+            ${libPdf.rowcol100}
+        </table>
+
+        <table width="100%" class="mt-5 ">
+            <tr>
+                <td colspan="15">
+                    <p><b>PJ NO</b></p>
+                </td>
+                <td colspan="3">
+                    <p> : </p>
+                </td>
+                <td colspan="32" border-bottom="1">
+                    <p>${result.pjCode} </p>
+                </td>
+                 <td colspan="15">
+                    <p></p>
+                </td>
+                <td colspan="35" border="1">
+                    <table width="100%">
+                        <tr>
+                            <td colspan="15">
+                                <p>VOUCHER NO</p>
+                            </td>
+                            <td colspan="3">
+                                <p> : </p>
+                            </td>
+                            <td colspan="17">
+                                ${result.documentNumber}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="15">
+                    <p></p>
+                </td>
+                 <td colspan="3">
+                    <p>  </p>
+                </td>
+                <td colspan="32" >
+                    <p></p>
+                </td>
+                <td colspan="15">
+                    <p></p>
+                </td>
+                <td colspan="35" border="1" border-top="0">
+                    <table width="100%">
+                        <tr>
+                            <td colspan="15">
+                                <p>CERTIFIED DATE</p>
+                            </td>
+                            <td colspan="3">
+                                <p> : </p>
+                            </td>
+                            <td colspan="17">
+                                ${result.certifiedDate}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="15">
+                    <p><b>CLAIMANT NO</b></p>
+                </td>
+                 <td colspan="3">
+                    <p> : </p>
+                </td>
+                <td colspan="32"  border-bottom="1">
+                      <p>${result.claimantNo} </p>
+                </td>
+                <td colspan="15">
+                    <p></p>
+                </td>
+                <td colspan="35" border="1" border-top="0">
+                    <table width="100%">
+                        <tr>
+                            <td colspan="15">
+                                <p>PAYMENT DATE</p>
+                            </td>
+                            <td colspan="3">
+                                <p> : </p>
+                            </td>
+                            <td colspan="17">
+                                 ${result.paymentDate}
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="15">
+                    <p><b>PJ NAME</b></p>
+                </td>
+                <td colspan="3">
+                    <p> : </p>
+                </td>
+                <td colspan="82"  border-bottom="1">
+                     <p>${result.pjName} </p>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="15">
+                    <p><b>CLAIMANT NAME</b></p>
+                </td>
+                <td colspan="3">
+                    <p> : </p>
+                </td>
+                <td colspan="82"  border-bottom="1">
+                     <p>${result.claimantName} </p>
+                </td>
+            </tr>
+            ${libPdf.rowcol100}
+        </table>
+
+        <table width="100%" class="border-table mt-5" border-top="1">
+            <tr>
+                <td colspan="10">
+                    <p align="center"><b>INV / REF<br/>NO.</b></p>
+                </td>
+                <td colspan="8">
+                    <p align="center"><b>P.O. NO.</b></p>
+                </td>
+                <td colspan="11">
+                    <p align="center"><b>WORK ITEM</b></p>
+                </td>
+                <td colspan="11">
+                    <p align="center"><b>CONTRACT<br/>(RM)</b></p>
+                </td>
+                <td colspan="17">
+                    <p align="center"><b>ACCU. APPROVAL<br/>(RM)</b></p>
+                </td>
+                <td colspan="13">
+                    <p align="center"><b>PREV.<br/>APPROVAL<br/>(RM)</b></p>
+                </td>
+                <td colspan="13">
+                    <p align="center"><b>NOW<br/>APPROVED<br/>(RM)</b></p>
+                </td>
+                <td colspan="17">
+                    <p align="center"><b>PRESENT<br/>RETENTION<br/>(${result.retentionLabel})</b></p>
+                </td>
+            </tr>
+
+            <#list result.arrItem as item>
+                <tr>
+                    <td colspan="10">
+                        <p>${item.invRefNo}</p>
+                    </td>
+                    <td colspan="8">
+                        <p>${item.poNo}</p>
+                    </td>
+                    <td colspan="11">
+                        <p>${item.workItemDisplay}</p>
+                    </td>
+                    <td colspan="11" align="right">
+                        <p>${item.contract}</p>
+                    </td>
+                    <td colspan="17" align="right">
+                        <p>${item.accuApproval}</p>
+                    </td>
+                    <td colspan="13" align="right">
+                        <p>${item.prevApproval}</p>
+                    </td>
+                    <td colspan="13" align="right">
+                        <p>${item.nowApproved}</p>
+                    </td>
+                    <td colspan="17" align="right">
+                        <p>${item.presentRetention}</p>
+                    </td>
+                </tr>
+            </#list>
+
+            <tr>
+                <td colspan="10" border="0">
+                    <p></p>
+                </td>
+                <td colspan="8" border="0">
+                    <p></p>
+                </td>
+                <td colspan="11" align="center">
+                    <p><b>TOTAL</b></p>
+                </td>
+                <td colspan="11" align="right">
+                    <p><b>${result.totalContract}</b></p>
+                </td>
+                <td colspan="17" align="right">
+                    <p><b>${result.totalAccuApproval}</b></p>
+                </td>
+                <td colspan="13" align="right">
+                    <p><b>${result.totalPrevApproval}</b></p>
+                </td>
+                <td colspan="13" align="right">
+                    <p><b>${result.totalNowApproved}</b></p>
+                </td>
+                <td colspan="17" align="right">
+                    <p><b>${result.totalPresentRetention}</b></p>
+                </td>
+            </tr>
+            ${libPdf.rowcol100}
+        </table>
+
+
+        <table width="100%" class=" mt-5">
+            <tr>
+                <td colspan="33">
+                    <p><b>13TH PAYMENT</b></p>
+                    <table width="100%" border="1">
+                        <tr>
+                            <td colspan="15" height="70" valign="middle">
+                                <p align="center"><b>RM</b></p>
+                            </td>
+                            <td colspan="70" height="70" valign="middle">
+                                <p align="center"><b>${result.totalBalance}</b></p>
+                            </td>
+                             <td colspan="15" >
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td colspan="5">
+                    <p></p>
+                </td>
+
+                <td colspan="48">
+                    <table width="100%" border="1">
+                        <tr>
+                            <td colspan="100" height="100" valign="top">
+                                <p><b>REMARKS:</b></p>
+                                <p  class="ml-5" >${result.remark}</p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+
+                <td colspan="3">
+                    <p></p>
+                </td>
+
+                <td colspan="11">
+                    <table width="100%" class="border-table" border-top="1">
+                        <tr>
+                            <td colspan="100"  align="center">
+                                <p><b>FINANCE</b></p>
+                                <p></p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="100" height="100" >
+                             
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            ${libPdf.rowcol100}
+        </table>
+
+        <table width="100%" class="border-table mt-5"  border-top="1">
+            <tr>
+                <td colspan="11" align="center">
+                    <p><b>MD</b></p>
+                </td>
+                <td colspan="11" align="center">
+                    <p><b>DMD</b></p>
+                </td>
+                <td colspan="11" align="center">
+                    <p><b>GM (CONST.)</b></p>
+                </td>
+                <td colspan="11" align="center">
+                    <p><b>GM (SITE)</b></p>
+                </td>
+                <td colspan="12" align="center">
+                    <p><b>C&amp;P MGR</b></p>
+                </td>
+                <td colspan="11" align="center">
+                    <p><b>PROC. MGR</b></p>
+                </td>
+                <td colspan="11" align="center">
+                    <p><b>BM / PGM</b></p>
+                </td>
+                <td colspan="11" align="center">
+                    <p><b>PM</b></p>
+                </td>
+                <td colspan="11" align="center">
+                    <p><b>QS</b></p>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="11" height="65">
+                    <p></p>
+                </td>
+                <td colspan="11">
+                    <p></p>
+                </td>
+                <td colspan="11">
+                    <p></p>
+                </td>
+                <td colspan="11">
+                    <p></p>
+                </td>
+                <td colspan="12">
+                    <p></p>
+                </td>
+                <td colspan="11">
+                    <p></p>
+                </td>
+                <td colspan="11">
+                    <p></p>
+                </td>
+                <td colspan="11">
+                    <p></p>
+                </td>
+                <td colspan="11">
+                    <p></p>
+                </td>
+            </tr>
+            ${libPdf.rowcol100}
+        </table>
+ 
+        <table width="100%" class="border-table mt-5" border-top="1">
+            <tr>
+                <td colspan="25">
+                    <p><b>Document No.: NCSB-IMS-SP10-FO-04</b></p>
+                </td>
+                <td colspan="30">
+                    <p>Process Owner: Construction Department</p>
+                </td>
+                <td colspan="20">
+                    <p>Revision: 03</p>
+                </td>
+                <td colspan="25">
+                    <p>Date Released: 05-January-2024</p>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="75">
+                    <p>This is a computer printed copy treated as <b>CONTROLLED DOCUMENT</b> </p>
+                </td>
+                <td colspan="25">
+                    <p>Page 1 of 1</p>
+                </td>
+            </tr>
+            ${libPdf.rowcol100}
+        </table>
+    </body>
+</pdf>

@@ -30,9 +30,6 @@
                 <td colspan="20" >
                     ${result.tagImgLogo} 
                 </td>
-                <!-- <td colspan="80" >
-                    <span>${subsidiary.legalname}  </span>
-                </td> -->
             </tr>
             
             <tr>

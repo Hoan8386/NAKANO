@@ -14,8 +14,8 @@ define([
     '../cons/scv_cons_record.js',
     '../cons/scv_cons_role.js',
     '../cons/scv_cons_subsidiary.js',
-    '../cons/scv_cons_search_print_rop_id_01.js',
-    '../cons/scv_cons_search_print_rop_id_02.js',
+    '../cons/scv_cons_search_print_rop_my_01.js',
+    '../cons/scv_cons_search_print_rop_my_02.js',
 ], (
         record, url, runtime,search,
         libPdf,
@@ -25,17 +25,17 @@ define([
         constRecord,
         constRole,
         constSubsidiary,
-        constSearchRopId01,
-        constSearchRopId02,
+        constSearchRopMy01,
+        constSearchRopMy02,
         
     ) => {
 
         const validatePrint = (curRec) =>{
             let curUser = runtime.getCurrentUser();
 
-            if(curUser.role !== constRole.Records.Administrator.ID && curUser.subsidiary != constSubsidiary.Records.NknId.ID) return false;
+            if(curUser.role !== constRole.Records.Administrator.ID && curUser.subsidiary != constSubsidiary.Records.NknMy.ID) return false;
 
-            let arrVendbill = constSearchRopId01.getDataSource({
+            let arrVendbill = constSearchRopMy01.getDataSource({
                 internalid: curRec.id
             });
             if(arrVendbill.length == 0) return false;
@@ -54,19 +54,19 @@ define([
                 params: {
                     recordId: curRec.id,
                     recordType: curRec.type,
-                    printFile: "scv_print_rop_id",
+                    printFile: "scv_print_rop_my",
                 }   
             });
 
             form.addButton({
-                id: "custpage_scv_btn_print_rop_id_pdf",
-                label: "ROP (ID)",
+                id: "custpage_scv_btn_print_rop_my_pdf",
+                label: "ROP (MY)",
                 functionName: "window.open('" + urlScript + "');"
             });
         };
 
         const generateFilePDF = (_params) => {
-            commonExtPerformance.startTime("scv_print_rop_id");
+            commonExtPerformance.startTime("scv_print_rop_my");
 
             let curRec = record.load({ type: _params.recordType, id: _params.recordId });
 
@@ -80,7 +80,7 @@ define([
 
             let filePDF = renderer.renderAsPdf();
 
-            commonExtPerformance.endTime("scv_print_rop_id");
+            commonExtPerformance.endTime("scv_print_rop_my");
 
             return filePDF;
         };
@@ -89,18 +89,25 @@ define([
             let subsidiaryId = curRec.getValue("subsidiary");
             let subsidiaryRec = record.load({type: "subsidiary", id: subsidiaryId});
 
-            const renderer = libPdf.renderTemplateWithXml("scv_print_rop_id");
+            const renderer = libPdf.renderTemplateWithXml("scv_print_rop_my");
 
             renderer.addRecord('subsidiary', subsidiaryRec);
 
             let objResult = {};
-            const arrVendbill = constSearchRopId01.getDataSource({
+            const arrVendbill = constSearchRopMy01.getDataSource({
                 internalid: curRec.id
-            });
-            const arrPrevApproval = constSearchRopId02.getDataSource();
+            }) || [];
+
+            let objLineFirst = arrVendbill[0] ?? {};
+            let po_internal_id = objLineFirst.po_internal_id;
+
+            const arrPrevApproval = constSearchRopMy02.getDataSource({
+                internalid: po_internal_id
+            }) || [];
 
             // log.error("hoan arrVendbill " ,arrVendbill)
             // log.error("hoan arrPrevApproval " ,arrPrevApproval)
+
             let projectId = curRec.getValue('cseg_scv_sg_proj');
             let objLookup = search.lookupFields({
                 type: 'customrecord_cseg_scv_sg_proj',
@@ -110,79 +117,78 @@ define([
                     'custrecord_scv_project_source.companyname'
                 ]
             });
-
-
-            let objLineFirst = arrVendbill[0] ?? {};
-
             let totalContract = 0;
-            let totalPrevApproved = 0;
-            let totalCurrentlyApproved = 0;
+            let totalAccuApproval = 0;
+            let totalPrevApproval = 0;
+            let totalNowApproved = 0;
             let totalPresentRetention = 0;
-            let totalApprovedAccumulation = 0;
+
+            let retentionLabel = '';
 
             let arrItem = arrVendbill.map(item => {
                 let objSS2 = arrPrevApproval.find(itemSS2 =>
                     itemSS2.po_internal_id === item.po_internal_id &&
                     itemSS2._3_ori_line_id === item.ori_line_id
                 ) || {};
+                let contract = item._9_contract_amount * 1 || 0;
+                let nowApproved = item._10_now_approved * 1 || 0;
+                let prevApproval = objSS2._2_prev_approval * 1 || 0;
+                let accuApproval = nowApproved + prevApproval;
 
-                let currentlyApproved = item._9_currently_approved * 1 || 0;
-                let prevApproved = objSS2._2_prev_approval_incl_retention * 1 || 0;
-                let approvedAccumulation = currentlyApproved + prevApproved || 0;
-                let retention = parseFloat(item._15_retetion) || 0;
-                // log.error("hoan retention" , retention)
+                let retention = parseFloat(item._11_retention) || 0;
+                let presentRetention = nowApproved * retention / 100;
 
-                totalContract += item._8_contract * 1 || 0;
-                totalApprovedAccumulation += approvedAccumulation;
-                totalPrevApproved += prevApproved;
-                totalCurrentlyApproved += currentlyApproved;
-                
-                let retentionAmount = currentlyApproved * retention / 100;
-                totalPresentRetention += retentionAmount;
+                if (!retentionLabel && item._11_retention) {
+                    retentionLabel = item._11_retention;
+                }
+
+                totalContract += contract;
+                totalAccuApproval += accuApproval;
+                totalPrevApproval += prevApproval;
+                totalNowApproved += nowApproved;
+                totalPresentRetention += presentRetention;
+
                 return {
-                    invRefNo: item._5_inv_ref_no || '',
-                    poNo: item._6_po_no || '',
-                    workItemDisplay: item._7_work_item_display || '',
-                    contract: formatNumberByKey(item._8_contract),
-                    approvedAccumulation: formatNumberByKey(approvedAccumulation),
-                    prevApproved: formatNumberByKey(prevApproved),
-                    currentlyApproved: formatNumberByKey(currentlyApproved),
-                    presentRetention: formatNumberByKey(retentionAmount)
+                    invRefNo: libPdf.formatDataXML(item._6_inv_ref_no || ''),
+                    poNo: libPdf.formatDataXML(item._7_po_no || ''),
+                    workItemDisplay: libPdf.formatDataXML(item._8_work_item_no || ''),
+                    contract: formatNumberByKey(contract),
+                    accuApproval: formatNumberByKey(accuApproval),
+                    prevApproval: formatNumberByKey(prevApproval),
+                    nowApproved: formatNumberByKey(nowApproved),
+                    presentRetention: formatNumberByKey(presentRetention)
                 };
             });
 
             objResult = {
-                tagImgLogo: libPdf.createImageBySubsidiaryV2(subsidiaryRec, 120),
-                // pjName: objLookup['custrecord_scv_project_source.companyname'] || '',
                 pjName: (objLookup['custrecord_scv_project_source.companyname'] || '').split(':').slice(1).join(':').trim(),
                 pjCode: objLookup['custrecord_scv_project_source.entityid'] || '',
-                docNumber: objLineFirst._1_document_number || '',
-                dateFormatDDMMYYYY: formatDate(objLineFirst._2_date) || '',
-                date: objLineFirst._2_date || '',
-                claimantNo: objLineFirst._3_claimant_no || '',
-                claimantName: objLineFirst._4_claimant_name || '',
-                memo: objLineFirst._10_memo || '',
-                remark: objLineFirst._11_remark || '',
-                ropReceivedOn: objLineFirst._12_rop_received_on || '',
-                paymentDate: objLineFirst._13_payment_date || '',
-                vat: objLineFirst._14_vat || '',
-                retention: objLineFirst._15_retetion || '',
-                retentionDisplay: objLineFirst._15_retetion_display || '',
+                claimantNo: objLineFirst._1_claimant_no || '',
+                claimantName: objLineFirst._2_claimant_name || '',
+                documentNumber: objLineFirst._3_document_number || '',
+                certifiedDate: objLineFirst._4_certified_date || '',
+                paymentDate: objLineFirst._5_payment_date || '',
+                invRefNo: objLineFirst._6_inv_ref_no || '',
+                poNo: objLineFirst._7_po_no || '',
+                remark: objLineFirst._12_remark || '',
+                retentionLabel: retentionLabel,
                 arrItem,
                 totalContract: formatNumberByKey(totalContract),
-                totalApprovedAccumulation: formatNumberByKey(totalApprovedAccumulation),
-                totalPrevApproved: formatNumberByKey(totalPrevApproved),
-                totalCurrentlyApproved: formatNumberByKey(totalCurrentlyApproved),
-                totalPresentRetention: formatNumberByKey(totalPresentRetention)
+                totalAccuApproval: formatNumberByKey(totalAccuApproval),
+                totalPrevApproval: formatNumberByKey(totalPrevApproval),
+                totalNowApproved: formatNumberByKey(totalNowApproved),
+                totalPresentRetention: formatNumberByKey(totalPresentRetention),
+                totalBalance: formatNumberByKey(
+                    totalNowApproved - totalPresentRetention
+                )
             };
-
-            // log.error("hoan check objResult" ,objResult);
+            libPdf.formatDataXMLWithObject(objResult);
+            objResult.tagImgLogo =  libPdf.createImageBySubsidiaryV2(subsidiaryRec, 60);
             renderer.addCustomDataSource({
                 format: "OBJECT",
                 alias: 'result',
                 data: objResult
             });
-
             return renderer;
         };
 
