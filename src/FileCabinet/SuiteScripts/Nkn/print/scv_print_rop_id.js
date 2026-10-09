@@ -130,7 +130,7 @@ define([
                 let prevApproved = objSS2._2_prev_approval_incl_retention * 1 || 0;
                 let approvedAccumulation = currentlyApproved + prevApproved || 0;
                 let retention = parseFloat(item._15_retetion) || 0;
-                // log.error("hoan retention" , retention)
+                
 
                 totalContract += item._8_contract * 1 || 0;
                 totalApprovedAccumulation += approvedAccumulation;

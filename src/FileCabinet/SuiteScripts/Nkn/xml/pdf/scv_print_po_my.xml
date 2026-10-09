@@ -22,9 +22,11 @@
 </head>
 <body padding="0.3in 0.5in 0.5in 0.5in" size="A4" >
     <table style="width: 100%;" class="mb-10">
-        <tr>
-            <td colspan="25">${result.tagImgLogo} </td>
-            <td colspan="50" class="valign-middle">
+       <tr >
+            <td colspan="25" valign="middle" align="left">
+                ${result.tagImgLogo}
+            </td>
+            <td colspan="50" valign="middle" style = "margin-top:22px">
                 <p style="margin: 0; padding: 0;" class="fs-14 align-right">
                     <b>${subsidiary.legalname}</b>
                 </p>
@@ -32,8 +34,7 @@
                     199101009281 (219594-W)
                 </p>
             </td>
-            <td colspan="25">
-            </td>
+            <td colspan="25" valign="middle"></td>
         </tr>
         <tr>
             <td colspan="100">
@@ -42,6 +43,7 @@
         </tr>
          ${libPdf.rowcol100}
     </table>
+
     <table style="width: 100%;" >
         <tr>
             <td colspan="50">
@@ -159,7 +161,7 @@
                     <tr>
                         <td colspan="25" ><p class="align-right">TYPE OF CONTRACT</p></td>
                         <td colspan="5">:</td>
-                        <td colspan="20" border-bottom="1"><p><b>${result.typeOfContract}</b></p></td>
+                        <td colspan="20" border-bottom="1"><p>${result.typeOfContract}</p></td>
                     </tr>
                      ${libPdf.rowcol100}
                 </table>
@@ -175,7 +177,6 @@
     </table>
 
     <table width="100%" class="mt-10">
-
         <tr>
             <td colspan="100">
                 <b border-bottom="1">PLACE OF DELIVERY :</b>
@@ -186,7 +187,6 @@
                 ${result.placeOfDelivery}
             </td>
         </tr>
-
         <tr class="mt-5">
             <td colspan="100">
                 <b border-bottom="1">TERMS OF PAYMENT :</b>
@@ -197,10 +197,9 @@
                 ${result.termsOfPayment}
             </td>
         </tr>
-
         <tr class="mt-5">
             <td colspan="100">
-                <b border-bottom="1" >REMARKS :</b>
+                <b border-bottom="1">REMARKS :</b>
             </td>
         </tr>
         <tr>
@@ -208,55 +207,59 @@
                 ${result.remark}
             </td>
         </tr>
-
-        <tr class="mt-5" >
+        <tr class="mt-5">
             <td colspan="100">
                 <b border-bottom="1">DESCRIPTION :</b>
             </td>
         </tr>
-        <tr >
+        <tr>
             <td colspan="100">
-                <b>${result.workItemCodeName}</b><br/>
-                ${result.workItemCode}&nbsp;&nbsp;&nbsp;&nbsp; = &nbsp;&nbsp;&nbsp;&nbsp;
-                ${result.contactPriceDisplay.currency}&nbsp;${result.contactPriceDisplay.amount}
+                <#list result.lines as line>
+                    ${line.workItemCode} &nbsp;&nbsp;&nbsp;&nbsp; = &nbsp;&nbsp;&nbsp;&nbsp;
+                    ${line.currency}&nbsp;${line.amount}
+                    <br/>
+                </#list>
             </td>
         </tr>
+    </table>
 
-        <tr class="mt-5" >
+    <table width="100%" page-break-inside="avoid" >
+        <tr class="mt-5">
             <td colspan="100">
                 <b>${subsidiary.legalname}</b><br/>
                 199101009281 (219594-W)
             </td>
         </tr>
         <tr height="70px">
-            <td colspan="30" style="border-bottom: 1px dotted #000" >
-            </td>
-            <td colspan="35">
-            </td>
-            <td colspan="35">
-            </td>
+            <td colspan="30" style="border-bottom: 1px dotted #000;"></td>
+            <td colspan="35"></td>
+            <td colspan="35"></td>
         </tr>
         <tr class="mt-5" border-bottom="1">
             <td colspan="100">
                 <b>AUTHORISED SIGNATURE:</b>
             </td>
         </tr>
-
-        <tr class="mt-5" >
+        <tr class="mt-5">
             <td colspan="100">
-                I, 
+                I,
                 <table style="width: 25%; display: inline;">
                     <tr>
                         <td border-bottom="1"></td>
                     </tr>
-                </table> 
+                </table>
                 of
                 <b>${result.vendorName}</b>
                 hereby accept the abovementioned terms and conditions of this purchase order.
             </td>
         </tr>
-
         <tr>
+            <td colspan="100">
+                <br/>
+            </td>
+         </tr>
+        <tr>
+           
             <td colspan="55">
                 <table style="width: 100%;">
                     <tr>
@@ -274,8 +277,10 @@
                 Signature
             </td>
         </tr>
+    </table>
 
-        <tr border-top="1" class="mt-5" >
+    <table width="100%">
+        <tr border-top="1" class="mt-5">
             <td colspan="30" class="mt-2">
                 <b>Kuala Lumpur Head Office :</b><br/>
                 Block B, 15-42, Megan Park,<br/>
@@ -284,9 +289,7 @@
                 Tel: 03-9050 6977&nbsp;&nbsp;Fax: 03-9059 6277<br/>
                 Email: klhq@nakano-const.com
             </td>
-
             <td colspan="5"></td>
-
             <td colspan="30" class="mt-2">
                 <b>Johor Bahru Office :</b><br/>
                 12A &amp; 14A, Jalan Bertam 14,<br/>
@@ -295,9 +298,7 @@
                 Tel: 07-354 6461, 354 6462&nbsp;&nbsp;Fax: 07-354 6463<br/>
                 Email: johor@nakano-const.com
             </td>
-
             <td colspan="5"></td>
-
             <td colspan="30" class="mt-2">
                 <b>Penang Office :</b><br/>
                 345, J, 2nd Floor, Bangunan Kelab Gelugor,<br/>
@@ -307,7 +308,7 @@
                 Email: penang@nakano-const.com
             </td>
         </tr>
-         ${libPdf.rowcol100}
+        ${libPdf.rowcol100}
     </table>
 </body>
 </pdf>

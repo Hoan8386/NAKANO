@@ -92,7 +92,7 @@ define([
                 internalid: curRec.id
             });
 
-             log.error("hoan arrLine01" , arrLine01);
+            // log.error("hoan arrLine01" , arrLine01);
             let objResult = {};
             let objLineFirst = arrLine01[0] ?? {};
             let projectId = curRec.getValue('cseg_scv_sg_proj');
@@ -104,11 +104,26 @@ define([
                     'custrecord_scv_project_source.companyname'
                 ]
             });
+
             let contractPrice = 0;
 
             for (let i = 0; i < arrLine01.length; i++) {
                 contractPrice += arrLine01[i]._15_amount * 1 || 0;
+                log.error("hoan _20_work_item_code" , arrLine01[i]._20_work_item_code);
             }
+
+            let lines = arrLine01.map(line => {
+                let currencyAmount = buildCurrencyAmount(
+                    line._15_currency_display,
+                    line._15_amount
+                );
+
+                return {
+                    workItemCode: line._20_work_item_code || "",
+                    currency: currencyAmount.currency,
+                    amount: currencyAmount.amount
+                };
+            });
 
             let contactPriceDisplay =
                 contractPrice === 0 &&
@@ -145,7 +160,8 @@ define([
                 remark: objLineFirst._18_remark || "",
                 workItemCodeName: objLineFirst._19_work_item_code_s_name || "",
                 workItemCode: objLineFirst._20_work_item_code || "",
-                contactPriceDisplay:contactPriceDisplay
+                contactPriceDisplay:contactPriceDisplay,
+                lines:lines
             };    
                  
             libPdf.formatDataXMLWithObject(objResult);
