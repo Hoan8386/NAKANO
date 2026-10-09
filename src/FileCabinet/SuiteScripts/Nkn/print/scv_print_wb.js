@@ -171,8 +171,8 @@ define([
             let typeOfContract = curRec.getText("jobtype");
             let modeOfPayment = curRec.getValue("custentity_scv_p_mode_of_payment");
             let retention = curRec.getValue("custentity_scv_p_retention");
-            let typeOfBuilding = curRec.getValue("custentity_scv_p_type_of_building");
-            let structure = curRec.getValue("custentity_scv_p_structure");
+            let typeOfBuilding = curRec.getText("custentity_scv_p_type_of_building");
+            let structure = curRec.getText("custentity_scv_p_structure");
             let basementCarparkArea = curRec.getValue("custentity_scv_p_base_carp_area");
             let gfa = curRec.getValue("custentity_scv_p_gfa") || 0;
             let cfa = curRec.getValue("custentity_scv_p_cfa") || 0;
@@ -231,8 +231,9 @@ define([
             }
             let indirectExpenses = curRec.getValue("custentity_scv_project_idr_cost_reserve") || 0;
 
-            let indirectExpensesPer = (indirectExpenses * 1) != 0 ? (indirectExpenses * 1) / (contractSum * 1) : 0;
-
+            let indirectExpensesPer = (indirectExpenses * 1) != 0
+            ? ((indirectExpenses * 1) / (contractSum * 1) * 100).toFixed(2)
+            : 0;
             let totalProfitPer = ((totalProfit * 1) / (contractSum * 1) * 100).toFixed(2);
             
             let overheadPer = ((overhead * 1) / (contractSum * 1) * 100).toFixed(2);
@@ -266,17 +267,17 @@ define([
                 typeOfContract: typeOfContract || '',
                 modeOfPayment: modeOfPayment || '',
                 retention: retention || '',
-                typeOfBuilding: typeOfBuilding || '',
-                structure: structure || '',
-                basementCarparkArea: basementCarparkArea || '',
-                gfa: gfa || '',
-                cfa: cfa || '',
-                piling: piling || '',
-                concrete: concrete || '',
-                rebar: rebar || '',
-                wireMesh: wireMesh || '',
-                formworks: formworks || '',
-                steelStructure: steelStructure || '',
+                typeOfBuilding:  typeOfBuilding || '',
+                structure:  structure || '',
+                basementCarparkArea: formatNumberByKey(basementCarparkArea) || '',
+                gfa: formatNumberByKey(gfa) || '',
+                cfa: formatNumberByKey(cfa) || '',
+                piling: formatNumberByKey(piling) || '',
+                concrete: formatNumberByKey(concrete) || '',
+                rebar: formatNumberByKey(rebar) || '',
+                wireMesh: formatNumberByKey(wireMesh) || '',
+                formworks: formatNumberByKey(formworks) || '',
+                steelStructure: formatNumberByKey(steelStructure) || '',
                 contractSum: contractSum || '',
                 constructionNetCost: constructionNetCost || '',
                 totalProfit: totalProfit || '',

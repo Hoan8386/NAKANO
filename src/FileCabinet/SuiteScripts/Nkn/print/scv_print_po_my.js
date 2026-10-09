@@ -56,7 +56,7 @@ define([
 
             form.addButton({
                 id: "custpage_scv_btn_print_po_id_pdf",
-                label: "PO (TH)",
+                label: "PO (MY)",
                 functionName: "window.open('" + urlScript + "');"
             });
         };
@@ -92,7 +92,6 @@ define([
                 internalid: curRec.id
             });
 
-            //  log.error("hoan arrLine01" , arrLine01);
             let objResult = {};
             let objLineFirst = arrLine01[0] ?? {};
             let projectId = curRec.getValue('cseg_scv_sg_proj');
@@ -118,6 +117,7 @@ define([
                 );
 
                 return {
+                    workItemCodeName:line._19_work_item_code_s_name,
                     workItemCode: line._20_work_item_code || "",
                     currency: currencyAmount.currency,
                     amount: currencyAmount.amount
@@ -157,7 +157,6 @@ define([
                 placeOfDelivery: objLineFirst._16_place_of_delivery || "",
                 termsOfPayment:objLineFirst._17_terms_of_payment,
                 remark: objLineFirst._18_remark || "",
-                workItemCodeName: objLineFirst._19_work_item_code_s_name || "",
                 workItemCode: objLineFirst._20_work_item_code || "",
                 contactPriceDisplay:contactPriceDisplay,
                 lines:lines

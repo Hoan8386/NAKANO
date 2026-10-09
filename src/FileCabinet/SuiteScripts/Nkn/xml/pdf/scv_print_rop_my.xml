@@ -247,55 +247,45 @@
         </table>
 
 
-        <table width="100%" class=" mt-5">
+        <table width="100%" class="mt-5">
             <tr>
-                <td colspan="33">
-                    <p><b>13TH PAYMENT</b></p>
+                <td colspan="33" valign="bottom">
+                    <p class="ml-5"><b>13TH PAYMENT</b></p>
                     <table width="100%" border="1">
                         <tr>
-                            <td colspan="15" height="70" valign="middle">
+                            <td colspan="15" height="60" valign="middle">
                                 <p align="center"><b>RM</b></p>
                             </td>
-                            <td colspan="70" height="70" valign="middle">
+                            <td colspan="70" height="60" valign="middle">
                                 <p align="center"><b>${result.totalBalance}</b></p>
                             </td>
-                             <td colspan="15" >
-                            </td>
+                            <td colspan="15" height="60"></td>
                         </tr>
                     </table>
                 </td>
-
-                <td colspan="5">
-                    <p></p>
-                </td>
-
-                <td colspan="48">
+                <td colspan="5"></td>
+                <td colspan="48" valign="top">
+                    <p style="margin: 0 0 10px 0;"></p>  
                     <table width="100%" border="1">
                         <tr>
-                            <td colspan="100" height="100" valign="top">
-                                <p><b>REMARKS:</b></p>
-                                <p  class="ml-5" >${result.remark}</p>
+                            <td colspan="100" height="80" valign="top">
+                                <p style="margin: 0;"><b>REMARKS:</b></p>
+                                <p class="ml-5">${result.remark}</p>
                             </td>
                         </tr>
                     </table>
                 </td>
-
-                <td colspan="3">
-                    <p></p>
-                </td>
-
-                <td colspan="11">
+                <td colspan="3"></td>
+                <td colspan="11" valign="top">
+                    <p style="margin: 0 0 10px 0;"></p>
                     <table width="100%" class="border-table" border-top="1">
                         <tr>
-                            <td colspan="100"  align="center">
-                                <p><b>FINANCE</b></p>
-                                <p></p>
+                            <td colspan="100" height="30" align="center" valign="middle">
+                                <p style="margin: 0;"><b>FINANCE</b></p>
                             </td>
                         </tr>
                         <tr>
-                            <td colspan="100" height="100" >
-                             
-                            </td>
+                            <td colspan="100" height="50"></td>
                         </tr>
                     </table>
                 </td>
@@ -303,7 +293,7 @@
             ${libPdf.rowcol100}
         </table>
 
-        <table width="100%" class="border-table mt-5"  border-top="1">
+        <table width="100%" class="border-table mt-5 "  border-top="1">
             <tr>
                 <td colspan="11" align="center">
                     <p><b>MD</b></p>
@@ -366,15 +356,15 @@
             ${libPdf.rowcol100}
         </table>
  
-        <table width="100%" class="border-table mt-5" border-top="1">
+        <table width="100%" class="border-table mt-5 fs-7" border-top="1">
             <tr>
-                <td colspan="25">
+                <td colspan="30">
                     <p><b>Document No.: NCSB-IMS-SP10-FO-04</b></p>
                 </td>
                 <td colspan="30">
                     <p>Process Owner: Construction Department</p>
                 </td>
-                <td colspan="20">
+                <td colspan="15">
                     <p>Revision: 03</p>
                 </td>
                 <td colspan="25">

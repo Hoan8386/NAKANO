@@ -165,8 +165,11 @@
                         <tr>
                             <td colspan="17" style="white-space: nowrap;"></td>
                             <td colspan="5"></td>
-                            <td colspan="28" style="border-bottom: 1px solid #000;">
-                                GRADE : ${results.header.grade}
+                            <td colspan="8" >
+                                GRADE : 
+                            </td>
+                            <td colspan="20" style="border-bottom: 1px solid #000;">
+                                ${results.header.grade}
                             </td>
                         </tr>
 
@@ -199,7 +202,7 @@
                         <tr>
                             <td colspan="25" style="white-space: nowrap;">DATE OF REQUEST</td>
                             <td colspan="5">:</td>
-                            <td colspan="20" style="border-bottom: 1px solid #000;">
+                            <td colspan="20" style="border-bottom: 1px solid #000;" >
                                 ${results.header.dateOfRequest}
                             </td>
                         </tr>
@@ -207,7 +210,7 @@
                         <tr>
                             <td colspan="25" style="white-space: nowrap;">DATE OF COMMENCEMENT</td>
                             <td colspan="5">:</td>
-                            <td colspan="20" style="border-bottom: 1px solid #000;">
+                            <td colspan="20" style="border-bottom: 1px solid #000;" >
                                 ${results.header.dateOfCommencement}
                             </td>
                         </tr>
@@ -215,7 +218,7 @@
                         <tr>
                             <td colspan="25" style="white-space: nowrap;">DATE OF COMPLETION / DELIVERY</td>
                             <td colspan="5">:</td>
-                            <td colspan="20" style="border-bottom: 1px solid #000;">
+                            <td colspan="20" style="border-bottom: 1px solid #000;" > 
                                 ${results.header.dateOfCompletion}
                             </td>
                         </tr>
@@ -223,9 +226,19 @@
                         <tr>
                             <td colspan="25" style="white-space: nowrap;">PERFORMANCE BOND</td>
                             <td colspan="5">:</td>
-                            <td colspan="20" style="border-bottom: 1px solid #000;">
-                                ${results.header.performanceBond} %
-                            </td>
+                            <td colspan="5"> ${results.header.performanceBondFlag} </td>
+                            <#if results.header.performanceBond?has_content>
+                                <td colspan="15" style="border-bottom: 1px solid #000;">
+                                ${results.header.performanceBond} 
+                                </td>
+                            <#else>
+                                <td colspan="13" style="border-bottom: 1px solid #000;">
+                                
+                                </td>
+                                <td colspan="2" >
+                                    %
+                                </td>
+                            </#if>
                         </tr>
 
                         <tr>
@@ -255,6 +268,13 @@
 
                         <tr>
                             <td colspan="25" style="white-space: nowrap;">WARRANTY</td>
+                            <td colspan="5">:</td>
+                            <td colspan="20" style="border-bottom: 1px solid #000;">
+                                ${results.header.warrantyValue}
+                            </td>
+                        </tr>
+                         <tr>
+                            <td colspan="25" style="white-space: nowrap;"></td>
                             <td colspan="5">:</td>
                             <td colspan="20" style="border-bottom: 1px solid #000;">
                                 ${results.header.warranty}
@@ -400,33 +420,10 @@
                 </td>
 
                 <td colspan="90" valign="top">
-                    Eastern Pretech have revise their price two times from
-                    RM13,099,520.95 (during tender stage) to RM12,063,000.00
-                    (negotiation on 25 June 2021)
+                       ${results.header.remarks}
                 </td>
             </tr>
 
-            <tr>
-                <td colspan="10"></td>
-                <td colspan="90">
-                    1) 5% downpayment upon PO and MITI approval for commencement.
-                </td>
-            </tr>
-
-            <tr>
-                <td colspan="10"></td>
-                <td colspan="90">
-                    2) 5% retention sum to RM12,063,000.00. 2.5% retention to be
-                    release upon Main Contractor CPC, 2.5% upon expiry of DLP.
-                </td>
-            </tr>
-
-            <tr>
-                <td colspan="10"></td>
-                <td colspan="90">
-                    3) CCC date - 30th April 2022
-                </td>
-            </tr>
              ${libPdf.rowcol100}
         </table>
 

@@ -7,10 +7,10 @@
         ${libPdf.css}
 
         body {
-            font-size: 9pt;
+            font-size: 8pt;
         }
         table {
-            font-size: 9pt;
+            font-size: 8pt;
         }
         .border-none,
         .border-none td,
@@ -197,7 +197,9 @@
                 ${result.termsOfPayment}
             </td>
         </tr>
-        <tr class="mt-5">
+    </table>
+    <table width="100%" class="mt-5">
+        <tr>
             <td colspan="100">
                 <b border-bottom="1">REMARKS :</b>
             </td>
@@ -207,20 +209,26 @@
                 ${result.remark}
             </td>
         </tr>
+    </table>
+    <table>
         <tr class="mt-5">
             <td colspan="100">
                 <b border-bottom="1">DESCRIPTION :</b>
             </td>
         </tr>
-        <tr>
-            <td colspan="100">
-                <#list result.lines as line>
+        <#list result.lines as line>
+            <tr>
+                <td colspan="100" style="padding-top: 3px;">
+                    <u>${line.workItemCodeName}</u>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="100">
                     ${line.workItemCode} &nbsp;&nbsp;&nbsp;&nbsp; = &nbsp;&nbsp;&nbsp;&nbsp;
                     ${line.currency}&nbsp;${line.amount}
-                    <br/>
-                </#list>
-            </td>
-        </tr>
+                </td>
+            </tr>
+        </#list>
     </table>
 
     <table width="100%" page-break-inside="avoid" >
@@ -237,10 +245,15 @@
         </tr>
         <tr class="mt-5" border-bottom="1">
             <td colspan="100">
-                <b>AUTHORISED SIGNATURE:</b>
+                <b>AUTHORISED SIGNATURE </b>
             </td>
         </tr>
-        <tr class="mt-5">
+        <tr>
+            <td colspan="100">
+                <br/>
+            </td>
+         </tr>
+        <tr >
             <td colspan="100">
                 I,
                 <table style="width: 25%; display: inline;">
@@ -248,7 +261,7 @@
                         <td border-bottom="1"></td>
                     </tr>
                 </table>
-                of
+                 &nbsp;of
                 <b>${result.vendorName}</b>
                 hereby accept the abovementioned terms and conditions of this purchase order.
             </td>
@@ -259,7 +272,6 @@
             </td>
          </tr>
         <tr>
-           
             <td colspan="55">
                 <table style="width: 100%;">
                     <tr>
@@ -277,6 +289,7 @@
                 Signature
             </td>
         </tr>
+        ${libPdf.rowcol100}
     </table>
 
     <table width="100%">

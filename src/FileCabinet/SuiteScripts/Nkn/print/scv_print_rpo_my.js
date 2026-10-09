@@ -130,16 +130,19 @@ define([
                 dateOfCommencement: objLineFirst._13_date_of_commencement || '',
                 dateOfCompletion: objLineFirst._14_date_of_completion || '',
                 performanceBond: objLineFirst._15_performance_bond || '',
-                insurance: objLineFirst._16_insurance || '',
+                performanceBondFlag:  showBooleanDisplay( objLineFirst._29_performance_bond_flag) ,
+                insurance: objLineFirst._16_insurance_display ||  objLineFirst._16_insurance || '',
                 ldPenaltyForDelayFlag: showBooleanDisplay(objLineFirst._17_l_d_penalty_for_delay_flag) || '',
                 ldPenaltyForDelay: objLineFirst._18_l_d_penalty_for_delay || '',    
                 defectLiabilityPeriod: objLineFirst._19_deffect_liability_period || '',
-                warranty: objLineFirst._20_warranty || '',
+                warranty: objLineFirst._20_warranty_display || objLineFirst._20_warranty || '',
+                warrantyValue: objLineFirst._30_warranty_value_display || objLineFirst._30_warranty_value || '',
                 conditionsOfConsultant: showBooleanDisplay(objLineFirst._21_conditions_of_consultant),
                 conditionsOfSubContract: showBooleanDisplay(objLineFirst._22_conditions_of_sub_contract),
                 specification: showBooleanDisplay(objLineFirst._23_specification),
                 bqScheduleOfRates: showBooleanDisplay(objLineFirst._24_b_q_schedule_of_rates),
-                drawingsProvidedToNkn: showBooleanDisplay(objLineFirst._25_drawings_provided_to_nkn)
+                drawingsProvidedToNkn: showBooleanDisplay(objLineFirst._25_drawings_provided_to_nkn),
+                remarks: objLineFirst._28_remark || '',
             };
 
            
@@ -176,29 +179,51 @@ define([
                     lineUniqueKeys.includes(e._0_po_line)
                 );
 
-                for(let i = 0; i < arrLine01_detail.length; i++){
-                    let item = arrLine01_detail[i];
+                let arrLine01_group = alasql(`
+                    SELECT
+                        _26_work_item_no,
+                        SUM(CAST(_27_working_budget AS NUMBER)) AS totalEstimate,
+                        SUM(CAST(_4_contract_price AS NUMBER)) AS totalContractPrice
+                    FROM ?
+                    GROUP BY _26_work_item_no
+                `, [arrLine01_detail]);
 
-                    let contractPrice = null;
-                    if (item._4_contract_price) {
-                        contractPrice = Number(item._4_contract_price);
+                for (let i = 0; i < arrLine01_group.length; i++) {
+                    let item = arrLine01_group[i];
+                    let arrRemarks = [];
+
+                    for (let j = 0; j < arrLine01_detail.length; j++) {
+                        let detail = arrLine01_detail[j];
+
+                        if (detail._26_work_item_no === item._26_work_item_no) {
+                            if (detail._31_remark_line) {
+                                arrRemarks.push(detail._31_remark_line);
+                            }
+                        }
                     }
 
-                    let estimate = Number(item._27_working_budget) || 0;
-                    let balance = estimate - (contractPrice || 0);
+                    item.remarks = arrRemarks;
+                }
 
-                    objResult.contractPrice += contractPrice || 0;
+                for (let i = 0; i < arrLine01_group.length; i++) {
+                    let item = arrLine01_group[i];
+
+                    let estimate = Number(item.totalEstimate) || 0;
+                    let contractPrice = Number(item.totalContractPrice) || 0;
+                    let balance = estimate - contractPrice;
 
                     const objResDetail = {
                         workItemNo: libPdf.formatDataXML(item._26_work_item_no) || '',
                         estimate: formatNumberByKey(estimate),
                         contractPrice: formatNumberByKey(contractPrice),
                         balance: formatNumberByKey(balance),
-                        remarks: item._28_remark || '',
+                        remarks: (item.remarks || [])
+                        .filter(e => e)
+                        .join('; ')
                     };
 
                     objResult.totalEstimate += estimate;
-                    objResult.totalContractPrice += contractPrice || 0;
+                    objResult.totalContractPrice += contractPrice;
                     objResult.totalBalance += balance;
 
                     objResult.lines.push(objResDetail);
