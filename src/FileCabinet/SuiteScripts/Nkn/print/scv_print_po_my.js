@@ -92,7 +92,7 @@ define([
                 internalid: curRec.id
             });
 
-            // log.error("hoan arrLine01" , arrLine01);
+             log.error("hoan arrLine01" , arrLine01);
             let objResult = {};
             let objLineFirst = arrLine01[0] ?? {};
             let projectId = curRec.getValue('cseg_scv_sg_proj');
@@ -141,6 +141,7 @@ define([
                 typeOfContract: objLineFirst._14_type_of_contract_display || objLineFirst._14_type_of_contract || "",
                 currency: objLineFirst._15_currency_display || "",
                 placeOfDelivery: objLineFirst._16_place_of_delivery || "",
+                termsOfPayment:objLineFirst._17_terms_of_payment,
                 remark: objLineFirst._18_remark || "",
                 workItemCodeName: objLineFirst._19_work_item_code_s_name || "",
                 workItemCode: objLineFirst._20_work_item_code || "",
