@@ -96,17 +96,18 @@ define([
             let objResult = {};
             const arrVendbill = constSearchRopMy01.getDataSource({
                 internalid: curRec.id
-            }) || [];
+            });
 
             let objLineFirst = arrVendbill[0] ?? {};
             let po_internal_id = objLineFirst.po_internal_id;
+            
+            let arrPrevApproval = [] ;
+            if(po_internal_id) {
+                arrPrevApproval = constSearchRopMy02.getDataSource({
+                    internalid: po_internal_id
+                }) 
+            }
 
-            const arrPrevApproval = constSearchRopMy02.getDataSource({
-                internalid: po_internal_id
-            }) || [];
-
-            // log.error("hoan arrVendbill " ,arrVendbill)
-            // log.error("hoan arrPrevApproval " ,arrPrevApproval)
 
             let projectId = curRec.getValue('cseg_scv_sg_proj');
             let objLookup = search.lookupFields({

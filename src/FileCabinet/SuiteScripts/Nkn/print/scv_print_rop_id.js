@@ -96,8 +96,17 @@ define([
             let objResult = {};
             const arrVendbill = constSearchRopId01.getDataSource({
                 internalid: curRec.id
-            });
-            const arrPrevApproval = constSearchRopId02.getDataSource();
+            }) ;
+
+            let objLineFirst = arrVendbill[0] ?? {};
+            let po_internal_id = objLineFirst.po_internal_id;
+
+            let arrPrevApproval = [];
+            if (po_internal_id) {
+                arrPrevApproval = constSearchRopId02.getDataSource({
+                    internalid: po_internal_id
+                });
+            }
 
             // log.error("hoan arrVendbill " ,arrVendbill)
             // log.error("hoan arrPrevApproval " ,arrPrevApproval)
@@ -112,7 +121,7 @@ define([
             });
 
 
-            let objLineFirst = arrVendbill[0] ?? {};
+            
 
             let totalContract = 0;
             let totalPrevApproved = 0;

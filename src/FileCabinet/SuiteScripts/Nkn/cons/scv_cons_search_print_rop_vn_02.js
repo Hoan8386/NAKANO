@@ -18,9 +18,22 @@ define(["N/search",
     const Records = {};
 
     const getDataSource = (_params) => {
-        let filters = [];
+        let filters = createFiltersFromParams(_params);
+
         return constSearch.getDataSource_Mixed(ID, filters, [], Records);
     };
+
+    const createFiltersFromParams = (_params) => {
+        const filters = [];
+
+        if (_params.internalid) {
+			filters.push(search.createFilter({
+				name: 'internalid', operator: 'anyof', values: _params.internalid
+			}));
+		}
+
+        return filters;
+    }
 
     return {
         ID,

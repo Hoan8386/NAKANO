@@ -86,7 +86,7 @@ define([
                 internalid: curRec.id 
             }); 
             
-            log.error("hoan check" ,arrLine01)
+            // log.error("hoan check" ,arrLine01)
             let objResult = {}; 
             let objLineFirst = arrLine01[0] ?? {}; 
             let objGroup = {}; 

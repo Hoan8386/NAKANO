@@ -90,16 +90,19 @@ define([
             const renderer = libPdf.renderTemplateWithXml("scv_print_rop_vn");
             renderer.addRecord('subsidiary', subsidiaryRec);
 
-            let arrLine01 = constSearchRopVn01.getDataSource({ internalid: curRec.id });
-            let arrLine02 = constSearchRopVn02.getDataSource();
-            let objLineFirst = arrLine01[0];
+           let arrLine01 = constSearchRopVn01.getDataSource({
+                internalid: curRec.id
+            }) ;
+
+            let objLineFirst = arrLine01[0] ?? {};
+
+            let arrLine02 = [];
+            if (objLineFirst.po_internal_id) {
+                arrLine02 = constSearchRopVn02.getDataSource({
+                    internalid: objLineFirst.po_internal_id
+                });
+            }
             let projectId = curRec.getValue('cseg_scv_sg_proj');
-            // let objLookup = search.lookupFields({
-            //     type: 'customrecord_cseg_scv_sg_proj',
-            //     id: projectId,
-            //     columns: ['custrecord_scv_project_source.entityid' , 'custrecord_scv_project_source.companyname' ]
-            // });
-            
             let objLookup = {};
             if(projectId) {
                 objLookup = search.lookupFields({

@@ -93,11 +93,17 @@ define([
             let objResult = {};
             const arrVendbill = constSearchRopTh01.getDataSource({
                 internalid: curRec.id
-            });
-            const arrPrevApproval = constSearchRopTh02.getDataSource();
-              log.error("hoan arrVendbill " ,arrVendbill)
-            //  log.error("hoan arrPrevApproval " ,arrPrevApproval)
+            }) ;
 
+            let objLineFirst = arrVendbill[0] ?? {};
+            let po_internal_id = objLineFirst.po_internal_id;
+
+            let arrPrevApproval = [];
+            if (po_internal_id) {
+                arrPrevApproval = constSearchRopTh02.getDataSource({
+                    internalid: po_internal_id
+                });
+            }
             let projectId = curRec.getValue('cseg_scv_sg_proj');
             let objLookup = {};
             if(projectId) {
@@ -110,7 +116,6 @@ define([
                     ]
                 });
             }
-            let objLineFirst = arrVendbill[0] ?? {};
             let totalContract = 0;
             let totalPrevApproved = 0;
             let totalNewApproval = 0;

@@ -103,7 +103,7 @@ define([
             });
             
             let objLineFirst = arrLine01[0] ?? {};
-             log.error("Hoan check",arrLine01)
+            // log.error("Hoan check",arrLine01)
             let projectId = curRec.getValue('cseg_scv_sg_proj');
             let objLookup = {};
             if(projectId) {

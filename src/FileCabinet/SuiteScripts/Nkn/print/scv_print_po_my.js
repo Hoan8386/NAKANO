@@ -92,7 +92,7 @@ define([
                 internalid: curRec.id
             });
 
-            // log.error("hoan arrLine01" , arrLine01);
+            //  log.error("hoan arrLine01" , arrLine01);
             let objResult = {};
             let objLineFirst = arrLine01[0] ?? {};
             let projectId = curRec.getValue('cseg_scv_sg_proj');
@@ -108,14 +108,13 @@ define([
             let contractPrice = 0;
 
             for (let i = 0; i < arrLine01.length; i++) {
-                contractPrice += arrLine01[i]._15_amount * 1 || 0;
-                log.error("hoan _20_work_item_code" , arrLine01[i]._20_work_item_code);
+                contractPrice += arrLine01[i]._7_contract_price * 1 || 0;
             }
 
             let lines = arrLine01.map(line => {
                 let currencyAmount = buildCurrencyAmount(
                     line._15_currency_display,
-                    line._15_amount
+                    line._7_contract_price
                 );
 
                 return {
@@ -128,9 +127,9 @@ define([
             let contactPriceDisplay =
                 contractPrice === 0 &&
                 arrLine01.every(e =>
-                    e._15_amount === "" ||
-                    e._15_amount === null ||
-                    e._15_amount === undefined
+                    e._7_contract_price === "" ||
+                    e._7_contract_price === null ||
+                    e._7_contract_price === undefined
                 )
                     ? { currency: '', amount: '' }
                     : buildCurrencyAmount(
@@ -146,7 +145,7 @@ define([
                 vendorPhone: objLineFirst._4_vendor_s_phone || "",
                 vendorFax: objLineFirst._5_vendor_s_fax || "",
                 vendorEmail: objLineFirst._6_vendor_s_email || "",
-                amount: objLineFirst._15_amount || "",
+                amount: objLineFirst._7_contract_price || "",
                 date: objLineFirst._8_date || "",
                 poNumber: objLineFirst._9_p_o_no || "",
                 ourRef: objLineFirst._10_our_ref || "",
