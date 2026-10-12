@@ -164,7 +164,7 @@ define([
                  
             libPdf.formatDataXMLWithObject(objResult);
 
-            objResult.tagImgLogo =  libPdf.createImageBySubsidiaryV2(subsidiaryRec, 120);
+            objResult.tagImgLogo =  libPdf.createImageBySubsidiaryV2(subsidiaryRec, 60);
 
             renderer.addCustomDataSource({
                 format: "OBJECT",

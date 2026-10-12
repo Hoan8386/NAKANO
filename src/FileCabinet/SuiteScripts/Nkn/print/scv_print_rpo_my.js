@@ -119,7 +119,7 @@ define([
                 scopeOfWork: objLineFirst._2_scope_of_work || '',
                 currency: objLineFirst._3_currency_display || '',
                 // contractPrice: objLineFirst._4_contract_price || '',
-                typeOfContract: objLineFirst._5_type_of_contract || '',
+                typeOfContract: objLineFirst._5_type_of_contract_display ||  objLineFirst._5_type_of_contract || '',
                 terms: objLineFirst._6_terms || '',
                 retention: objLineFirst._7_retention || '',
                 cidbRegistration: showBooleanDisplay(objLineFirst._8_cidb_registration) || '',

@@ -82,22 +82,20 @@ define([
 
         const rennderPDF = (curRec) => {
             const renderer = libPdf.renderTemplateWithXml("scv_print_wb");
-            let subsidiaryId = curRec.getValue("subsidiary");
-            let subsidiaryRec = record.load({type: "subsidiary", id: subsidiaryId});
             let objResult = getWorkingBudgetData(curRec);
 
-            libPdf.formatDataXMLWithObject(objResult);
-            objResult.tagImgLogo = libPdf.createImageBySubsidiaryV2(subsidiaryRec, 50);
             renderer.addCustomDataSource({
                 format: "OBJECT",
                 alias: 'result',
                 data: objResult
             });
-
             return renderer;
         };
 
         const getWorkingBudgetData = (curRec) => {
+            let subsidiaryId = curRec.getValue("subsidiary");
+            let subsidiaryRec = record.load({type: "subsidiary", id: subsidiaryId});
+            let subsidiaryName = subsidiaryRec.getValue("name");
             let projectNo = curRec.getValue("entityid");
             let projectName = curRec.getValue("companyname");
             let currency = record.load({type: "currency", id: curRec.getValue("currency")});
@@ -249,6 +247,7 @@ define([
             let netCostByCFA =  (constructionNetCost * 1) / (cfa * 1) ;
 
             let objResult = {
+                subsidiaryName : subsidiaryName,
                 projectNo: projectNo || '',
                 projectName: projectName || '',
                 primaryCurrency : primaryCurrency || '',
@@ -312,6 +311,8 @@ define([
             objResult.netCostByCFA = formatNumberByKey(objResult.netCostByCFA);
             objResult.indirectExpenses = formatNumberByKey(objResult.indirectExpenses);
 
+            libPdf.formatDataXMLWithObject(objResult);
+            objResult.tagImgLogo = libPdf.createImageBySubsidiaryV2(subsidiaryRec, 50);
             return objResult;
         };     
 

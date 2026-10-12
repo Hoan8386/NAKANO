@@ -25,6 +25,7 @@ const _initPrint = async () =>{
             //     }
             // });
         }
+        _scvExcelJS.replaceKeyCellValue(curSheet, 'B1', '{pSubName}', data.subsidiaryName);
         _scvExcelJS.replaceKeyCellValue(curSheet, 'D3', '{pProjectNo}', data.projectNo);
         _scvExcelJS.replaceKeyCellValue(curSheet, 'N3', '{pPrimaryCurrency}', data.primaryCurrency);
         _scvExcelJS.replaceKeyCellValue(curSheet, 'P3', '{pContractSum}', data.contractSum);

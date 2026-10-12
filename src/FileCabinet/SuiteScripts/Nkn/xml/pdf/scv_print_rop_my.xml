@@ -165,16 +165,16 @@
                 <td colspan="10">
                     <p align="center"><b>INV / REF<br/>NO.</b></p>
                 </td>
-                <td colspan="8">
+                <td colspan="11">
                     <p align="center"><b>P.O. NO.</b></p>
                 </td>
-                <td colspan="11">
+                <td colspan="14">
                     <p align="center"><b>WORK ITEM</b></p>
                 </td>
                 <td colspan="11">
                     <p align="center"><b>CONTRACT<br/>(RM)</b></p>
                 </td>
-                <td colspan="17">
+                <td colspan="14">
                     <p align="center"><b>ACCU. APPROVAL<br/>(RM)</b></p>
                 </td>
                 <td colspan="13">
@@ -183,7 +183,7 @@
                 <td colspan="13">
                     <p align="center"><b>NOW<br/>APPROVED<br/>(RM)</b></p>
                 </td>
-                <td colspan="17">
+                <td colspan="14">
                     <p align="center"><b>PRESENT<br/>RETENTION<br/>(${result.retentionLabel})</b></p>
                 </td>
             </tr>
@@ -193,16 +193,16 @@
                     <td colspan="10">
                         <p>${item.invRefNo}</p>
                     </td>
-                    <td colspan="8">
+                    <td colspan="11">
                         <p>${item.poNo}</p>
                     </td>
-                    <td colspan="11">
+                    <td colspan="14">
                         <p>${item.workItemDisplay}</p>
                     </td>
                     <td colspan="11" align="right">
                         <p>${item.contract}</p>
                     </td>
-                    <td colspan="17" align="right">
+                    <td colspan="14" align="right">
                         <p>${item.accuApproval}</p>
                     </td>
                     <td colspan="13" align="right">
@@ -211,7 +211,7 @@
                     <td colspan="13" align="right">
                         <p>${item.nowApproved}</p>
                     </td>
-                    <td colspan="17" align="right">
+                    <td colspan="14" align="right">
                         <p>${item.presentRetention}</p>
                     </td>
                 </tr>
@@ -221,16 +221,16 @@
                 <td colspan="10" border="0">
                     <p></p>
                 </td>
-                <td colspan="8" border="0">
+                <td colspan="11" border="0">
                     <p></p>
                 </td>
-                <td colspan="11" align="center">
+                <td colspan="14" align="center">
                     <p><b>TOTAL</b></p>
                 </td>
                 <td colspan="11" align="right">
                     <p><b>${result.totalContract}</b></p>
                 </td>
-                <td colspan="17" align="right">
+                <td colspan="14" align="right">
                     <p><b>${result.totalAccuApproval}</b></p>
                 </td>
                 <td colspan="13" align="right">
@@ -239,7 +239,7 @@
                 <td colspan="13" align="right">
                     <p><b>${result.totalNowApproved}</b></p>
                 </td>
-                <td colspan="17" align="right">
+                <td colspan="14" align="right">
                     <p><b>${result.totalPresentRetention}</b></p>
                 </td>
             </tr>

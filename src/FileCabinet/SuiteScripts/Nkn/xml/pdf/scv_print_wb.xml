@@ -30,7 +30,7 @@
             </td>
             <td colspan="25" style="padding-top:0; padding-bottom:0;" valign="middle">
                 <p class="fs-12" >
-                    <b>NAKANO SINGAPORE</b>
+                    <b>${result.subsidiaryName}</b>
                 </p>
             </td>
             <td colspan="30" style="padding-top:0; padding-bottom:0;" valign="middle">
